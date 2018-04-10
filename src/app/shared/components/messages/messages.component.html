@@ -1,0 +1,4 @@
+<div *ngIf="messageLength()" class="col-md-3 col-sm-12 alert">
+  <span class="closebtn" (click)="clear()">x</span>
+  <span *ngFor='let message of messages'> {{message}} </span>
+</div>

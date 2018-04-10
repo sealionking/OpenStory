@@ -1,0 +1,39 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "assets/scss/mixins";
+@import "assets/scss/variables";
+
+
+.ng-select.custom {
+  border:0;
+  outline: 0;
+  min-height: 0;
+  border-radius: 0;
+  width: 200px;
+}
+
+.ng-select .ng-control {
+  min-height: 0;
+  background-color: #fff;
+  color: #687086;
+  border-radius: 0;
+  border: 0;
+  &:hover {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+  .ng-placeholder {
+      height: rem(19);
+      color: #687086;
+      font-size: rem(14);
+      line-height: rem(19);
+      color: black !important;
+  }
+}
+
+body{
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  font-family: "Open Sans", sans-serif;
+  min-height: 100vh;
+  font-size: rem(14);
+  line-height: rem(19);
+}

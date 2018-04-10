@@ -1,0 +1,111 @@
+@import 'variables';
+@import 'mixins';
+
+.underHead{
+  align-items: center;
+  background-color: $ligth-grey;
+  display: flex;
+  height:40px;
+  justify-content: flex-end;
+  width: calc(100% - 50px);
+}
+
+.profil{
+  @include flexbox;
+  border-right: rem(1) solid $black;
+  flex-direction: column;
+  padding-right: rem(16);
+  text-align: right;
+  a{
+    color: $dark-grey;
+    line-height: rem(15);
+    text-decoration: none;
+  }
+}
+
+a.nameSur{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(14);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+a.emailAdr{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(12);
+  text-decoration: none;
+}
+
+.edit{
+  @include flexbox;
+  padding-left: rem(16);
+  padding-right: rem(16);
+}
+
+.editProfText{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(14);
+  padding-left: rem(6);
+}
+
+a.editProfText{
+  text-decoration: none;
+  &:hover{
+    color: $dark-grey;
+  }
+}
+
+.logout{
+  @include flexbox;
+  padding-right: rem(16);
+}
+
+.logoutText{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(14);
+  padding-left: rem(6);
+}
+
+a.logoutText{
+  font-family: $font-family-Open-Sans;
+  text-decoration: none;
+  &:hover{
+    color: $dark-grey;
+  }
+}
+
+.exit-users {
+  background-color: $text-color4;
+  font-size: rem(24);
+  height: rem(40);
+  margin-top: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  width: rem(50);
+  z-index: -1;
+  svg {
+    height: rem(16);
+    width: rem(16);
+  }
+}
+.exit-user {
+  background-color: $text-color4;
+  font-size: rem(24);
+  height: rem(40);
+  margin-top: auto;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: rem(50);
+  z-index: -1;
+  svg {
+    height: rem(16);
+    width: rem(16);
+  }
+}

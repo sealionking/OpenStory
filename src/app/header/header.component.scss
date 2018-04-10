@@ -1,0 +1,93 @@
+@import "../../assets/scss/variables";
+@import "../../assets/scss/mixins";
+
+.header {
+  display: inline-flex;
+  height: 40px;
+  width: 100%;
+  position: relative;
+  .left {
+    height: 40px;
+    position: absolute;
+    svg {
+      &:nth-child(1) {
+        height: 20px;
+        margin-left: 20px;
+        margin-top: 20px;
+        width: 20px;
+      }
+      &:nth-child(2) {
+        height: 16px;
+        margin-left: 46px;
+        margin-top: 24px;
+        width: 110px;
+      }
+    }
+  }
+  .right1 {
+    height: 40px;
+    position: absolute;
+    right: 0;
+    svg {
+      &:nth-child(1) {
+        height: 16px;
+        margin-right: 12px;
+        margin-top: 24px;
+        width: 16px;
+      }
+      &:nth-child(2) {
+        height: 16px;
+        margin-right: 12px;
+        margin-top: 24px;
+        width: 16px;
+      }
+    }
+    img {
+      border-radius: 50%;
+      cursor: pointer;
+      margin: -10px 50px 0 0;
+      right: 0;
+      width: 20px;
+    }
+  }
+  .right2 {
+    display: none;
+    height: 40px;
+    position: absolute;
+    right: 0;
+    svg {
+        height: 16px;
+        margin-right: 12px;
+        margin-top: 2px;
+        width: 16px;
+
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .header {
+    display: none;
+  }
+}
+
+.logout{
+  @include flexbox;
+  padding-right: rem(16);
+  margin-top: rem(20);
+}
+
+.logoutText{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(14);
+  padding-left: rem(6);
+}
+
+a.logoutText{
+  font-family: $font-family-Open-Sans;
+  text-decoration: none;
+  &:hover{
+    color: $dark-grey;
+  }
+}

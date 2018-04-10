@@ -1,0 +1,101 @@
+@import '../../../../assets/scss/searchbar';
+@import "../../../../assets/scss/overlay";
+@import '../../../../assets/scss/dashlayout';
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/sidemenu';
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/header';
+@import '../../../users/components/users/users.component';
+//@import "../../../content/components/content/content.component";
+//@import "../../../comments/components/comments/comments.component";
+
+.navbar-nav {
+  @include flex-direction(row) ;
+}
+
+.header {
+  @include justify-content(space-between);
+}
+
+.test {
+  position: absolute;
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  height: 100%;
+  min-height: 100%;
+}
+
+.sidemenu {
+  top:rem(125);
+}
+
+.searchbar {
+  h1 {
+    margin-left: 0 !important;
+  }
+}
+
+.container{
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  position: absolute;
+  margin: 0;
+  top: 0;
+  max-width: 100%;
+  height: inherit;
+}
+gridster {
+  width: 100%;
+  min-height: 100vh;
+  height: 150vh;
+  background: transparent;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+}
+.grid-item--height4 {height: 100%;
+  overflow-y: scroll;}
+.grid-item--height5 {height: rem(813);}
+.grid-item--width1  {width: 100%;}
+
+.grid-item {
+  margin-left: 0;
+}
+app-masonry {
+  align-content: space-between;
+  height: 366px !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+  appMasonryItem {
+    position: relative;
+    .col-6 {
+      margin-top: 8px !important;
+    }
+    .row .latest-comment{span{
+      height: 20px;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }}
+  }
+}
+
+.hero-grid__item img {
+  height: 163px;
+  width: auto;
+}
+.description {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background-color: #EFF0F3;
+  height: 1.49625rem;
+  font-size: 0.75rem;
+  line-height: 1.0625rem;
+  padding: 0.1875rem 0.5rem 0 0.5rem;
+  margin: 0;
+  width: rem(245);
+  p{
+    padding: rem(2);
+    width: auto;
+  }
+}

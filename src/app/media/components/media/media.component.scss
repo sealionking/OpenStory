@@ -1,0 +1,57 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+@import "../../../../assets/scss/searchbar";
+@import "../../../../assets/scss/filter";
+@import "../../../../assets/scss/imagegrid";
+@import "../../../../assets/scss/overlay";
+
+.right-container {
+  margin: rem(0) rem(44) rem(52) rem(92);
+  position: relative;
+  top: 0;
+}
+
+.filter {
+  margin-left: rem(8);
+  width: calc(100% - 14px);
+}
+
+.searchbar{
+  h1{
+    margin-left: rem(7);
+  }
+  .search {
+    svg {
+      right: rem(5);
+    }
+  }
+}
+app-masonry {
+  //margin-left: rem(12);
+  //margin-right: rem(-16);
+  img {
+    max-height: rem(600);
+    width: 100%;
+  }
+}
+
+appMasonryItem {
+  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.15);
+  border-radius: rem(2);
+}
+
+.overlay {
+  width: 100%;
+}
+button {
+  background-color: $green; /* Green */
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 8px;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+}

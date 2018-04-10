@@ -1,0 +1,126 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+@import "../../../../assets/scss/filter";
+@import "../../../../assets/scss/overlay";
+@import "../../../../assets/scss/searchbar";
+
+.right-container {
+  margin: rem(0) rem(44) rem(52) rem(92);
+  position: relative;
+  top: 0;
+}
+
+.filter {
+  margin-left: rem(8);
+  width: calc(100% - 14px);
+}
+
+.overlay {
+  height: calc(100% - 16px);
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  width: calc(100% - 5px);
+  div {
+    column-gap: rem(40);
+    -moz-column-gap: rem(40); /* Firefox */
+    -webkit-column-gap: rem(40); /* Chrome, Safari, Opera */
+  }
+}
+
+.box {
+  padding: rem(8);
+  margin: 0;
+  &:hover {
+    .overlay {
+      background-color: rgba(51, 59, 80, 0.8);
+      opacity: 1;
+      z-index: 1;
+      height: calc(100% - 16px);
+    }
+  }
+}
+.box .inner {
+  background-color: $white;
+  border-radius: rem(2) rem(2) 0 0;
+  font-weight: 600 !important;
+  height: rem(190);
+  min-height: 100%;
+  padding: rem(15) 0 0 rem(20);
+  position: relative;
+  .title-comments {
+    color: $green;
+    font-size: rem(16);
+    max-height: rem(20);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 80%;
+  }
+  svg {
+    height: rem(20);
+    position: absolute;
+    right: rem(20);
+    top: rem(20);
+    width: rem(20);
+  }
+  .description {
+    color: $text-color2;
+    font-size: rem(12);
+    font-weight: 700;
+    line-height: rem(17);
+    margin-top: rem(7);
+    span.date{
+      white-space: nowrap;
+    }
+  }
+  .content {
+    color: $text-color2;
+    display: -webkit-box;
+    font-size: rem(14);
+    height: rem(60);
+    line-height: rem(19);
+    margin-right: rem(20);
+    margin-top: rem(10);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  hr {
+    margin-bottom: rem(20);
+    margin-left: rem(-20);
+    position: relative;
+  }
+  .status {
+    border-top: rem(1) solid $ligth-grey;
+    bottom: rem(0);
+    height: rem(40);
+    left: rem(0);
+    position: absolute;
+    width: 100%;
+    p {
+      color: $text-color2;
+      font-size: rem(14);
+      line-height: rem(40);
+      padding-left: rem(20);
+      position: relative;
+    }
+  }
+}
+
+@media only screen and (max-width: rem(500)){
+  .row {
+    margin-top: -29px;
+    width: 100%;
+    .col-sm-12 {
+      padding: 0;
+      .overlay{
+        width: 100%;
+      }
+    }
+  }
+}

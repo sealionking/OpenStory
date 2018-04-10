@@ -1,0 +1,46 @@
+@import '../scss/variables';
+@import '../scss/mixins';
+
+.user-view {
+  margin: 0 rem(4) 0 rem(4);
+  padding: 0;
+  @media (min-width: 501px) {
+    margin: rem(15) 0 0 rem(21);
+  }
+  .user-avatar {
+    min-height: 321px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #53D79F;
+    align-items: center;
+    padding: rem(30) 0 0 0;
+    @media (min-width: 768px) {
+      padding: rem(80) 0 0 0;
+    }
+    .avatar-edit {
+      height: rem(40);
+      width: rem(40);
+      background-color: #FFFFFF;
+      position: absolute;
+      z-index: 3;  
+      align-self: flex-end;
+      margin-left: rem(108);
+      border-radius: 50%;
+      -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+      box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75); 
+      @media (min-width: 768px) and (max-width: 1020px) {
+        margin-left: rem(87);
+        margin-top: rem(5);
+      }
+      svg {
+        margin: rem(11);
+        height: rem(17);
+        width: rem(18); 
+      }
+    }
+  }
+}
+
+

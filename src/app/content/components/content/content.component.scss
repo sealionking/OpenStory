@@ -1,0 +1,52 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+@import "../../../../assets/scss/sidemenu";
+@import "../../../../assets/scss/overlay";
+@import "../../../../assets/scss/searchbar";
+@import "../../../../assets/scss/imagegrid";
+@import "../../../../assets/scss/filter";
+
+app-masonry {
+  margin-left: rem(12);
+  margin-right: rem(-8);
+}
+
+a {
+  cursor: pointer;
+}
+
+appMasonryItem {
+  box-shadow: 2px 2px 2px 0 rgba(0,0,0,0.15);
+  border-radius: rem(2);
+}
+
+.navbar-nav {
+  @include flex-direction(row) ;
+}
+
+.header {
+  @include justify-content(space-between);
+}
+
+#main-container {
+  height: auto !important;
+}
+
+.container {
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  position: absolute;
+  margin: 0;
+  max-width: 100%;
+  height: inherit !important;
+  //min-height: 100%;
+  .slideP{
+    background: #D4D7DD;
+    height: 40px;
+  }
+}
+
+@media only screen and (max-width: 31.25rem) {
+  .searchbar .add-content {
+    padding-left: 140px;
+  }
+}

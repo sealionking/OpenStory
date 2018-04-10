@@ -1,0 +1,381 @@
+<section class="right-container">
+    <div class="searchbar">
+        <div class="row align-items-left">
+            <h1>Dashboard</h1>
+            <!--<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
+              <!--<style type="text/css">-->
+                <!--.str{fill:#B1B4BE;;}-->
+                <!--.st1{fill:none;}-->
+              <!--</style>-->
+              <!--<g id="Mask">-->
+                <!--<path id="path-1_1_" class="str" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>-->
+              <!--</g>-->
+              <!--<g id="_xD83C__xDFA8_color-_x2F_1-white">-->
+                <!--<rect id="Rectangle-27" class="st1" width="16" height="16"/>-->
+              <!--</g>-->
+            <!--</svg>-->
+            <!--<p>Edit Dashboard</p>-->
+        </div>
+        <!--<div class="search">-->
+            <!--<span class="click-here" style="cursor:pointer">-->
+              <!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 18 18" style="enable-background:new 0 0 18 18;" xml:space="preserve">-->
+                <!--<style type="text/css">-->
+                  <!--.search0 {-->
+                      <!--fill: #4A5269;-->
+                  <!--}-->
+                <!--</style>-->
+                <!--<g id="_xD83C__xDF53_icon-_x2F_-search" transform="translate(-1.000000, -1.000000)">-->
+                  <!--<g id="_xD83C__xDFA8_color-_x2F_-green-copy-4" transform="translate(1.000000, 1.000000)">-->
+                    <!--<g id="Mask">-->
+                      <!--<path id="path-1_1_" class="search0" d="M11.7,10.3l5.3,5.3c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0l-5.3-5.3C9.2,12.6,7.9,13,6.4,13-->
+                        <!--C2.8,12.9-0.1,10,0,6.4S3-0.1,6.6,0s6.4,3,6.4,6.6C13,8,12.5,9.3,11.7,10.3z M6.5,11C9,11,11,9,11,6.5S9,2,6.5,2S2,4,2,6.5-->
+                        <!--S4,11,6.5,11z" />-->
+                    <!--</g>-->
+                  <!--</g>-->
+                <!--</g>-->
+              <!--</svg>-->
+            <!--</span>-->
+        <!--</div>-->
+    </div>
+    <gridster [options]="options">
+        <gridster-item [item]="item" *ngFor="let item of dashboard">
+            <div class="mini-tittle">
+                <h5>Users</h5>
+                <div>
+ <span class="media-expand m1">
+                  <img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <app-masonry [options]="masonryOptions" [useImagesLoaded]="true" class="hero">
+                <appMasonryItem class="col-xl-12 col-lg-12 col-md-12 col-sm-12 box" *ngFor="let myUsers of userList" >
+                    <div class="overlay">
+                        <a class="view" href="">VIEW</a>
+                        <div class="checkbox">
+                            <input id="checkbox" type="checkbox">
+                            <label for="checkbox"></label>
+                        </div>
+                        <div class="options">
+                            <a href="#"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                 <style type="text/css">
+                   .st0{fill:#FFFFFF;}
+                 </style>
+                 <g id="Mask">
+                   <path id="path-1_1_" class="st0" d="M7,4h4c0.3,0,0.5,0,0.8,0.1c2.7,0.4,4.6,3,4.1,5.7l-1,6.2h-1v-5c0-1.7-1.3-3-3-3H7v3.9L0,6l7-6
+                     V4z"/>
+                 </g>
+                 </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>
+                      </g>
+                      <g id="_xD83C__xDFA8_color-_x2F_1-white">
+                        <rect id="Rectangle-27" class="st1" width="16" height="16"/>
+                      </g>
+                      </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M1,3c0-0.6,0.4-1,1-1h3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2h3c0.6,0,1,0.4,1,1v1H1V3z M7,1   C6.4,1,6,1.4,6,2h4c0-0.6-0.4-1-1-1H7z M5,5H2v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5h-3v7.5c0,0.3-0.2,0.5-0.5,0.5l0,0   c-0.3,0-0.5-0.2-0.5-0.5V5H6v7.5C6,12.8,5.8,13,5.5,13l0,0C5.2,13,5,12.8,5,12.5V5z"/>
+                      </g>
+                      <rect y="0" class="st1" width="16" height="16"/>
+                      </svg></a>
+                        </div>
+                    </div>
+                    <div class="col comment-container">
+                        <div class="row comment">
+                            <div class="col-2"><img *ngIf="myUsers.userPicture != ''; else defaultAvatar" class="avatar" src="{{myUsers.userPicture}}" alt="profile image"/>
+                                <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg" alt="profile image"/></ng-template></div>
+                            <div class="col-10">
+                                <!--<div class="d-flex justify-content-between"><span class="author">{{myComments.username}}</span></div>-->
+                                <div class="d-flex"><span class="tittle-article">{{myUsers.name}}</span><span class="comment-date">{{myUsers.created | date}}</span></div>
+                                <div class="d-flex latest-comment">
+                                    <span>{{myUsers.mail}}</span>
+                                </div>
+                                <div class="d-flex latest-comment" *ngFor="let role of myUsers.roles; let i = index">
+                                    <span *ngIf="role.id && i <= 1; else elseLabel">{{role.label}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </appMasonryItem>
+            </app-masonry>
+        </gridster-item>
+        <gridster-item [item]="item" *ngFor="let item of dashboard">
+            <div class="mini-tittle">
+                <h5>Users Comments</h5>
+                <div>
+                <span class="media-expand m1">
+<img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <app-masonry [options]="masonryOptions" [useImagesLoaded]="true" class="hero">
+            <appMasonryItem class="col-xl-12 col-lg-12 col-md-12 col-sm-12 box" *ngFor="let myComments of commentsList" >
+                    <div class="overlay">
+                        <a class="view" href="http:\\{{myComments.viewUrl}}">VIEW</a>
+                        <div class="checkbox">
+                            <input id="checkbox" type="checkbox">
+                            <label for="checkbox"></label>
+                        </div>
+                        <div class="options">
+                            <a href="#"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                 <style type="text/css">
+                   .st0{fill:#FFFFFF;}
+                 </style>
+                 <g id="Mask">
+                   <path id="path-1_1_" class="st0" d="M7,4h4c0.3,0,0.5,0,0.8,0.1c2.7,0.4,4.6,3,4.1,5.7l-1,6.2h-1v-5c0-1.7-1.3-3-3-3H7v3.9L0,6l7-6
+                     V4z"/>
+                 </g>
+                 </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>
+                      </g>
+                      <g id="_xD83C__xDFA8_color-_x2F_1-white">
+                        <rect id="Rectangle-27" class="st1" width="16" height="16"/>
+                      </g>
+                      </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M1,3c0-0.6,0.4-1,1-1h3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2h3c0.6,0,1,0.4,1,1v1H1V3z M7,1   C6.4,1,6,1.4,6,2h4c0-0.6-0.4-1-1-1H7z M5,5H2v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5h-3v7.5c0,0.3-0.2,0.5-0.5,0.5l0,0   c-0.3,0-0.5-0.2-0.5-0.5V5H6v7.5C6,12.8,5.8,13,5.5,13l0,0C5.2,13,5,12.8,5,12.5V5z"/>
+                      </g>
+                      <rect y="0" class="st1" width="16" height="16"/>
+                      </svg></a>
+                        </div>
+                    </div>
+                <div class="col comment-container">
+                    <div class="row comment">
+                        <div class="col-2" style="padding-right: 0"><img *ngIf="myComments.username.userPicture != ''; else defaultAvatar" class="comment-avatar" src="{{myComments.username.userPicture}}" alt="profile image"/>
+                            <ng-template #defaultAvatar><img class="comment-avatar" src="../../../../assets/images/avatar.svg" alt="profile image"/></ng-template></div>
+                        <div class="col-10" style="padding-left: 0">
+                            <div class="d-flex justify-content-between"><span class="author">{{myComments.username.name}}</span></div>
+                            <div class="d-flex"><span class="tittle-article">{{myComments.subject}}</span><span class="comment-date">{{myComments.created * 1000 | date}}</span></div>
+                            <div class="d-flex latest-comment">
+                    <span [innerHTML]="myComments.commentBody">{{myComments.commentBody}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </appMasonryItem>
+            </app-masonry>
+        </gridster-item>
+        <gridster-item [item]="item" *ngFor="let item of media">
+            <div class="mini-tittle">
+                <h5>Media gallery</h5>
+                <div>
+               <span class="media-expand m1">
+<img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <app-masonry [options]="masonryOptions" [useImagesLoaded]="true" class="hero">
+                <!--<ng4-loading-spinner [threshold]="5000" [loadingText]="'Please wait...'" [zIndex]="9999"></ng4-loading-spinner>-->
+                <appMasonryItem class="hero-grid__item"  *ngFor="let myMedia of tmpMedia">
+                    <div class="col-6">
+                    <img src="{{myMedia.uri}}">
+                    <!--<div class="overlay">-->
+                        <!--<a class="view" href="#">VIEW</a>-->
+                        <!--<div class="updates">-->
+                            <!--<p class="hero__tagline">{{myMedia.filename}}</p>-->
+                            <!--<p class="hero__author">By {{myMedia.username}} on {{myMedia.created * 1000 | date}}</p>-->
+                        <!--</div>-->
+                        <!--<div class="checkbox">-->
+                            <!--<input id="checkbox1" type="checkbox">-->
+                            <!--<label for="checkbox1"></label>-->
+                        <!--</div>-->
+                        <!--<div class="options">-->
+                            <!--<a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
+                                                <!--<style type="text/css">-->
+                                                  <!--.st0{fill:#FFFFFF;}-->
+                                                  <!--.st1{fill:none;}-->
+                                                <!--</style>-->
+                                                <!--<g id="Mask">-->
+                                                  <!--<path id="path-1_1_" class="st0" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>-->
+                                                <!--</g>-->
+                                                <!--<g id="_xD83C__xDFA8_color-_x2F_1-white">-->
+                                                  <!--<rect id="Rectangle-27" class="st1" width="16" height="16"/>-->
+                                                <!--</g>-->
+                                                <!--</svg></a>-->
+                            <!--<a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
+                                                <!--<style type="text/css">-->
+                                                  <!--.st0{fill:#FFFFFF;}-->
+                                                  <!--.st1{fill:none;}-->
+                                                <!--</style>-->
+                                                <!--<g id="Mask">-->
+                                                  <!--<path id="path-1_1_" class="st0" d="M1,3c0-0.6,0.4-1,1-1h3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2h3c0.6,0,1,0.4,1,1v1H1V3z M7,1   C6.4,1,6,1.4,6,2h4c0-0.6-0.4-1-1-1H7z M5,5H2v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5h-3v7.5c0,0.3-0.2,0.5-0.5,0.5l0,0   c-0.3,0-0.5-0.2-0.5-0.5V5H6v7.5C6,12.8,5.8,13,5.5,13l0,0C5.2,13,5,12.8,5,12.5V5z"/>-->
+                                                <!--</g>-->
+                                                <!--<rect y="0" class="st1" width="16" height="16"/>-->
+                                                <!--</svg></a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="description">
+                        <p class="hero__tagline">{{myMedia.filename }}
+                        </p>
+                    </div>
+                        <div class="description">
+                        <p class="hero__author">By {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}
+                        </p>
+                    </div>
+                    </div>
+                </appMasonryItem>
+            </app-masonry>
+        </gridster-item>
+        <gridster-item [item]="item" *ngFor="let item of dashboard">
+            <div class="mini-tittle">
+                <h5>Content</h5>
+                <div>
+                <span class="media-expand m1">
+                    <img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <app-masonry [options]="masonryOptions" [useImagesLoaded]="true" class="hero">
+                <appMasonryItem class="col-xl-12 col-lg-12 col-md-12 col-sm-12 box" *ngFor="let myContent of contentList" >
+                    <div class="overlay">
+                        <a class="view" href="http:\\{{myContent.viewUrl}}">VIEW</a>
+                        <div class="checkbox">
+                            <input id="checkbox" type="checkbox">
+                            <label for="checkbox"></label>
+                        </div>
+                        <div class="options">
+                            <a href="#"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                    viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                 <style type="text/css">
+                   .st0{fill:#FFFFFF;}
+                 </style>
+                 <g id="Mask">
+                   <path id="path-1_1_" class="st0" d="M7,4h4c0.3,0,0.5,0,0.8,0.1c2.7,0.4,4.6,3,4.1,5.7l-1,6.2h-1v-5c0-1.7-1.3-3-3-3H7v3.9L0,6l7-6
+                     V4z"/>
+                 </g>
+                 </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>
+                      </g>
+                      <g id="_xD83C__xDFA8_color-_x2F_1-white">
+                        <rect id="Rectangle-27" class="st1" width="16" height="16"/>
+                      </g>
+                      </svg></a>
+                            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+                      <style type="text/css">
+                        .st0{fill:#FFFFFF;}
+                        .st1{fill:none;}
+                      </style>
+                      <g id="Mask">
+                        <path id="path-1_1_" class="st0" d="M1,3c0-0.6,0.4-1,1-1h3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2h3c0.6,0,1,0.4,1,1v1H1V3z M7,1   C6.4,1,6,1.4,6,2h4c0-0.6-0.4-1-1-1H7z M5,5H2v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5h-3v7.5c0,0.3-0.2,0.5-0.5,0.5l0,0   c-0.3,0-0.5-0.2-0.5-0.5V5H6v7.5C6,12.8,5.8,13,5.5,13l0,0C5.2,13,5,12.8,5,12.5V5z"/>
+                      </g>
+                      <rect y="0" class="st1" width="16" height="16"/>
+                      </svg></a>
+                        </div>
+                    </div>
+                    <div class="col comment-container">
+                        <div class="row comment">
+                            <div class="col-2">
+                                <img *ngIf="myContent.username.userPicture != ''; else defaultAvatar" class="avatar" src="{{myContent.username.userPicture}}" alt="profile image"/>
+                                <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg" alt="profile image"/></ng-template></div>
+                            <div class="col-10">
+                                <div class="d-flex justify-content-between"><span class="author">{{myContent.username.name}}</span></div>
+                                <div class="d-flex"><span class="tittle-article">{{myContent.title}}</span><span class="comment-date">{{myContent.created * 1000 | date}}</span></div>
+                                <div class="d-flex latest-comment">
+                                    <span [innerHTML]="myContent.body">{{myContent.body}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </appMasonryItem>
+            </app-masonry>
+        </gridster-item>
+        <gridster-item [item]="item" *ngFor="let item of activeUsers">
+            <div class="mini-tittle">
+                <h5>Active Users</h5>
+                <div>
+                  <span class="media-expand m1">
+<img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <app-masonry [options]="masonryOptions" [useImagesLoaded]="true" class="hero">
+                <appMasonryItem class="users-statistics">
+                        <div class="row">
+                            <div class="col-3"><span>{{this.userNumber}}</span></div>
+                            <div class="col-3 text-center peeps">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_2_1_" x="0px" y="0px" viewBox="0 0 48 49" style="enable-background:new 0 0 48 49;" xml:space="preserve">
+                    <style type="text/css">
+                      .st0{fill:#53D79F;}
+                    </style>
+                    <path id="path-1_1_" class="st0" d="M18.7,30.4c-2.8-1.7-4.8-4.6-5.1-8l-0.7-9.6C12.5,6.6,17,1.3,23.1,0.8c0.3,0,0.6,0,0.9,0  c6.1,0,11.1,4.9,11.1,11c0,0.3-0.8,10.4-0.8,10.4c-0.3,3.4-2.2,6.4-5.1,8l0.7,1.4l16.2,6.9c1.1,0.5,1.8,1.5,1.8,2.7l-0.1,7.5H-0.1  v-7.4c0-1.2,0.7-2.3,1.8-2.7L18,31.9L18.7,30.4z"></path>
+                  </svg>
+                            </div>
+                            <div class="col-6">Active users on site</div>
+                        </div>
+
+                </appMasonryItem>
+            </app-masonry>
+        </gridster-item>
+        <gridster-item [item]="canvasChart">
+            <div class="mini-tittle">
+                <h5>All user roles</h5>
+                <div>
+                <span class="media-expand m1">
+                  <img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <div>
+                <canvas id="users">{{chartUsers}}</canvas>
+            </div>
+
+        </gridster-item>
+        <gridster-item [item]="canvasChart">
+            <div class="mini-tittle">
+                <h5>All content types</h5>
+                <div>
+                <span class="media-expand m1">
+                  <img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <div>
+                <canvas id="content">{{chartContent}}</canvas>
+            </div>
+
+        </gridster-item>
+        <gridster-item [item]="canvasChart">
+            <div class="mini-tittle">
+                <h5>All media types</h5>
+                <div>
+                <span class="media-expand m1">
+                  <img src="../../../../assets/images/drag.png">
+                </span>
+                </div>
+            </div>
+            <div>
+                <canvas id="media">{{chartContent}}</canvas>
+            </div>
+
+        </gridster-item>
+    </gridster>
+
+</section>

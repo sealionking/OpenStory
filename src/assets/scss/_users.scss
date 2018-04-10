@@ -1,0 +1,34 @@
+@import 'variables';
+@import 'mixins';
+
+.slideP{
+  background-color: $ligth-grey;
+  display: none;
+  height: rem(40);
+  padding: 0 rem(45);
+  width: calc(100% - 50px);
+  &.slick-slider {
+    display: block;
+  }
+}
+
+.prof1{
+  height: rem(40);
+  overflow: hidden;
+  padding-top: rem(8.97);
+  width: rem(80);
+}
+
+#name{
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: 12px;
+  padding-left: 8px;
+  padding-top: 3px;
+  text-decoration: none;
+}
+
+.slick-initialized .slick-slide{
+  @include flexbox;
+  justify-content: center;
+}

@@ -1,0 +1,161 @@
+// Animation
+@mixin animation ($animation, $duration, $timing, $iteration, $delay: 0s, $fill: none) {
+  -webkit-animation-delay: $delay;
+  -webkit-animation-duration: $duration;
+  -webkit-animation-fill-mode: $fill;
+  -webkit-animation-iteration-count: $iteration;
+  -webkit-animation-name: $animation;
+  -webkit-animation-timing-function: $timing;
+
+  -moz-animation-delay: $delay;
+  -moz-animation-duration: $duration;
+  -moz-animation-fill-mode: $fill;
+  -moz-animation-iteration-count: $iteration;
+  -moz-animation-name: $animation;
+  -moz-animation-timing-function: $timing;
+
+  animation-delay: $delay;
+  animation-duration: $duration;
+  animation-fill-mode: $fill;
+  animation-iteration-count: $iteration;
+  animation-name: $animation;
+  animation-timing-function: $timing;
+}
+
+@mixin border-radius($radius) {
+  border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+}
+
+$baseFontSize : 16;
+@function rem($pixels, $context: $baseFontSize) {
+  @if (unitless($pixels)) {
+    $pixels: $pixels * 1px;
+  }
+
+  @if (unitless($context)) {
+    $context: $context * 1px;
+  }
+
+  @return $pixels / $context * 1rem;
+}
+// Flexbox.
+@mixin flexbox {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+@mixin flex-direction($direction: row) {
+  -webkit-box-orient: $direction;
+  -webkit-box-direction: $direction;
+  -webkit-flex-direction: $direction;
+  -ms-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+@mixin flex-wrap($wrap: nowrap) {
+  -webkit-flex-wrap: $wrap;
+  -moz-flex-wrap: $wrap;
+  -ms-flex-wrap: $wrap;
+  flex-wrap: $wrap;
+}
+
+@mixin justify-content($justify: flex-start) {
+  -webkit-box-pack: $justify;
+  -webkit-justify-content: $justify;
+  -ms-justify-content: $justify;
+  -ms-flex-pack: $justify;
+  justify-content: $justify;
+}
+
+@mixin align-items($align: stretch) {
+  -webkit-align-items: $align;
+  -ms-align-items: $align;
+  -ms-flex-align: $align;
+  align-items: $align;
+}
+
+// Apply auto to left-right margins.
+@mixin push--auto {
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+// Keyframes
+@mixin keyframe ($animation-name) {
+  @-webkit-keyframes  #{$animation-name} {
+    @content;
+  }
+  @-moz-keyframes  #{$animation-name} {
+    @content;
+  }
+  @keyframes  #{$animation-name} {
+    @content;
+  }
+}
+
+// Transform
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}
+
+// Transform Origin
+@mixin transform-origin ($origin) {
+  -webkit-transform-origin: $origin;
+  -moz-transform-origin: $origin;
+  -ms-transform-origin: $origin;
+  transform-origin: $origin;
+}
+
+// Overriding the transition delay mixin from the Bootstrap assets.
+@mixin transition-delay($transition-delay...) {
+  -webkit-transition-delay: $transition-delay;
+  transition-delay: $transition-delay;
+}
+
+// Orange button.
+@mixin button-orange {
+  @include border-radius(rem(3px));
+  background-color: $orange;
+  color: $white;
+  display: inline-block;
+  font: {
+    family: $montserrat;
+    size: rem(14px);
+  }
+  line-height: rem(18px);
+  margin-top: rem(20px);
+  padding: rem(6px) rem(20px);
+  text-align: center;
+}
+
+@mixin transition($transition...) {
+  -moz-transition:    $transition;
+  -o-transition:      $transition;
+  -webkit-transition: $transition;
+  transition:         $transition;
+}
+
+//user select mixin
+@mixin user-select{
+  user-select: none; 
+  -moz-user-select: none;     
+  -ms-user-select: none;  
+  -webkit-user-select: none; 
+}
+
+//box-shadow
+@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
+
+  -webkit-box-shadow:$top $left $blur $color #{$inset};
+  -moz-box-shadow:$top $left $blur $color #{$inset};
+  box-shadow:$top $left $blur $color #{$inset};
+}

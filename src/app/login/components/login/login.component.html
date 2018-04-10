@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <div class="row">
+    <section class="col-lg-8 row section-left ">
+      <div class="col-1"></div>
+      <div class="col-11 flex-column custom-story">
+        <h1 class="d-flex">Hello</h1>
+        <p class="d-block">To protect your OpenStory account, as well as the security of the platforms on which OpenStory is installed, keep your password confidential. You are responsible for the activity that happens on or through the Platform’s account.
+        </p><br>
+        <p> Start your demo by inserting the following credentials:
+          <br>
+          Name: <b>demo</b><br>
+          Password: <b>demo</b></p>
+          <br>
+         <p> Log in to your demo account and start editing like a pro!</p>
+      </div>
+      <p class="footer-left">© 2018 Open Story All Rights Reserved</p>
+    </section>
+    <section class="col-lg-4 section-right ">
+      <div class="container">
+        <div class="d-flex justify-content-between login-form ">
+          <div class="col">
+            <img class="img-fluid logo-open-story" src="../../../assets/images/logo.svg">
+          </div>
+          <div class="col-9 name-logo">
+            <img class="img-fluid" src="../../../assets/images/logo-text.svg">
+          </div>
+        </div>
+        <div class="col pl-5" >
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            <label class="log-in">LOG IN</label>
+            <div class="form-container">
+            <span class="input input--name">
+              <input class="input__field" type="text" name="name" [(ngModel)]="model.name" #name="ngModel" placeholder="Name" required  />
+              <label class="input__label">
+		            <span class="input__label-content"></span>
+              </label>
+              <span class="input__focuslabel">
+              </span>
+            </span>
+              <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+            </div>
+            <div class="form-container">
+            <span class="input input--password">
+              <input class="input__field" type="password" name="password" [(ngModel)]="model.password" #password="ngModel" placeholder="Password" required />
+              <label class="input__label">
+		          <span class="input__label-content"></span>
+              </label>
+                <span class="input__focuslabel">
+                  <span class="input__focuslabel-content" aria-hidden="true"></span>
+              </span>
+            </span>
+              <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+            </div>
+            <div class="d-flex justify-content-between">
+            </div>
+            <button type="submit" class="btn btn-lg btn-block btn-login" [disabled]="!f.form.valid">Log in</button>
+          </form>
+        </div>
+      </div>
+      <p class="footer-right">Privacy Policy & Cookie Information | Terms of use</p>
+    </section>
+    <div class="col-12 text-center w-100 m-0 footer-frontpage">
+      <div class="col text-left">© 2018 Open Story All Rights Reserved</div>
+      <div class="col text-right"><a href="https://openstory.io/" target="_blank">Privacy Policy & Cookie Information | Terms of use</a></div>
+    </div>
+  </div>
+</div>
