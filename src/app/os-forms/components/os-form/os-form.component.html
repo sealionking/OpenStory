@@ -1,0 +1,403 @@
+<div>
+    <form [formGroup]="configForm" (ngSubmit)="onSubmit(configForm.value, configForm.valid)">
+        <!--Value: {{ configForm.value | json }}-->
+        <div *ngFor="let fData of formData">
+            <div [ngSwitch]="fData.type" class="form-group">
+
+                <!--Text field type-->
+                <ng-container *ngSwitchCase="'text'">
+                    <div class="form-group form-group-textfield">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true && fData.id != 'title'">*</span>
+                        <div [formArrayName]="fData.id" class="textfields">
+                            <div class="field textfield"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <span class="prefix" *ngIf="fData.prefix" [innerHTML]="fData.prefix"></span>
+                                <input type="text"
+                                       [placeholder]="fData.placeholder"
+                                       [id]="fData.id"
+                                       [formControlName]="i"
+                                       [attr.maxlength]="fData.maxLength"
+                                       [tooltip]="fData.description" placement="right"
+                                >
+                                <span class="suffix" *ngIf="fData.suffix" [innerHTML]="fData.suffix"></span>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <span class="add btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id)">Add new item
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--Password field type-->
+                <ng-container *ngSwitchCase="'password'">
+                    <div class="form-group form-group-password">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id">
+                            <div class="field textfield"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <input type="password"
+                                       [placeholder]="fData.placeholder"
+                                       [id]="fData.id"
+                                       [formControlName]="i"
+                                       [attr.maxlength]="fData.maxLength"
+                                       [tooltip]="fData.description" placement="right"
+                                >
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                              (click)="addNewElement(fData.id)">Add new item
+                        </span>
+                    </div>
+                </ng-container>
+
+                <!--Select field type-->
+                <ng-container *ngSwitchCase="'select'">
+                    <div class="form-group form-group-select">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <ng-select
+                                class="custom"
+                                [items]="fData.options"
+                                bindLabel="name"
+                                bindValue="id"
+                                [searchable]="false"
+                                [placeholder]="fData.placeholder"
+                                [formControlName]="fData.id"
+                                [multiple]="fData.multiValues != 1"
+                                [maxSelectedItems]="fData.multiValues != -1 ? fData.multiValues : 999"
+                        >
+                        </ng-select>
+                        <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                            <small class="text-danger"
+                                   *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                                        formSubmitted === validator.onFormSubmit">
+                                {{validator.errorMsg}}
+                            </small>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
+                <!--Text-area field type-->
+                <ng-container *ngSwitchCase="'text-area'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id">
+                            <div *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <textarea type="text"
+                                          [placeholder]="fData.placeholder"
+                                          [id]="fData.id"
+                                          [formControlName]="i"
+                                          [attr.maxlength]="fData.maxLength"
+                                          [tooltip]="fData.description"
+                                ></textarea>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                              (click)="addNewElement(fData.id)">Add new item
+                        </span>
+                    </div>
+                </ng-container>
+
+                <!--Text-summary field type-->
+                <ng-container *ngSwitchCase="'text-summary'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id">
+                            <div *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <app-text-summary [placeholder]="fData.placeholder"
+                                                  [maxLength]="fData.maxLength"
+                                                  [description]="fData.description"
+                                                  [formControlName]="i"
+                                                  [id]="fData.id"
+                                >
+                                </app-text-summary>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                                            formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                            </div>
+                            <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id)">Add new item
+                             </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--Text-editor field type-->
+                <ng-container *ngSwitchCase="'text-editor'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id">
+                            <div *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <app-text-editor [placeholder]="fData.placeholder"
+                                                 [maxLength]="fData.maxLength"
+                                                 [description]="fData.description"
+                                                 [formControlName]="i"
+                                                 [id]="fData.id"
+
+                                >
+                                </app-text-editor>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                              (click)="addNewElement(fData.id)">Add new item
+                        </span>
+                    </div>
+                </ng-container>
+
+                <!--Number field type-->
+                <ng-container *ngSwitchCase="'number'">
+                    <div class="form-group {{fData.id}} form-group-number">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div class="numberfields" [formArrayName]="fData.id">
+                            <div class="numberfield"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <span class="prefix" *ngIf="fData.prefix" [innerHTML]="fData.prefix"></span>
+                                <input type="number"
+                                       [placeholder]="fData.placeholder"
+                                       [id]="fData.id"
+                                       [formControlName]="i"
+                                       [attr.maxlength]="fData.maxLength"
+                                       [step]="fData.decimals !== null ? fData.step : '1'"
+                                       [tooltip]="fData.description" placement="right"
+                                >
+                                <span class="suffix" *ngIf="fData.suffix" [innerHTML]="fData.suffix"></span>
+                                <span class="remove btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <span class="add btn btn-success" *ngIf="((fData.multiValues !== null &&
+                                fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id)">Add new item
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--Number slider field type-->
+                <ng-container *ngSwitchCase="'slider'">
+                    <div class="form-group slider">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id">
+                            <div *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <nouislider
+                                        [min]="fData.minimumValue"
+                                        [max]="fData.maximumValue"
+                                        [step]="fData.step"
+                                        [tooltips]="true"
+                                        [formControl]="valueData"
+                                ></nouislider>
+                                <span class="json-description" *ngIf="fData.description" [innerHTML]="fData.description"></span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                                            formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                            </div>
+                            <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id, 'slider')">Add new item
+                             </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--email field type-->
+                <ng-container *ngSwitchCase="'email'">
+                    <div class="form-group form-group-email">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div class="emailfields" [formArrayName]="fData.id">
+                            <div class="emailfield"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <input type="text"
+                                       [placeholder]="fData.placeholder"
+                                       [id]="fData.id"
+                                       [formControlName]="i"
+                                       [attr.maxlength]="fData.maxLength"
+                                       [tooltip]="fData.description" placement="right"
+                                >
+                                <span class="remove btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <span class="add btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id)">Add new item
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--URL field type-->
+                <ng-container *ngSwitchCase="'url'">
+                    <div class="form-group form-group-url">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div class="urlfields" [formArrayName]="fData.id">
+                            <div class="urlfield"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <app-url-field [placeholder]="fData.placeholder"
+                                               [description]="fData.description"
+                                               [urlTitleDisabled]="fData.urlTitleDisabled"
+                                               [formControlName]="i"
+                                               [id]="fData.id">
+                                </app-url-field>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                                            formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                            </div>
+                            <span class="btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id)">Add new item
+                             </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--Checkbox field type-->
+                <ng-container *ngSwitchCase="'checkbox'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <app-checkbox *ngFor="let check of fData.options"
+                                      [value]="check.id"
+                                      [label]="check.name"
+                                      [formControl]="configForm.controls[fData.id]"></app-checkbox>
+                        <span *ngIf="fData.description" [innerHTML]="fData.description"></span>
+                        <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                            <small class="text-danger"
+                                   *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                {{validator.errorMsg}}
+                            </small>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
+                <!--Radio field type-->
+                <ng-container *ngSwitchCase="'radio'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <app-radio-button *ngFor="let check of fData.options; let i = index"
+                                          [name]="fData.id"
+                                          [value]="check.id"
+                                          [label]="check.name"
+                                          [inputId]="i"
+                                          [formControlName]="fData.id"></app-radio-button>
+                        <span *ngIf="fData.description" [innerHTML]="fData.description"></span>
+                        <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                            <small class="text-danger"
+                                   *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                {{validator.errorMsg}}
+                            </small>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
+                <!--Unsupported Field-->
+                <ng-container *ngSwitchDefault>
+                    <label [for]="fData.id">{{ fData.label }}</label>
+                    <div class="unsupported-field">Unsupported Field</div>
+                </ng-container>
+
+            </div>
+        </div>
+        <div class="form-actions text-right">
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
+

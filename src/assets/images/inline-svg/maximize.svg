@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="maximize" x="0px" y="0px" viewBox="0 0 16 16" width="16" height="16" style="enable-background:new 0 0 16 16;" xml:space="preserve">
+  <style type="text/css">
+    #maximize .st7{fill:#D8D8D8;}
+    #maximize .st9{fill:none;}
+    #maximize .st8{fill:#EFF0F3;}
+    span.maximize:hover #maximize .st8{fill:#687086;}
+  </style>
+  <g>
+    <path id="path-1_1_" class="st7" d="M14,14v-3c0-0.6,0.4-1,1-1s1,0.4,1,1v3v1c0,0.6-0.4,1-1,1h-4c-0.6,0-1-0.4-1-1s0.4-1,1-1H14z    M2,14h3c0.6,0,1,0.4,1,1s-0.4,1-1,1H2H1c-0.6,0-1-0.4-1-1v-4c0-0.6,0.4-1,1-1s1,0.4,1,1V14z M14,2h-3c-0.6,0-1-0.4-1-1s0.4-1,1-1   h3h1c0.6,0,1,0.4,1,1v4c0,0.6-0.4,1-1,1s-1-0.4-1-1V2z M2,0h3c0.6,0,1,0.4,1,1S5.6,2,5,2H2v3c0,0.6-0.4,1-1,1S0,5.6,0,5V1   c0-0.6,0.4-1,1-1H2z"/>
+    <rect id="Rectangle-27" y="0" class="st9" width="16" height="16"/>
+    <g>
+      <path id="path-1_2_" class="st8" d="M14,14v-3c0-0.6,0.4-1,1-1s1,0.4,1,1v3v1c0,0.6-0.4,1-1,1h-4c-0.6,0-1-0.4-1-1s0.4-1,1-1H14z     M2,14h3c0.6,0,1,0.4,1,1s-0.4,1-1,1H2H1c-0.6,0-1-0.4-1-1v-4c0-0.6,0.4-1,1-1s1,0.4,1,1V14z M14,2h-3c-0.6,0-1-0.4-1-1s0.4-1,1-1    h3h1c0.6,0,1,0.4,1,1v4c0,0.6-0.4,1-1,1s-1-0.4-1-1V2z M2,0h3c0.6,0,1,0.4,1,1S5.6,2,5,2H2v3c0,0.6-0.4,1-1,1S0,5.6,0,5V1    c0-0.6,0.4-1,1-1H2z"/>
+    </g>
+  </g>
+</svg>

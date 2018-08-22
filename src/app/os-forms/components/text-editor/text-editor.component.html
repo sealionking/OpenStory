@@ -1,0 +1,8 @@
+<div>
+  <ckeditor [config]="ckeConfig"
+            (change)="onChange()"
+            [(ngModel)]="inputVal"
+            [tooltip]="description" placement="right"
+  >
+  </ckeditor>
+</div>

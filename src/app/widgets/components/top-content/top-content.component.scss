@@ -1,0 +1,48 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+// Position number.
+.comment {
+  margin: rem(8) rem(6);
+}
+
+.position {
+  @include border-radius(100%);
+  background-color: $green;
+  border: 3px solid #0DBCAC;
+  color: $white;
+  font-size: rem(24);
+  line-height: rem(33);
+  height: rem(40);
+  text-align: center;
+  width: rem(40);
+}
+
+// Info.
+.info {
+  border-bottom: 1px solid $ligth-grey;
+  margin: 0 0 0 rem(17);
+  padding: 0 0 rem(8);
+  width: calc(100% - 57px);
+}
+
+.title {
+  color: $text-color2;
+  font-size: rem(14);
+  font-weight: 700;
+  line-height: rem(19);
+}
+
+.author {
+  color: rgba(51, 59, 80, 0.7);
+  font-size: rem(12);
+  font-weight: 700;
+  line-height: rem(17);
+}
+
+.updated-date {
+  color: $text-color4;
+  font-size: rem(12);
+  font-weight: 600;
+  line-height: rem(17);
+}

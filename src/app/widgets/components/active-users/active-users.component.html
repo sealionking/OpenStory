@@ -1,0 +1,8 @@
+<div class="user-widget" *ngIf="activeUsers">
+  <div class="d-flex align-items-center justify-content-center">
+    <div class="number" [innerHTML]="activeUsers"></div>
+    <img src="../../../../assets/images/users.svg" width="48" height="48">
+    <div class="message">active users on site</div>
+  </div>
+</div>
+<app-doublebounce *ngIf="!activeUsers"></app-doublebounce>

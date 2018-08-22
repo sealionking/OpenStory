@@ -3,7 +3,6 @@ import {Component, OnInit} from '@angular/core';
 import {Comment} from '../../models/comments';
 import {CommentsService} from '../../services/comments.service';
 // import {NgxMasonryOptions} from '../../../masonry/ngx-masonry-options.interface';
-import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {MessageService} from '../../../core/services/message.service';
 
@@ -19,7 +18,7 @@ export class CommentsComponent implements OnInit {
     /**
      * Array used to retrieve data from the server.
      */
-    commentsList: Array<Comment>;
+    commentsList: Comment[];
     /**
      * Items for the filter status list.
      * @type {{id: string; name: string}[]}
@@ -44,22 +43,21 @@ export class CommentsComponent implements OnInit {
      * variable that stores the list of media.
      * @type {Array<Comment>}
      */
-    tmpList = this.commentsList;
-    /**
-     * Mansonry animation options
-     * @type {{transitionDuration: string; resize: boolean}}
-     */
-    // public masonryOptions: NgxMasonryOptions = {
-    //     transitionDuration: '0.4s',
-    //     resize: true
-    // };
+    tmpList: Comment[];
+    limit = 10;
+
+    public lottieConfig: Object;
     /**
      *@ignore
      */
     constructor(private commentsService: CommentsService,
                 private messageService: MessageService,
-                private spinnerService: Ng4LoadingSpinnerService,
                 private wsSocket: WebsocketService) {
+        this.lottieConfig = {
+            path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
     /**
@@ -74,14 +72,13 @@ export class CommentsComponent implements OnInit {
      * Get list of Comments.
      */
     public listenComments(): void {
-        this.spinnerService.show();
-        this.wsSocket.eventListen('getCommentsList')
+        this.wsSocket.eventListen('ListComment')
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
-                        this.commentsList = data.body;
+                        this.commentsList = data.body.slice(0, 10);
                         this.date = this.commentsService.populateFilters(this.commentsList);
-                        this.tmpList = this.commentsList;
+                        this.tmpList = data.body;
                         break;
                     case 400:
                         // TODO: add general messages - bootstrap.
@@ -106,7 +103,6 @@ export class CommentsComponent implements OnInit {
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
-                this.spinnerService.hide();
             });
     }
 
@@ -126,6 +122,14 @@ export class CommentsComponent implements OnInit {
      * Clears the filter functions.
      */
     clear() {
-        this.commentsList = this.tmpList;
+        this.commentsList = this.tmpList.slice(0 , 10);
+    }
+
+    /**
+     * Shows more.
+     */
+    showMore() {
+        this.limit += 10;
+        this.commentsList = this.tmpList.slice(0, this.limit);
     }
 }

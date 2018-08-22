@@ -1,0 +1,20 @@
+<div class="links ">
+  <div class="link">
+    <label for="">Url title</label>
+    <input *ngIf="urlTitleDisabled === false"
+            type="text"
+            [placeholder]="'Type here'"
+            (input)="onChange()"
+            [(ngModel)]="inputVal.title"
+            [tooltip]="description" placement="right">
+  </div>
+  <div class="link">
+    <label for="">Url link</label>
+    <input type="text"
+              [placeholder]="'Type here'"
+              (input)="onChange()"
+              [(ngModel)]="inputVal.url"
+              [tooltip]="description" placement="right">
+  </div>
+</div>
+<div class="description">The url can only be internal</div>

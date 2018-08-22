@@ -128,6 +128,7 @@ export class NgxMasonryComponent implements OnInit, OnDestroy {
                     this.layout();
                 }
             });
+            // TODO: Modify this when bug is fixed.
             this._element.nativeElement.removeChild(element);
         } else {
             // Tell Masonry that a child element has been added

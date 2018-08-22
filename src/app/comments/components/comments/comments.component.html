@@ -1,25 +1,6 @@
-<section class="right-container">
+<section class="main-container-right">
     <div class="searchbar">
         <h1>Comments</h1>
-        <!--<div class="search">-->
-            <!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
-                   <!--viewBox="0 0 18 18" style="enable-background:new 0 0 18 18;" xml:space="preserve">-->
-                <!--<style type="text/css">-->
-                  <!--.search0 {-->
-                      <!--fill: #4A5269;-->
-                  <!--}-->
-                <!--</style>-->
-                <!--<g id="_xD83C__xDF53_icon-_x2F_-search" transform="translate(-1.000000, -1.000000)">-->
-                  <!--<g id="_xD83C__xDFA8_color-_x2F_-green-copy-4" transform="translate(1.000000, 1.000000)">-->
-                    <!--<g id="Mask">-->
-                      <!--<path id="path-1_1_" class="search0" d="M11.7,10.3l5.3,5.3c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0l-5.3-5.3C9.2,12.6,7.9,13,6.4,13-->
-                              <!--C2.8,12.9-0.1,10,0,6.4S3-0.1,6.6,0s6.4,3,6.4,6.6C13,8,12.5,9.3,11.7,10.3z M6.5,11C9,11,11,9,11,6.5S9,2,6.5,2S2,4,2,6.5-->
-                              <!--S4,11,6.5,11z"/>-->
-                    <!--</g>-->
-                  <!--</g>-->
-                <!--</g>-->
-              <!--</svg>-->
-        <!--</div>-->
     </div>
     <div class="filter">
         <ng-select class="custom"
@@ -43,49 +24,24 @@
                    [(ngModel)]="selectedDate">
         </ng-select>
     </div>
-    <app-masonry [useImagesLoaded]="true" class="hero">
-        <ng4-loading-spinner [threshold]="5000" [loadingText]="'Please wait...'" [zIndex]="9999">
+
+    <!--Loader-->
+    <lottie-animation-view *ngIf="!commentsList"
+                           [options]="lottieConfig"
+                           [width]="300"
+                           [height]="400">
+    </lottie-animation-view>
+
+    <!--In case the retrieved object is empty but exists -->
+    <div class="no-content" *ngIf="commentsList && commentsList.length === 0">
+        <h1>No Comments to be displayed.</h1>
+    </div>
+
+    <!--List-->
+    <app-masonry *ngIf="commentsList" [useImagesLoaded]="true" class="hero">
         <appMasonryItem class="col-xl-3 col-lg-4 col-md-6 col-sm-12 box" *ngFor="let myComments of commentsList" >
             <div class="overlay">
-                <a class="view" href="http:\\{{myComments.viewUrl}}" target="_blank">VIEW</a>
-                <!--<div class="checkbox">-->
-                    <!--<input id="checkbox" type="checkbox">-->
-                    <!--<label for="checkbox"></label>-->
-                <!--</div>-->
-                <!--<div class="options">-->
-                    <!--<a href="#"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
-                    <!--viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
-                 <!--<style type="text/css">-->
-                   <!--.st0{fill:#FFFFFF;}-->
-                 <!--</style>-->
-                 <!--<g id="Mask">-->
-                   <!--<path id="path-1_1_" class="st0" d="M7,4h4c0.3,0,0.5,0,0.8,0.1c2.7,0.4,4.6,3,4.1,5.7l-1,6.2h-1v-5c0-1.7-1.3-3-3-3H7v3.9L0,6l7-6-->
-                     <!--V4z"/>-->
-                 <!--</g>-->
-                 <!--</svg></a>-->
-                    <!--<a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
-                      <!--<style type="text/css">-->
-                        <!--.st0{fill:#FFFFFF;}-->
-                        <!--.st1{fill:none;}-->
-                      <!--</style>-->
-                      <!--<g id="Mask">-->
-                        <!--<path id="path-1_1_" class="st0" d="M13,6l-3-3l2.3-2.3c0.4-0.4,1-0.4,1.4,0l1.6,1.6c0.4,0.4,0.4,1,0,1.4L13,6z M12,7l-9,9H0v-3   l9-9L12,7z M6.5,15H16v1H5.5L6.5,15z"/>-->
-                      <!--</g>-->
-                      <!--<g id="_xD83C__xDFA8_color-_x2F_1-white">-->
-                        <!--<rect id="Rectangle-27" class="st1" width="16" height="16"/>-->
-                      <!--</g>-->
-                      <!--</svg></a>-->
-                    <!--<a href="#"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 16 16" style="enable-background:new 0 0 16 16;" xml:space="preserve">-->
-                      <!--<style type="text/css">-->
-                        <!--.st0{fill:#FFFFFF;}-->
-                        <!--.st1{fill:none;}-->
-                      <!--</style>-->
-                      <!--<g id="Mask">-->
-                        <!--<path id="path-1_1_" class="st0" d="M1,3c0-0.6,0.4-1,1-1h3c0-1.1,0.9-2,2-2h2c1.1,0,2,0.9,2,2h3c0.6,0,1,0.4,1,1v1H1V3z M7,1   C6.4,1,6,1.4,6,2h4c0-0.6-0.4-1-1-1H7z M5,5H2v10c0,0.6,0.4,1,1,1h10c0.6,0,1-0.4,1-1V5h-3v7.5c0,0.3-0.2,0.5-0.5,0.5l0,0   c-0.3,0-0.5-0.2-0.5-0.5V5H6v7.5C6,12.8,5.8,13,5.5,13l0,0C5.2,13,5,12.8,5,12.5V5z"/>-->
-                      <!--</g>-->
-                      <!--<rect y="0" class="st1" width="16" height="16"/>-->
-                      <!--</svg></a>-->
-                <!--</div>-->
+                <a class="view" [href]="myComments.viewUrl" target="_blank">VIEW</a>
             </div>
             <div class="inner">
                 <div class="title-comments">{{myComments.subject}}</div>
@@ -140,6 +96,6 @@
                 </div>
             </div>
         </appMasonryItem>
-        </ng4-loading-spinner>
     </app-masonry>
+    <button *ngIf="commentsList && limit < tmpList.length" (click)="showMore()">Show More</button>
 </section>

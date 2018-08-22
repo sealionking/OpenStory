@@ -1,25 +1,6 @@
-<section class="right-container">
+<section class="main-container-right">
     <div class="searchbar">
         <h1>Media</h1>
-        <!--<div class="search">-->
-            <!--<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"-->
-                   <!--viewBox="0 0 18 18" style="enable-background:new 0 0 18 18;" xml:space="preserve">-->
-                <!--<style type="text/css">-->
-                  <!--.search0 {-->
-                      <!--fill: #4A5269;-->
-                  <!--}-->
-                <!--</style>-->
-                <!--<g id="_xD83C__xDF53_icon-_x2F_-search" transform="translate(-1.000000, -1.000000)">-->
-                  <!--<g id="_xD83C__xDFA8_color-_x2F_-green-copy-4" transform="translate(1.000000, 1.000000)">-->
-                    <!--<g id="Mask">-->
-                      <!--<path id="path-1_1_" class="search0" d="M11.7,10.3l5.3,5.3c0.4,0.4,0.4,1,0,1.4s-1,0.4-1.4,0l-5.3-5.3C9.2,12.6,7.9,13,6.4,13-->
-                              <!--C2.8,12.9-0.1,10,0,6.4S3-0.1,6.6,0s6.4,3,6.4,6.6C13,8,12.5,9.3,11.7,10.3z M6.5,11C9,11,11,9,11,6.5S9,2,6.5,2S2,4,2,6.5-->
-                              <!--S4,11,6.5,11z"/>-->
-                    <!--</g>-->
-                  <!--</g>-->
-                <!--</g>-->
-              <!--</svg>-->
-        <!--</div>-->
     </div>
     <div class="filter">
         <ng-select class="custom"
@@ -44,8 +25,20 @@
         </ng-select>
     </div>
 
-    <app-masonry [useImagesLoaded]="true" class="hero">
-        <ng4-loading-spinner [threshold]="5000" [loadingText]="'Please wait...'" [zIndex]="9999">
+    <!--Loader-->
+    <lottie-animation-view *ngIf="!mediaList"
+                           [options]="lottieConfig"
+                           [width]="300"
+                           [height]="400">
+    </lottie-animation-view>
+
+    <!--In case the retrieved object is empty but exists -->
+    <div class="no-content" *ngIf="mediaList && mediaList.length === 0">
+        <h1>No Content to be displayed.</h1>
+    </div>
+
+    <!--List-->
+    <app-masonry *ngIf="mediaList"  [useImagesLoaded]="true" class="hero">
         <appMasonryItem class="hero-grid__item"  *ngFor="let myMedia of mediaList">
             <div class="image_size">{{fileSize(myMedia.filesize) |  number : '1.2-2'}} MB</div>
             <img *ngIf="myMedia.filemime.slice(0, 3) === 'ima'; else defaultMedia" src="{{myMedia.uri}}">
@@ -72,15 +65,12 @@
                 </p>
                 <p *ngIf="myMedia.username && myMedia.username.name; else enableAnonymous" class="hero__author">By {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}
                 </p>
-                <ng-template #enableAnonymous class="hero__author">By Anonymous on {{myMedia.created * 1000 | date}}
+                <ng-template #enableAnonymous class="hero__author">by Anonymous on {{myMedia.created * 1000 | date}}
                 </ng-template>
             </div>
         </appMasonryItem>
-        </ng4-loading-spinner>
     </app-masonry>
     <button *ngIf="limit < filteredMedia.length" (click)="showMoreImages()">Show More</button>
-    <!--<h2 *ngIf="limit >= 400">No More Images</h2>-->
-
 </section>
 
 

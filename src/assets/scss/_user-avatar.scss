@@ -2,11 +2,8 @@
 @import '../scss/mixins';
 
 .user-view {
-  margin: 0 rem(4) 0 rem(4);
+  margin: 0;
   padding: 0;
-  @media (min-width: 501px) {
-    margin: rem(15) 0 0 rem(21);
-  }
   .user-avatar {
     min-height: 321px;
     position: relative;

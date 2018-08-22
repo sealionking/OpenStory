@@ -3,16 +3,10 @@
 @import "../../../../assets/scss/filter";
 @import "../../../../assets/scss/overlay";
 @import "../../../../assets/scss/searchbar";
-
-.right-container {
-  margin: rem(0) rem(44) rem(52) rem(92);
-  position: relative;
-  top: 0;
-}
+@import "../../../../assets/scss/sidemenu";
 
 .filter {
-  margin-left: rem(8);
-  width: calc(100% - 14px);
+  width: 100%;
 }
 
 .overlay {
@@ -123,4 +117,45 @@
       }
     }
   }
+}
+
+app-masonry {
+  margin-left: rem(12);
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(60) 0;
+  min-height: calc(100vh - 190px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+button {
+  background-color: $green; /* Green */
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 8px;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.no-content {
+  margin: 20px 0;
+  font-size: 24px;
 }

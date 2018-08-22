@@ -1,12 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {NgSelectModule} from '@ng-select/ng-select';
 import {FilterPipeModule} from 'ngx-filter-pipe';
-import {OrderModule} from 'ngx-order-pipe';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {HttpClientModule} from '@angular/common/http';
 
 import {MessagesComponent} from './components/messages/messages.component';
-
+import {NgSelectModule} from '@ng-select/ng-select';
+import {OrderModule} from 'ngx-order-pipe';
+import {TooltipModule} from 'ngx-bootstrap';
+import {CKEditorModule} from 'ng2-ckeditor';
+import {AlertModule} from 'ngx-bootstrap';
+import {TruncateModule} from '@yellowspot/ng-truncate';
+import {DoublebounceComponent} from './components/doublebounce/doublebounce.component';
 
 @NgModule({
     imports: [
@@ -15,10 +21,17 @@ import {MessagesComponent} from './components/messages/messages.component';
         NgSelectModule,
         ReactiveFormsModule,
         FilterPipeModule,
-        OrderModule
+        OrderModule,
+        HttpClientModule,
+        InlineSVGModule,
+        TooltipModule.forRoot(),
+        CKEditorModule,
+        AlertModule.forRoot(),
+        TruncateModule
     ],
     declarations: [
-        MessagesComponent
+        MessagesComponent,
+        DoublebounceComponent
     ],
     exports: [
         CommonModule,
@@ -27,7 +40,13 @@ import {MessagesComponent} from './components/messages/messages.component';
         NgSelectModule,
         ReactiveFormsModule,
         FilterPipeModule,
-        OrderModule
+        OrderModule,
+        InlineSVGModule,
+        TooltipModule,
+        CKEditorModule,
+        AlertModule,
+        TruncateModule,
+        DoublebounceComponent
     ]
 })
 export class SharedModule {

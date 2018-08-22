@@ -1,0 +1,22 @@
+<div *ngIf="commentList">
+    <div class="comment-widget d-flex" *ngFor="let comment of commentList">
+        <div class="image">
+            <img *ngIf="comment.username.userPicture != ''; else defaultAvatar" class="avatar"
+                 [src]="comment.username.userPicture" alt="profile image"/>
+            <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/default.svg" alt="profile image"/></ng-template>
+        </div>
+        <div class="info">
+            <div class="title">{{comment.subject}}</div>
+            <div class="author">{{comment.username.name}}</div>
+            <div class="comment-date">{{comment.created * 1000 | date}}</div>
+            <div class="latest-comment" [innerHTML]="comment.commentBody | truncate: 100"></div>
+        </div>
+    </div>
+</div>
+
+<!--Loader-->
+<app-doublebounce *ngIf="!commentList"></app-doublebounce>
+
+<div *ngIf="commentList && commentList.length === 0">
+    <h1>No data present to retrieve.</h1>
+</div>

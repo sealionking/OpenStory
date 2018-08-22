@@ -1,96 +1,135 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {MessageService} from '../../../core/services/message.service';
-import {ActivatedRoute, Router} from '@angular/router';
 import {WebsocketService} from '../../../core/services/websocket.service';
 
 @Component({
     selector: 'app-new-content',
+    encapsulation: ViewEncapsulation.None,
     templateUrl: './new-content.component.html',
     styleUrls: ['./new-content.component.scss']
 })
 export class NewContentComponent implements OnInit {
     contentSchema: any;
     initContent = false;
+    contentName: string;
+    contentLabel: string;
+    showSchema = false;
+    public lottieConfig: Object;
 
-    constructor( private wsService: WebsocketService,
-                 private auth: AuthenticateService,
-                 private messageService: MessageService,
-                 private route: Router,
-                 private router: ActivatedRoute) {
+    /**
+     * @ignore
+     */
+    constructor(private wsService: WebsocketService,
+                private auth: AuthenticateService,
+                private messageService: MessageService,
+                private route: Router,
+                private router: ActivatedRoute) {
+        this.contentName = this.router.snapshot.paramMap.get('contenttype');
+        this.lottieConfig = {
+            path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
         this.contentSchemaRequest();
     }
 
+    /**
+     * Request for the new content schema
+     */
     contentSchemaRequest() {
         this.wsService.sendRequest({
-            event: 'getEntityDefinition', data: {token: this.auth.getToken(), entityType: 'node', bundle: this.getContentName()}})
+            eventType: 'entity',
+            event: 'EntityDefinition', data: {token: this.auth.getToken(), entityType: 'node', bundle: this.getContentName()}
+        })
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
-                        if(this.initContent){ return;} else {this.initContent = true;}
-                        this.contentSchema = data.body;
+                        if (this.initContent) {
+                            return;
+                        } else {
+                            this.initContent = true;
+                        }
+                        this.contentLabel = data.body.entityLabel;
+                        this.contentSchema = data.body.definition;
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Unprocessable Entity.');
+                        data.body.errors.forEach((i) => {
+                            this.messageService.add(i.detail);
+                        });
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Internal Server Error.');
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
+                this.showSchema = true;
             });
     }
 
+    /**
+     * Retreive the content type from the url
+     * @return {string | null}
+     */
     getContentName() {
         const type = this.router.snapshot.paramMap.get('contenttype');
         return type;
     }
 
+    /**
+     * Submit the new content type
+     * @param formData
+     */
     onSubmitFn(formData): void {
-        this.wsService.sendRequest({event: 'createEntity', data: {token: this.auth.getToken(),
-                entityType: 'node', bundle: this.getContentName(), body: formData}})
+        this.wsService.sendRequest({
+            eventType: 'content', event: 'CreateEntity', data: {
+                token: this.auth.getToken(),
+                entityType: 'node', bundle: this.getContentName(), body: formData
+            }
+        })
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
-                        this.route.navigate(['/content'])
+                        this.route.navigate(['/content']);
+                        this.messageService.add('Content has been created!', 'success');
+                        break;
+                    case 201:
+                        this.route.navigate(['/content']);
+                        this.messageService.add('Content has been created!', 'success');
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Access denied.');
+                        this.messageService.add(data.body);
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Unprocessable Entity.');
+                        data.body.errors.forEach((i) => {
+                            this.messageService.add(i.detail);
+                        });
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Internal Server Error.');
                         break;
                     default:
@@ -102,7 +141,7 @@ export class NewContentComponent implements OnInit {
     /**
      * Allows the user to go back to the users screen
      */
-    goBack(){
+    goBack() {
         this.route.navigate(['/content']);
     }
 }

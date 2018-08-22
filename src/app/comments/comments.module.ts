@@ -8,7 +8,7 @@ import {FilterPipeModule} from 'ngx-filter-pipe';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {NgxMasonryModule} from '../masonry/masonry.module';
-import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import {LottieAnimationViewModule} from 'ng-lottie';
 
 @NgModule({
   imports: [
@@ -16,9 +16,9 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
     CommentsRoutingModule,
     FilterPipeModule,
     FormsModule,
-    Ng4LoadingSpinnerModule.forRoot(),
     NgSelectModule,
-    NgxMasonryModule
+    NgxMasonryModule,
+    LottieAnimationViewModule.forRoot()
   ],
   providers: [CommentsService],
   declarations: [CommentsComponent]

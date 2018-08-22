@@ -89,14 +89,14 @@ $menu-items-loop-offset: $menu-items - 1;
         height: 0;
         top: 0;
         left: ($width/2);
-        margin-left: 0px;
+        margin-left: 0;
       }
       &:after {
         border-right: 1px solid #53D79F;
         background: $white;
         top: -6px;
         bottom: -6px;
-        left: 0;
+        left: 1px;
         width: 80px;
         height: 70px;
         z-index: 0;
@@ -155,13 +155,6 @@ $menu-items-loop-offset: $menu-items - 1;
 }
 %cf:after {
     clear: both;
-}
-
-
-html {
-  background-color: $background-color;
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 800;
 }
 
 .toggle {

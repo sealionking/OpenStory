@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="close_1" data-name="close_1" viewBox="0 0 16 16" width="16" height="16">
+  <defs>
+    <style>
+      #close_1 .cls-1{fill:#d4d7dd;}
+      #close_1 .cls-2{fill:none;}
+      span.close_1:hover #close_1 .cls-1{fill:#687086;}
+    </style>
+  </defs>
+  <title>Close</title>
+  <g id="Symbols">
+    <g id="_icon-_-close-options" data-name="icon-/-close-options">
+      <g id="_color-_-darck-blue-copy-29" data-name="color-/-darck-blue-copy-29">
+        <g id="Mask">
+          <path id="path-1" class="cls-1" d="M8,9.41,4.82,12.6A1,1,0,1,1,3.4,11.18L6.59,8,3.4,4.82A1,1,0,0,1,4.82,3.4L8,6.59,11.18,3.4A1,1,0,1,1,12.6,4.82L9.41,8l3.19,3.18a1,1,0,1,1-1.42,1.42Z" transform="translate(0.05 0.01)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+  <rect class="cls-2" width="16" height="16"/>
+</svg>

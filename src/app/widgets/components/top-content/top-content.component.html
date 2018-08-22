@@ -1,0 +1,12 @@
+<div class="comment d-flex" *ngFor="let content of topList; let i = index" >
+  <div class="position" [innerHTML]="i+1"></div>
+  <div class="info">
+    <div class="title">{{content.title}} </div>
+    <div class="author">by {{content.username.name}}</div>
+    <div class="updated-date">Updated on: {{content.changed * 1000 | date: 'medium'}}</div>
+  </div>
+</div>
+<app-doublebounce *ngIf="!topList"></app-doublebounce>
+<div *ngIf="topList && topList.length === 0">
+  <h1>No data present to retrieve.</h1>
+</div>

@@ -1,41 +1,16 @@
-<section class="right-container">
-  <div class="searchbar">
-    <h1>Add New Content</h1>
-  </div>
-  <div class="close" (click)="goBack()">
-    <a>
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 14 14" style="enable-background:new 0 0 14 14;" xml:space="preserve">
-            <style type="text/css">
-              .st0 {
-                fill: #D4D7DD;
-              }
-            </style>
-            <g id="_xD83C__xDF53_icon-_x2F_-inactive" transform="translate(-1.000000, -1.000000)">
-              <g id="_xD83C__xDFA8_color-_x2F_-darck-blue" transform="translate(1.000000, 1.000000)">
-                <g id="Mask">
-                  <path id="path-1_1_" class="st0" d="M8.3,7l5.4,5.4c0.4,0.4,0.4,1,0,1.3c-0.4,0.4-1,0.4-1.3,0L7,8.3l-5.4,5.4     c-0.4,0.4-1,0.4-1.3,0c-0.4-0.4-0.4-1,0-1.3L5.7,7L0.3,1.6c-0.4-0.4-0.4-1,0-1.3s1-0.4,1.3,0L7,5.7l5.4-5.4c0.4-0.4,1-0.4,1.3,0     c0.4,0.4,0.4,1,0,1.3L8.3,7z" /> </g>
-              </g>
-            </g>
-          </svg>
-    </a>
-  </div>
-  <div class="row user-view">
-    <div class="col-md-3 user-avatar align-middle">
-      <div class="d-flex position-relative">
-        <img src="../../../../assets/images/default.svg" alt="Content" class="img-thumbnail w-100">
-      </div>
-    </div>
-    <div class="col-md-9 row user-info">
-      <div class="col">
-        <label class="profile-info">Add New Content</label>
-        <json-schema-form
-                [loadExternalAssets]="true"
-                [schema]="contentSchema"
-                [framework]="'bootstrap-4'"
-                (onSubmit)="onSubmitFn($event)"
-                >
-        </json-schema-form>
-      </div>
-    </div>
-  </div>
+<section class="main-container-right">
+    <!--Loader-->
+    <lottie-animation-view *ngIf="showSchema === false"
+                           [options]="lottieConfig"
+                           [width]="300"
+                           [height]="400">
+    </lottie-animation-view>
+
+    <!--Add new content-->
+    <section class="right-container" *ngIf="showSchema === true">
+        <div class="searchbar">
+            <h1>Add New <span>{{contentLabel}}</span> Content</h1>
+        </div>
+        <app-os-form [formData]="contentSchema" (sentData)="onSubmitFn($event)"></app-os-form>
+    </section>
 </section>

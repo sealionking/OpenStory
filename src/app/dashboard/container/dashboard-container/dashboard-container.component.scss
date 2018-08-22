@@ -1,0 +1,166 @@
+@import '../../../../assets/scss/searchbar';
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/sidemenu';
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/header';
+@import "../../../../assets/scss/imagegrid";
+
+//Temp Css
+//TODO: Apply the correct CSS code
+.grid {
+  width: 100%;
+  xmin-height: rem(700);
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.grid-item.is-pointer-down {
+  border: deeppink;
+  opacity: 0.5;
+}
+
+.grid-item {
+  -webkit-box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
+  -moz-box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
+  box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
+  float: left;
+  overflow: hidden;
+  position: relative;
+  width: 420px;
+  &:hover {
+    .handle {
+      display: block;
+    }
+  }
+}
+
+.large {
+  height: auto;
+  width: 855px;
+}
+
+.default {
+  height: auto;
+  width: 420px;
+}
+
+.minimized {
+  height: 43px;
+  width: 420px;
+}
+
+.expand {
+  height: auto;
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(60) 0;
+  min-height: calc(100vh - 190px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+.widget-content > div {
+  background-color: $white;
+  padding: rem(10) rem(7.5);
+  position: absolute;
+  right: 0;
+  z-index: 2;
+  > span {
+    cursor: pointer;
+    margin: 0 rem(2.5);
+  }
+}
+
+
+.handle {
+  cursor: pointer;
+  display: none;
+  height: 30px;
+  line-height: 36px;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+// Notification
+.notification {
+  animation: 0.4s ease-out slideLeftIn;
+  background-color: rgba(104, 112, 134, 0.7);
+  bottom: 60px;
+  min-height: 60px;
+  padding: 0 32px;
+  position: fixed;
+  right: 24px;
+  z-index: 4;
+  &.closed {
+    animation: 0.4s ease-out slideLeftOut;
+  }
+}
+
+.question-title {
+  color: $white;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 14px;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-buttons {
+  margin: 0 -12px 0 50px;
+}
+
+button {
+  margin: 0 4px;
+}
+
+@keyframes slideLeftIn {
+  0% {
+    opacity: 0.5;
+    transform: translateX(calc(100% + 25px));
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideLeftOut {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: translateX(calc(100% + 25px));
+  }
+}
+.add-widget {
+  color: #B1B4BE;
+  font-size: 12px;
+  img {
+    margin: 0 rem(8) 0 0;
+    transform: rotate(45deg);
+    width: rem(11.32);
+  }
+}

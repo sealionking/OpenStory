@@ -14,14 +14,14 @@ export class MessagesComponent implements OnInit {
     /**
      * Array of strings used to display numerous messages
      */
-    messages: Array<string>;
+    messages = [];
 
     /**
      * @ignore
-     * @param {MessageService} message
+     * @param mService
      */
-    constructor(private message: MessageService) {
-        this.messages = this.message.messages;
+    constructor(private mService: MessageService) {
+        this.messages = this.mService.messages;
     }
 
     /**
@@ -35,13 +35,13 @@ export class MessagesComponent implements OnInit {
      * @return {number}
      */
     messageLength(): number {
-        return this.message.messages.length;
+        return this.mService.messages.length;
     }
 
     /**
      * Removes the message
      */
-    clear(): void {
-        this.message.clear();
+    clear() {
+        this.messages.length = 0;
     }
 }

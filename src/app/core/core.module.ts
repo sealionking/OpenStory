@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 
 import {AuthenticateService} from './services/authenticate.service';
 import {AuthGuard} from './guard/auth-guard';
+import {GlobalObjectsRefService} from './services/global-objects-ref.service';
 import {MessageService} from './services/message.service';
 import {WebsocketService} from './services/websocket.service';
 
@@ -16,6 +17,7 @@ import {WebsocketService} from './services/websocket.service';
     providers: [
         AuthenticateService,
         AuthGuard,
+        GlobalObjectsRefService,
         MessageService,
         WebsocketService
     ]

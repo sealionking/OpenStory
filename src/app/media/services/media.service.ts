@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 import {AuthenticateService} from '../../core/services/authenticate.service';
 import {Media} from '../models/media';
@@ -14,16 +14,18 @@ export class MediaService {
      * @ignore
      */
     constructor(private wsSocket: WebsocketService,
-                private auth: AuthenticateService) { }
+                private auth: AuthenticateService) {
+    }
 
     /**
      * Function that sends token and request to the server.
      */
     public getMedia() {
         this.wsSocket.sendEvent({
-            event: 'getMedia',
+            eventType: 'media',
+            event: 'ListMedia',
             data: {
-                token: this.auth.getToken()
+                token: this.auth.getToken(), sorting: { created: 'DESC' }
             }
         });
     }
@@ -36,12 +38,15 @@ export class MediaService {
      */
     fileMimeToType(mime: string, types: Array<any>): string {
         let type = null;
-        types.forEach(t => {
-            if (mime.indexOf(t.id) >= 0) {
-                type = t.id;
-            }
-        });
-
+        if (mime) {
+            types.forEach(t => {
+                if (mime.indexOf(t.id) >= 0) {
+                    type = t.id;
+                }
+            });
+        } else {
+            type = 'value';
+        }
         return type;
     }
 

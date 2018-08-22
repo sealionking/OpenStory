@@ -1,4 +1,6 @@
-<div *ngIf="messageLength()" class="col-md-3 col-sm-12 alert">
-  <span class="closebtn" (click)="clear()">x</span>
-  <span *ngFor='let message of messages'> {{message}} </span>
+<div *ngFor='let message of (messages | slice: messages.length - 1)' class="position-fixed w-100" (click)="clear()">
+  <alert *ngIf="message.msg.length > 0"  [type]="message?.type ? message?.type : 'danger'" align="center" [dismissOnTimeout]="7000">
+    <strong>{{message.msg}}</strong>
+    <span class="close">&times;</span>
+  </alert>
 </div>

@@ -1,14 +1,66 @@
-@import "~@ng-select/ng-select/themes/default.theme.css";
-@import "assets/scss/mixins";
 @import "assets/scss/variables";
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import "../node_modules/bootstrap/scss/bootstrap-grid.scss";
+@import "~@ng-select/ng-select/themes/default.theme.css";
+@import "~nouislider/distribute/nouislider.min.css";
+@import "assets/scss/mixins";
+@import "assets/scss/buttons";
+@import "assets/scss/modal";
 
+html {
+  min-height: 100%;
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%) !important;
+}
+
+body{
+  background: transparent;
+  font-family: "Open Sans", sans-serif;
+  font-size: rem(14);
+  line-height: rem(19);
+  height: 100%;
+
+  /* Font varient */
+  font-variant-ligatures: none;
+  -webkit-font-variant-ligatures: none;
+  /* Smoothing */
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+}
+
+:focus {
+  outline: 0;
+}
+
+::-webkit-scrollbar {
+  width: rem(5);
+  height: rem(16);
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #EFF0F3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: $text-color4;
+  border-radius: rem(10);
+  height: rem(16);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: $text-color4;
+}
 
 .ng-select.custom {
   border:0;
   outline: 0;
   min-height: 0;
   border-radius: 0;
-  width: 200px;
 }
 
 .ng-select .ng-control {
@@ -22,18 +74,68 @@
     box-shadow: none;
   }
   .ng-placeholder {
-      height: rem(19);
-      color: #687086;
-      font-size: rem(14);
-      line-height: rem(19);
-      color: black !important;
+    height: rem(19);
+    font-size: rem(14);
+    line-height: rem(19);
+    color: black !important;
   }
 }
 
-body{
-  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
-  font-family: "Open Sans", sans-serif;
-  min-height: 100vh;
-  font-size: rem(14);
-  line-height: rem(19);
+// Select in forms.
+.form-group {
+  .ng-select.ng-single .ng-control {
+    height: rem(40);
+    padding: 0 0 rem(8);
+  }
+
+  .ng-select .ng-control .ng-value-container,
+  .ng-select.ng-single .ng-control .ng-value-container .ng-input {
+    padding-left: 0;
+  }
+
+  .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.marked {
+    background-color: #f9f9f9;
+  }
+}
+
+// Range slider.
+.noUi-horizontal {
+  height: rem(8);
+}
+
+.noUi-connects {
+  @include border-radius(4px);
+  background-color: $ligth-grey;
+}
+
+.noUi-handle:before {
+  @include border-radius(100%);
+  background-color: $white;
+  bottom: 0;
+  content: "";
+  height: rem(8);
+  left: 0;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: rem(8);
+}
+
+.noUi-handle:after {
+  content: none;
+}
+
+.noUi-horizontal .noUi-handle {
+  @include border-radius(100%);
+  background-color: $green;
+  border: 0;
+  box-shadow: none;
+  height: rem(24);
+  top: rem(-9);
+  width: rem(24);
+}
+
+.noUi-connect:nth-child(1) {
+      background-color: #53D79F;
 }
