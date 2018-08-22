@@ -1,389 +1,107 @@
-@import '../../../../assets/scss/sidemenu';
 @import '../../../../assets/scss/variables';
 @import '../../../../assets/scss/mixins';
-@import '../../../../assets/scss/header';
-@import '../../../../assets/scss/user-avatar';
+@import '../../../../assets/scss/sidemenu';
 @import '../../../../assets/scss/searchbar';
-@import '../../../../assets/scss/overlay';
 
-
-#main-container {
-  height: auto !important;
+.json-schema-form {
+  height: 100%;
+  width: 100%;
 }
 
-.avatar {
-  border-radius: rem(100);
-  box-shadow: 0 rem(1) rem(3) 0 rgba(0,0,0,0.25);
-  height: rem(150);
-  width: rem(150);
-  @media (min-width: 768px) and (max-width: 1020px) {
-    height: rem(120);
-    width: rem(120);
-  }
+.json-form-layout-container {
+  @include common-shadow(2px, 2px, 2px, 0, rgba(0, 0, 0, 0.15));
+  background-color: $white;
+  border-radius: rem(2);
+  margin-left: rem(21);
+  padding: rem(63) rem(16) rem(27.5) rem(60);
+  width: 100%;
 }
 
-.col-12 {
-  padding: 0;
-  margin: rem(70) rem(10) 0 0;
-  text-align: center;
-  @media (min-width: 501px) {
-    text-align: right;
-    margin: rem(70) 0 0 0;
-  }
-  .btn-update {
-    border: 1px solid transparent;
-    border-radius: rem(2);
-    background-color: $green;
-    color: $white;
-    font-size: rem(14);
-    font-weight: 400;
-    height: rem(30);
-    line-height: rem(19);
-    text-align: center;
-    width: rem(150);
-    user-select: none;
-  }
-}
-
-.container {
-  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
-  height: inherit;
-  margin: 0;
-  max-width: 100%;
-  position: absolute;
-  .slideP {
-    background: $ligth-grey;
-    height: 40px;
-  }
-}
-
-.checkbox {
-  margin-top: rem(5);
-  margin-bottom: rem(20);
-  position: relative;
-  label {
-    background-color: transparent;
-    border: rem(2) solid $dark-grey;
-    border-radius: 0;
-    height: rem(20);
-    width: rem(20);
-    left: rem(-20);
-    top: rem(-23);
-    &::after {
-      border: 2px solid $green;
-      border-top: none;
-      border-right: none;
-      content: "";
-      height: 6px;
-      left: 2px;
-      opacity: 0;
-      position: absolute;
-      top: 3px;
-      transform: rotate(-45deg);
-      width: 12px;
-    }
-  }
-  input[type="checkbox"] {
-    visibility: hidden;
-  }
-  input[type="checkbox"]:checked + label {
-    background-color: transparent;
-    border-color: $green;
-  }
-  input[type="checkbox"]:checked + label::after {
-    opacity: 1;
-  }
-  .d-block {
-    color: $text-color2;
-    margin-left: rem(29);
-    padding-top: rem(4);
-  }
-}
-
-.close {
+.return-content {
   display: none;
   @media (min-width: 768px) {
+    cursor: pointer;
     display: block;
-    margin-right: rem(10);
-    margin-top: rem(20);
-    position: absolute;
-    right: 0;
+    float: right;
+    margin: rem(16) rem(16) 0 0;
     z-index: 3;
-    svg {
+    img {
       height: rem(12);
       width: rem(12);
     }
   }
 }
 
-form {
-  width: 50%;
-  @media screen and (max-width: 1075px) {
-    width: 100%;
-  }
-}
-
-.form-container {
-  margin-bottom: rem(58);
-  padding: 0;
-  width: 100%;
-}
-
-.input {
-  display: inline-block;
-  position: relative;
-  vertical-align: top;
-  width: 100%;
-  z-index: 1;
-}
-
-.input__field {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  color: $text-color2;
-  display: block;
-  font-size: rem(16);
-  line-height: rem(22);
-  position: absolute;
-  padding: 0;
-  top: 0;
-  width: 100%;
-  &:focus {
-    outline: none;
-  }
-  &:focus + .input__label .input__label-content {
-    transform: translate3d(0, -34px, 0);
-  }
-  &:focus ~ .input__focuslabel {
-    height: rem(20);
-    .input__focuslabel-content {
-      transform: translate3d(0, -16px, 0);
-    }
-  }
-}
-
-.input__label {
-  color: $text-color2;
-  display: inline-block;
-  font-size: rem(16);
-  line-height: rem(22);
-  padding: 0;
-  position: absolute;
-  opacity: 0.8;
-  overflow: hidden;
-  text-align: left;
-  top: 0;
-  width: 100%;
-  z-index: -1;
-  &-content {
-    display: block;
-    position: relative;
-    padding: 0;
-    transition: transform 0.2s;
-    width: 100%;
-  }
-  &::after {
-    bottom: 0;
-    content: '';
-    height: rem(2);
-    left: 0;
-    position: absolute;
-    transition: transform 0.2s;
-    width: 100%;
-    z-index: -1;
-  }
-}
-
-.input__focuslabel {
-  bottom: 0;
-  color: $text-color4;
-  display: inline-block;
-  font-size: rem(16);
-  height: rem(1);
-  padding: 0;
-  position: absolute;
-  width: 100%;
-  overflow: hidden;
-  text-align: left;
-  transition: height 0.2s;
-  vertical-align: bottom;
-  &-content {
-    display: block;
-    position: relative;
-    top: rem(16);
-    transition: transform 0.2s;
-    width: 100%;
-  }
-}
-
-.input--filled .input__label {
-  &-content {
-    transform: translate3d(0, -35px, 0);
-  }
-}
-
-.input--filled .input__focuslabel {
-  height: rem(20);
-  .input__focuslabel-content {
-    transform: translate3d(0, -15px, 0);
-  }
-}
-
-.input__label::after {
-  background:  #687086;
-  content: '';
-  height: rem(1);
-  left: 0;
-  position: absolute;
-  width: 100%;
-  z-index: -1;
-}
-
-.header {
-  @include justify-content(space-between);
-}
-
-label {
-  color: $text-color2;
-  font-size: rem(16);
-  a {
-    color: inherit;
-    text-decoration: none;
-    &:hover {
-      color: inherit;
-      text-decoration: none;
-    }
-  }
-}
-
-.navbar-nav {
-  @include flex-direction(row) ;
-}
-
-.profile-info {
-  color: $text-color2;
-  font-size: rem(24);
-  line-height: rem(24);
-  margin-bottom: rem(78);
-  margin-top: rem(4);
-  width: 100%;
-  &:after {
-    background: $green;
-    content: '';
-    height: rem(1);
-    position: absolute;
-    left: 0;
-    top: rem(33);
-    width: calc(100% - 20px);
-    @media (min-width: 501px) {
-      width: calc(100% - 40px);
-    }
-    @media (min-width: 1076px) {
-      width: calc(50% - 20px);
-    }
-  }
-}
-
-.d-block {
-  margin-top: rem(-24);
-}
-
-.erole {
-  height: rem(19);
-  color: $text-color4;
-  line-height: rem(19);
-  font-size: rem(14);
-  font-weight: 600;
-}
-
-.personal-options {
-  color: $text-color2;
-  font-weight: 600;
-  height: rem(19);
-  line-height: rem(19);
-  margin-left: rem(29);
-  span {
-    font-weight: none;
-  }
-}
-
-.test {
-  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
-  height: 100%;
-  min-height: inherit;
-  position: absolute;
-}
-
-.searchbar {
-  h1 {
-    color: #687086;
-  }
-}
-
-.sidemenu {
-  top: rem(140);
-}
-
-.user-info {
-  background-color: $white;
-  margin: 0;
-  padding: rem(25) 0 rem(20) rem(20);
-  @media (min-width: 501px) {
-    padding-left: rem(40);
-    padding-right: rem(10);
-    padding-top: rem(123);
-  }
-  .col {
-    margin: 0;
-    padding: 0;
-    padding-right: rem(20);
-    @media (min-width: 501px) {
-      padding-right: rem(40);
-    }
-  }
-}
-
-.user-view {
-  -webkit-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
-  -moz-box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
-  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.15);
-  .user-avatar {
-    align-items: center;
+ng4-spinner {
+  section {
     background-color: $green;
-    display: flex;
-    flex-direction: column;
-    min-height: rem(210);
-    padding: rem(30) 0 0 0;
-    position: relative;
-    @media (min-width: 768px) {
-      padding: rem(80) 0 0 0;
-    }
+    @include common-shadow(2px, 2px, 2px, 0, rgba(0, 0, 0, 0.15));
+    font-size: rem(20);
+    text-align: right;
   }
 }
 
-.w-100 {
-  margin-top: rem(35);
-  span {
-    color: #687086;
+.fa {
+  color: $white;
+  position: absolute;
+  bottom: 25px;
+  right: 20px;
+}
+
+app-side-menu {
+  .right-container {
+    margin: 0;
+  }
+}
+
+app-side-menu {
+  .right-container {
+    margin: 0;
+  }
+}
+
+.json-form-layout-container-redux {
+  background-color: transparent;
+  width: 100%;
+  height: 100vh;
+  margin-left: rem(21);
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(60) 0;
+  min-height: calc(100vh - 190px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+// Overwrite ngx-tooltip styling.
+app-os-form {
+  .tooltip .arrow {
+    display: none
+  }
+  .tooltip-inner {
+    @include border-radius(0);
+    background-color: #EFF0F3;
+    color: $text-color1;
     font-size: rem(12);
-    font-weight: 600;
-    height: rem(17);
     line-height: rem(17);
+    padding: 4px 8px;
   }
-  select {
-    border: 0;
-    border-bottom: 1px solid #83A4C5;
-    color: $text-color2;
-    height: rem(22);
-    font-size: rem(16);
-    line-height: rem(22);
-    padding: 0;
-    overflow: hidden;
-    outline: none;
-    width: 100%;
-    option {
-      outline: 0;
-    }
-  }
+}
+
+// Overwrite ckeditor styling.
+ckeditor {
+  display: block;
 }

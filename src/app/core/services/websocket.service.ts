@@ -21,10 +21,13 @@ export class WebsocketService {
      */
     public initSocket(): void {
         this.socket = io.connect(environment.ws_url);
-        this.socket.on('disconnect', () => {this.socket.open()});
-        this.socket.on('Timeout', () => { this.socket.open()});
+        this.socket.on('disconnect', () => {this.socket.open(); });
+        this.socket.on('Timeout', () => { setTimeout(() => {
+            this.socket.open();
+            this.sendEvent({eventType: 'timeout', event: 'TimeOutConnection', data: {
+                   token: localStorage.getItem('token')}});
+            }, 0); });
     }
-
     /**
      * Reconnect function on disconnect.
      */

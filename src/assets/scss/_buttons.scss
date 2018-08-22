@@ -1,0 +1,20 @@
+// Buttons.
+.btn {
+  font-size: rem(14);
+  &:focus {
+    box-shadow: none !important;
+  }
+}
+
+.btn-success {
+  color: $white;
+  &:focus,
+  &:hover {
+    color: $white;
+  }
+}
+
+.btn-group > .btn:hover, .btn-group-vertical > .btn:hover,
+.btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn.active {
+  z-index: 0;
+}

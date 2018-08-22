@@ -1,0 +1,28 @@
+<div class="media-items" *ngIf="mediaList">
+  <div class="media-item" *ngFor="let myMedia of mediaList">
+    <div class="image_size">{{fileSize(myMedia.filesize) |  number : '1.2-2'}} MB</div>
+    <img *ngIf="myMedia.filemime.slice(0, 3) === 'ima'; else defaultMedia" class="img-fluid" src="{{myMedia.uri}}">
+    <img *ngIf="myMedia.filemime.slice(0, 3) === 'app'" class="img-fluid" src="../../../../assets/images/noDocs.svg">
+    <img *ngIf="myMedia.filemime.slice(0, 3) === 'vid'" class="img-fluid" src="../../../../assets/images/noVideo.svg">
+    <img *ngIf="myMedia.filemime.slice(0, 3) === 'aud'" class="img-fluid" src="../../../../assets/images/noAudio.svg">
+    <ng-template><img #defaultMedia class="img-fluid" src="../../../../assets/images/default.svg"></ng-template>
+    <div class="overlay">
+      <div class="updates">
+        <p class="hero__tagline">{{myMedia.filename}}</p>
+        <p *ngIf="myMedia.username && myMedia.username.name; else enableAnonymous" class="hero__author">By {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}</p>
+        <ng-template #enableAnonymous class="hero__author">by Anonymous on {{myMedia.created * 1000 | date}}
+        </ng-template>
+      </div>
+      <div class="checkbox">
+      </div>
+      <div class="options">
+        <a href="#"></a>
+        <a href="#"></a>
+      </div>
+    </div>
+  </div>
+</div>
+<app-doublebounce *ngIf="!mediaList"></app-doublebounce>
+<div *ngIf="mediaList && mediaList.length === 0">
+  <h1>No data present to retrieve.</h1>
+</div>

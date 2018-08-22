@@ -3,6 +3,8 @@
 **OpenStory** is a decoupled admin interface, capable of improving the usability of any `Drupal` website. With a `NodeJS middleware`, the **OpenStory** interface allows content managers to edit content in a collaborative way, 
  to manage multiple sites and to share the media gallery across various sites (feature enabled for multisite platforms).
 
+See [Demo](https://demo-v2.openstory.io) or visit the [Presentation site](https://openstory.io/).
+
 
 ## About OpenStory
 
@@ -30,7 +32,8 @@ Just imagine having only the information you need a click-away, without the need
 ## Build and Development server
 
 To get started you need the latest [Angular CLI](https://github.com/angular/angular-cli) version. 
-* Run `npm install` to download all the dependencies for the application. 
+* Run `npm install` to download all the dependencies for the application.
+* Into the environment file (E.g. `enironment.ts`) it needs to add the server url in the `ws_url` property. The url needs to be absolute (E.g. http://example.com).
 * Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 * Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 

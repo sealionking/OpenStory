@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Ng4LoadingSpinnerModule} from 'ng4-loading-spinner';
-import {JsonSchemaFormModule} from 'angular2-json-schema-form';
 
 import {ContentComponent} from './components/content/content.component';
 import {ContentRoutingModule} from './content-routing.module';
@@ -11,6 +9,8 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {SharedModule} from '../shared/shared.module';
 import { NewContentComponent } from './components/new-content/new-content.component';
 import { EditContentComponent } from './components/edit-content/edit-content.component';
+import {OsFormsModule} from '../os-forms/os-forms.module';
+import {LottieAnimationViewModule} from 'ng-lottie';
 
 /**
  * The Content module
@@ -21,10 +21,10 @@ import { EditContentComponent } from './components/edit-content/edit-content.com
         CommonModule,
         ContentRoutingModule,
         SharedModule,
-        Ng4LoadingSpinnerModule.forRoot(),
         NgxMasonryModule,
         NgSelectModule,
-        JsonSchemaFormModule
+        OsFormsModule,
+        LottieAnimationViewModule.forRoot()
     ],
     declarations: [ContentComponent, NewContentComponent, EditContentComponent],
     providers: [

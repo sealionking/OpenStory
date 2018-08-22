@@ -1,0 +1,22 @@
+<div *ngFor="let myUsers of userList" class="user-widget d-flex">
+  <div class="image">
+    <img *ngIf="myUsers.userPicture != ''; else defaultAvatar" class="avatar" src="{{myUsers.userPicture}}" alt="profile image"/>
+    <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg" alt="profile image"/></ng-template>
+  </div>
+  <div class="info d-flex flex-column justify-content-between">
+    <div>
+      <div class="title">{{myUsers.name}}</div>
+      <div class="created-date">{{myUsers.created | date}}</div>
+    </div>
+    <div>
+      <div class="mail">{{myUsers.mail}}</div>
+      <div class="roles" *ngFor="let role of myUsers.roles; let i = index">
+        <span *ngIf="role.id && i <= 1">{{role.label}}</span>
+      </div>
+    </div>
+  </div>
+</div>
+<app-doublebounce *ngIf="!userList"></app-doublebounce>
+<div *ngIf="userList && userList.length === 0">
+  <h1>No data present to retrieve.</h1>
+</div>

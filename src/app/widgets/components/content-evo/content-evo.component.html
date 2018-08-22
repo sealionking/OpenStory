@@ -1,0 +1,23 @@
+<div class="statistics d-flex" *ngIf="stories.length > 0 && stories">
+  <div class="all-stories d-flex flex-column">
+    <span class="name" [innerHTML]="stories[0].name"></span>
+    <span class="value" [innerHTML]="stories[0].value.all_stories"></span>
+  </div>
+
+  <div class="row">
+    <div *ngFor="let x of stories; let i = index">
+    <div *ngIf="i > 0 && i < stories.length">
+      <div class="statistic d-flex">
+        <div>
+          <div class="value" [innerHTML]="x.value.count || x.value.other"></div>
+          <div class="name" [innerHTML]="x.name"></div>
+        </div>
+        <img *ngIf="x.value.arrow === 'greater'" class="up" src="assets/images/upArrow.svg" alt="Up" width="16" height="16">
+        <img *ngIf="x.value.arrow === 'smaller'" class="down" src="assets/images/downArrow.svg" alt="Up" width="16" height="16">
+        <div *ngIf="x.value.arrow === 'none'" class="none"></div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<app-doublebounce *ngIf="stories.length == 0"></app-doublebounce>

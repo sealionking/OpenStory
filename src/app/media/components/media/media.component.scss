@@ -4,22 +4,13 @@
 @import "../../../../assets/scss/filter";
 @import "../../../../assets/scss/imagegrid";
 @import "../../../../assets/scss/overlay";
-
-.right-container {
-  margin: rem(0) rem(44) rem(52) rem(92);
-  position: relative;
-  top: 0;
-}
+@import "../../../../assets/scss/sidemenu";
 
 .filter {
-  margin-left: rem(8);
-  width: calc(100% - 14px);
+  width: 100%;
 }
 
 .searchbar{
-  h1{
-    margin-left: rem(7);
-  }
   .search {
     svg {
       right: rem(5);
@@ -27,8 +18,7 @@
   }
 }
 app-masonry {
-  //margin-left: rem(12);
-  //margin-right: rem(-16);
+  margin: 0 rem(-7.5);
   img {
     max-height: rem(600);
     width: 100%;
@@ -54,4 +44,33 @@ button {
   padding: 10px 24px;
   text-align: center;
   text-decoration: none;
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(60) 0;
+  min-height: calc(100vh - 190px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+// Loader.
+lottie-animation-view {
+  width: 100%;
+}
+
+.no-content {
+  margin: 20px 0;
+  font-size: 24px;
 }

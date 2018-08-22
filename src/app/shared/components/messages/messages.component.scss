@@ -9,7 +9,7 @@
   position: fixed;
   right: 40%;
   top: 0;
-  z-index: 1;
+  z-index: 100;
 }
 
 .closebtn {
@@ -25,4 +25,14 @@
 
 .closebtn:hover {
   color: black;
+}
+
+div {
+  z-index: 97;
+}
+
+.alert-md-color {
+  background-color: #7B1FA2;
+  border-color: #4A148C;
+  color: #fff;
 }

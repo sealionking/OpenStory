@@ -5,6 +5,7 @@ import {GeneralUsers} from '../../../shared/model/general-users';
 import {MessageService} from '../../../core/services/message.service';
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {UsersService} from '../../services/users.service';
+import {UserData} from '../../../shared/model/user-data';
 
 /**
  * User Display Page component
@@ -16,13 +17,9 @@ import {UsersService} from '../../services/users.service';
 })
 export class UsersComponent implements OnInit {
     /**
-     * Filter list for the user roles
-     * @type {string[]}
-     */
-    /**
      * Filter dropdown options
      */
-    dropItems: any;
+    dropItems = [];
     /**
      * Sort list used to sort the users by name alphabetically
      * @type {string[]}
@@ -55,14 +52,22 @@ export class UsersComponent implements OnInit {
      */
     tmpList: GeneralUsers[];
     initUsers = false;
+    deleteStatus = false;
+    checkbox: any;
+    currentUser: UserData;
 
+    public lottieConfig: Object;
     /**
      * @ignore
      */
     constructor(private auth: AuthenticateService,
                 private wsService: WebsocketService,
-                private messageService: MessageService,
-                private usersService: UsersService) {
+                private messageService: MessageService) {
+        this.lottieConfig = {
+            path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
     /**
@@ -70,6 +75,7 @@ export class UsersComponent implements OnInit {
      */
     ngOnInit() {
         this.showUsers();
+        this.getUserInfo();
     }
 
     /**
@@ -78,15 +84,23 @@ export class UsersComponent implements OnInit {
      * @return {Array<GeneralUsers>}
      */
     showUsers(): Array<GeneralUsers> {
-        this.wsService.sendRequest({event: 'getUsers', data: {token: this.auth.getToken()}})
+        this.wsService.sendRequest({
+            eventType: 'user', event: 'ListUser', data: {
+                token: this.auth.getToken(),
+                sorting: {created: 'DESC'}
+            }
+        })
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
+                        this.getUserRoles();
                         // TODO: Remove this functionality, when back-end fix multiple emits issue.
-                        if(this.initUsers){ return;} else {this.initUsers = true;}
+                        if (this.initUsers) {
+                            return;
+                        } else {
+                            this.initUsers = true;
+                        }
                         this.list = data.body;
-                        // TODO: Remove this function. when back-end will give us the full url.
-                        this.usersService.addFullPath(this.list);
                         this.tmpList = this.list;
                         break;
                     case 400:
@@ -146,7 +160,7 @@ export class UsersComponent implements OnInit {
         this.list = this.tmpList.filter(data => {
             for (const entry of data.roles) {
                 if (this.statusFilter !== null) {
-                    if ((entry.id === this.statusFilter) || (entry.label === this.statusFilter) ) {
+                    if ((entry.id === this.statusFilter) || (entry.label === this.statusFilter)) {
                         return true;
                     } else {
                     }
@@ -163,33 +177,79 @@ export class UsersComponent implements OnInit {
     }
 
     /**
-     * Used to find the user roles
-     */
-    filterItems() {
-        let roles: any;
-        roles = this.tmpList.map(data => {
-            for (const envy of data.roles) {
-                if (data.roles.length > 0) {
-                    roles = envy;
-                }
-            }
-            return roles;
-        });
-        this.dropItems = Array.from(new Set(roles.map(x => x.label)));
-    }
-
-    /**
      * Delete user from view and server
      * @param name
      * @param id
      */
-    deleteUser(name, id){
-        this.wsService.sendEvent({event: 'deleteEntity', data: {
-                token: this.auth.getToken(), entityType: 'user', userId: id
-            }});
-        this.list = this.tmpList.filter( data => {
-            return data.uid !== id;
+    deleteThisUser(id) {
+        this.wsService.sendEvent({eventType: 'user', event: 'DeleteEntity', data: {
+                token: this.auth.getToken(), entityType: 'user', bundle: 'user', id: id
+            }
         });
+        this.list = this.tmpList.filter(data => {
+            return data.uuid !== id;
+        });
+    }
+
+    /**
+     * cancel delete user function
+     */
+    return() {
+        this.deleteStatus = false;
+        this.checkbox = null;
+    }
+
+    getUserInfo() {
+        this.currentUser = this.auth.getUserInfo();
+    }
+
+    /**
+     * Function used to get an object array of the user roles
+     */
+    getUserRoles() {
+        this.wsService.sendRequest({
+            eventType: 'user',
+            event: 'GetUserRoles', data: {token: this.auth.getToken()}
+        })
+            .subscribe(data => {
+                switch (data.statusCode) {
+                    case 200:
+                        const roles = [];
+                        for (const role in data.body) {
+                            if (role) {
+                                roles.push({
+                                    label: data.body[role],
+                                    id: role
+                                });
+                            }
+                        }
+                        this.dropItems = Array.from(new Set(roles
+                            .map(x => x.label)));
+                        break;
+                    case 400:
+                        // TODO: add general messages - bootstrap.
+                        this.messageService.add('Bad request.');
+                        break;
+                    case 403:
+                        // TODO: add general messages - bootstrap.
+                        this.messageService.add('Access denied.');
+                        break;
+                    case 404:
+                        // TODO: add general messages - bootstrap.
+                        this.messageService.add('Not Found.');
+                        break;
+                    case 422:
+                        // TODO: add general messages - bootstrap.
+                        this.messageService.add('Unprocessable Entity.');
+                        break;
+                    case 500:
+                        // TODO: add general messages - bootstrap.
+                        this.messageService.add('Internal Server Error.');
+                        break;
+                    default:
+                        this.messageService.add('Connection issues between UI and Server');
+                }
+            });
     }
 
 }

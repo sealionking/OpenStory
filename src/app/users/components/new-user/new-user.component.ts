@@ -11,17 +11,21 @@ import {Router} from '@angular/router';
     styleUrls: ['./new-user.component.scss']
 })
 export class NewUserComponent implements OnInit {
-    userSchema: string;
-    displayData: any;
-    myLayout: any;
-    form: any;
+    userSchema: any;
     userRoles = [];
-    minLength = 6;
+    initContent = false;
+    // Loader visibility.
+    lottieLoader: boolean = false;
+    showSchema = false;
+    public lottieConfig: Object;
+
     /**
      *
      * @param {WebsocketService} wsService
      * @param {AuthenticateService} auth
      * @param {MessageService} messageService
+     * @param ngSpinner
+     * @param loader
      * @param {Router} route
      */
     constructor(
@@ -29,6 +33,11 @@ export class NewUserComponent implements OnInit {
         private auth: AuthenticateService,
         private messageService: MessageService,
         private route: Router) {
+        this.lottieConfig = {
+            path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
     /**
@@ -38,130 +47,97 @@ export class NewUserComponent implements OnInit {
         this.getUserRoles();
         this.schemaRequest();
     }
+
     /**
      * Function used to retrevie the form info from the server
      */
     schemaRequest() {
         this.wsService.sendRequest({
-                     event: 'getEntityDefinition', data: {token: this.auth.getToken(), entityType: 'user', bundle: 'user'}})
+            eventType: 'entity',
+            event: 'EntityDefinition', data: {token: this.auth.getToken(), entityType: 'user', bundle: 'user'}
+        })
             .subscribe(data => {
-            switch (data.statusCode) {
-                case 200:
-                    this.userSchema = data.body;
-                    // TODO: Remove this when back-end will send correct schema.
-                    delete this.userSchema['properties']['roles']['enum'];
-                    this.userSchema['properties']['roles']['oneOf'] = this.userRoles;
-                    this.userSchema['properties']['mail']['pattern'] = "^\\S+@\\S+$";
-                    this.userSchema['properties']['mail']['description'] = "User Email Address";
-                    this.userSchema['properties']['pass']['minLength'] = this.minLength;
-                    this.userSchema['properties']['name']['placeholder'] = 'Username';
-                    this.userSchema['properties']['First Name']['placeholder'] = 'First Name';
-                    this.userSchema['properties']['Last Name']['placeholder'] = 'Last Name';
-                    this.myLayout = [
-                        {
-                            key    : 'First Name',
-                            notitle: true
-
-                        },
-                        {
-                            key    : 'Last Name',
-                            notitle: true
-
-                        },
-                        {
-                            key    : 'name',
-                            notitle: true
-
-                        },
-                        {
-                            key    : 'mail',
-                            notitle: true
-
-                        },
-                        {
-                            key  : 'pass',
-                            type : 'password',
-                            title: 'Password: '
-                        },
-                        {
-                            key  : 'roles',
-                            title: 'Available Roles: ',
-                            htmlClass : 'col-xl-3 col-lg-4 col-md-6 p-0',
-                        },
-                        {
-                            type : 'submit',
-                            style: 'btn-success float-right',
-                            title: 'Add New User'
+                // Set the loader visibility.
+                this.lottieLoader = true;
+                switch (data.statusCode) {
+                    case 200:
+                        if (this.initContent) {
+                            return;
+                        } else {
+                            this.initContent = true;
                         }
-                    ];
-                    break;
-                case 400:
-                    // TODO: add general messages - bootstrap.
-                    this.messageService.add('Bad request.');
-                    break;
-                case 403:
-                    // TODO: add general messages - bootstrap.
-                    this.messageService.add('Access denied.');
-                    break;
-                case 404:
-                    // TODO: add general messages - bootstrap.
-                    this.messageService.add('Not Found.');
-                    break;
-                case 422:
-                    // TODO: add general messages - bootstrap.
-                    this.messageService.add('Unprocessable Entity.');
-                    break;
-                case 500:
-                    // TODO: add general messages - bootstrap.
-                    this.messageService.add('Internal Server Error.');
-                    break;
-                default:
-                    this.messageService.add('Connection issues between UI and Server');
-            }
-        });
+                        this.userSchema = data.body.definition;
+                        break;
+                    case 400:
+                        this.messageService.add('Bad request.');
+                        break;
+                    case 403:
+                        this.messageService.add('Access denied.');
+                        break;
+                    case 404:
+                        this.messageService.add('Not Found.');
+                        break;
+                    case 422:
+                        // TODO: Change back when json.api is re-implemented
+                        // data.body.errors.forEach((i) => {
+                        //     this.messageService.add(i.detail);
+                        // });
+                        this.messageService.add(data.body.message);
+                        break;
+                    case 500:
+                        this.messageService.add('Internal Server Error.');
+                        break;
+                    default:
+                        this.messageService.add('Connection issues between UI and Server');
+                }
+                this.showSchema = true;
+            });
     }
 
     /**
      * Function used to get an object array of the user roles
      */
     getUserRoles() {
-        this.wsService.sendRequest( {
-            event: 'getUserRoles', data: {token: this.auth.getToken()}
+        this.wsService.sendRequest({
+            eventType: 'user',
+            event: 'GetUserRoles', data: {token: this.auth.getToken()}
         })
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
-                        let roles = data.body;
-                        for (let role in roles) {
-                            this.userRoles.push({
-                                title: roles[role],
-                                enum: [role]
-                            });
+                        const roles = data.body;
+                        for (const role in roles) {
+                            if (role) {
+                                this.userRoles.push({
+                                    title: roles[role],
+                                    enum: [role]
+                                });
+                            }
                         }
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Unprocessable Entity.');
+                        // TODO: Change back when json.api is re-implemented
+                        // data.body.errors.forEach((i) => {
+                        //     this.messageService.add(i.detail);
+                        // });
+                        this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Internal Server Error.');
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
+                this.showSchema = true;
             });
     }
 
@@ -170,45 +146,52 @@ export class NewUserComponent implements OnInit {
      * @param formData: any
      * @constructor
      */
-    OnSubmitFn(formData): void {
-        this.displayData = formData;
-        this.wsService.sendRequest({event: 'createEntity', data: {token: this.auth.getToken(),
-                entityType: 'user', bundle: 'user', body: formData}})
+    onSubmitFn(formData): void {
+        this.wsService.sendRequest({
+            eventType: 'user', event: 'CreateEntity', data: {
+                token: this.auth.getToken(),
+                entityType: 'user', bundle: 'user', body: formData
+            }
+        })
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
-                        this.route.navigate(['/users'])
+                        this.route.navigate(['/users']);
+                        this.messageService.add('User has been created!', 'success');
+                        break;
+                    case 201:
+                        this.route.navigate(['/users']);
+                        this.messageService.add('User has been created!', 'success');
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Access denied.');
+                        this.messageService.add(data.body.message);
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Unprocessable Entity.');
+                        // TODO: Change back when json.api is re-implemented
+                        // data.body.errors.forEach((i) => {
+                        //     this.messageService.add(i.detail);
+                        // });
+                        this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Internal Server Error.');
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
             });
-
     }
+
     /**
      * Allows the user to go back to the users screen
      */
-    goBack(){
+    goBack() {
         this.route.navigate(['/users']);
     }
 }

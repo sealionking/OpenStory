@@ -5,5 +5,5 @@
 
 export const environment = {
     production: false,
-    ws_url: 'https://nodejs.openstory.io:30000'
+    ws_url: ''
 };

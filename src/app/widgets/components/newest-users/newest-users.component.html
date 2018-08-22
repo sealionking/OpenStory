@@ -1,0 +1,11 @@
+<div class="user-widget" *ngIf="newestUsers">
+  <div class="d-flex align-items-center justify-content-center">
+    <div class="number">
+      <div *ngIf="newestUsers !== '0'; else newUser" [innerHTML]="newestUsers"></div>
+      <ng-template #newUser><div class="number">0</div></ng-template>
+    </div>
+    <img src="../../../../assets/images/users.svg" width="48" height="48">
+    <div class="message">newest users on site</div>
+  </div>
+</div>
+<app-doublebounce *ngIf="!newestUsers"></app-doublebounce>

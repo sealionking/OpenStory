@@ -9,6 +9,7 @@ import {FooterComponent} from './footer/footer.component';
 import {HeaderComponent} from './header/header.component';
 import {SideMenuComponent} from './side-menu/side-menu.component';
 import {SharedModule} from './shared/shared.module';
+import {StatusCodesModule} from './status-codes/status-codes.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {SharedModule} from './shared/shared.module';
         BrowserModule,
         BrowserAnimationsModule,
         CoreModule,
-        SharedModule
+        SharedModule,
+        StatusCodesModule
     ],
     bootstrap: [AppComponent]
 })

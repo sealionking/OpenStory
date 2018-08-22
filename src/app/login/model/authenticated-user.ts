@@ -18,4 +18,5 @@ export interface AuthenticatedUser {
      * User ID
      */
     uid?: number;
+    captcha?: string;
 }

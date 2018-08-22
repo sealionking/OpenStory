@@ -38,6 +38,9 @@ export class AppComponent implements OnInit {
             if (e instanceof NavigationEnd) {
                 this.routeHidden = (this.auth.getToken() !== null);
             }
+            if (this.router.url === '/page-not-found') {
+                this.routeHidden = false;
+            }
         });
     }
 

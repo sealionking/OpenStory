@@ -1,0 +1,25 @@
+/* Modal General Style */
+.modal-dialog {
+  @include media-breakpoint-up(1441px) {
+    max-width: rem(1347);
+  }
+}
+
+.modal-content {
+  @include border-radius(0);
+  background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  padding: rem(50);
+  .btn-group {
+    background-color: $white;
+    .btn {
+      height: rem(40);
+      padding: 0 rem(20);
+    }
+  }
+  .form-actions {
+    padding: 0 rem(50);
+    button {
+      margin: 0 rem(8);
+    }
+  }
+}

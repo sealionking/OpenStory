@@ -3,13 +3,16 @@ export interface GeneralUsers {
     changed: string;
     created: string;
     defaultLangcode: boolean;
-    fieldC: any[];
+    fieldFirstName: string;
+    fieldLastName: string;
+    fieldUserC: any[];
     init: string;
     langcode: string;
     login: string;
     mail: string;
     metatag: any[];
     name: string;
+    preferredAdminLangcode: string;
     preferredLangcode: any[];
     publishedArticles: number;
     roles: any[];

@@ -4,7 +4,6 @@ import {Media} from '../../models/media';
 import {MediaService} from '../../services/media.service';
 import {MessageService} from '../../../core/services/message.service';
 // import {NgxMasonryOptions} from '../../../masonry/ngx-masonry-options.interface';
-import {Ng4LoadingSpinnerService} from 'ng4-loading-spinner';
 import {WebsocketService} from '../../../core/services/websocket.service';
 
 /**
@@ -59,17 +58,19 @@ export class MediaComponent implements OnInit {
      * Mansonry animation options
      * @type {{transitionDuration: string; resize: boolean}}
      */
-    // public masonryOptions: NgxMasonryOptions = {
-    //     transitionDuration: '0.4s',
-    //     resize: true
-    // };
-/**
- * @ignore
- */
+
+    public lottieConfig: Object;
+    /**
+     * @ignore
+     */
     constructor(private mediaService: MediaService,
                 private messageService: MessageService,
-                private spinnerService: Ng4LoadingSpinnerService,
                 private wsSocket: WebsocketService) {
+        this.lottieConfig = {
+            path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
     /**
@@ -83,8 +84,7 @@ export class MediaComponent implements OnInit {
      * Get list of media.
      */
     public listenMedia(): void {
-        this.spinnerService.show();
-        this.wsSocket.eventListen('getMedia')
+        this.wsSocket.eventListen('ListMedia')
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
@@ -122,7 +122,6 @@ export class MediaComponent implements OnInit {
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
-                this.spinnerService.hide();
             });
 
     }
@@ -156,7 +155,7 @@ export class MediaComponent implements OnInit {
         this.mediaList = this.mediaList.slice(0, 15);
     }
 
-    fileSize(size){
+    fileSize(size) {
         return size / 1024000;
     }
 }

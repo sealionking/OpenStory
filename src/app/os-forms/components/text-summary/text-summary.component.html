@@ -1,0 +1,16 @@
+<div>
+  <textarea type="text"
+            [placeholder]="placeholder"
+            (input)="onChange()"
+            [(ngModel)]="inputVal.summary"
+            [attr.maxlength]="maxLength"
+            [tooltip]="description" placement="right"
+  ></textarea>
+    <ckeditor [config]="ckeConfig"
+              (change)="onChange()"
+              [(ngModel)]="inputVal.body"
+              [maxlength]="maxLength"
+              [tooltip]="description" placement="right"
+    >
+    </ckeditor>
+</div>

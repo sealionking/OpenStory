@@ -1,0 +1,59 @@
+input {
+  display: none;
+}
+// .options > label
+label {
+  display: inline-block;
+  position: relative;
+  margin-right: 16px;
+  padding-left: 36px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 24px;
+
+  // .options > label:before
+  // this creates the outer circle for faux radio button
+  &:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 0;
+    top: 50%;
+    margin-top: -10px;
+    border: 2px solid #687086;
+    border-radius: 100%;
+  }
+
+  // .options > label:after
+  // this creates the inner circle for active faux radio button
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    top: 10px;
+    left: 10px;
+    margin-top: 0;
+    background: #687086;
+    border-radius: 100%;
+    transition: .2s ease-in-out;
+  }
+}
+
+// .options :checked + label:after
+:checked + label {
+  font-weight: 600;
+  &:after {
+    background: #53D79F;
+    height: 8px;
+    width: 8px;
+    margin-top: -2px;
+    left: 6px;
+  }
+  &:before {
+    border-color: #53D79F;
+  }
+}

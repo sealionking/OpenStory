@@ -8,11 +8,9 @@
   width: 100%;
   h1 {
     color: $text-color1;
-    font-size: rem(20);
     font-weight: 600;
     line-height: rem(27);
-    height: rem(27);
-    margin-left: rem(21);
+    margin: 0 rem(8) 0 0;
   }
   .add-content{
     position: relative;
@@ -21,15 +19,18 @@
       left: rem(10);
       position: relative;
       z-index: 99;
-      &.add svg {
+      &.add .svg {
+        @include box-shadow(0, 2px, 2px, 0, rgba(0,0,0,0.15));
+        @include border-radius(100%);
         background-color: transparent;
-        height: rem(38.1);
+        height: rem(30);
         position: relative;
-        top: rem(-6);
+        top: rem(-2);
         transform: rotate(0deg);
         transition: all 1s;
-        width: rem(38.1);
+        width: rem(30);
         -webkit-transform: rotate(0deg);
+        cursor: pointer;
         &.rotate {
           filter: drop-shadow(0 rem(2) rem(2) $ligth-grey) ;
           transform: rotate(45deg);
@@ -41,8 +42,12 @@
     ul.menu {
       display: none;
       float: right;
+      height: 100%;
       left: rem(20);
+      margin-left: rem(40);
+      padding: 0;
       position: absolute;
+      overflow: hidden;
       top: 0;
       &.anim {
         display: block;
@@ -51,9 +56,7 @@
         color: $green;
         cursor: pointer;
         display: inline;
-        font-family: "Open Sans";
         font-size: rem(14);
-        height: rem(19);
         line-height: rem(19);
         position: relative;
         &:after {
@@ -90,39 +93,7 @@
       display: none;
     }
     .add-content {
-      top: -48px;
-      padding-left: 125px;
-      ul.menu {
-        background-color: $white;
-        display: table-footer-group;
-        height: calc(100vh - 60px);
-        left: -100%;
-        padding-left: 20px;
-        padding-top: rem(20);
-        position: absolute;
-        transition: all 0.5s;
-        top: rem(40);
-        width: calc(100% - 50px);
-        z-index: 6;
-        &.anim {
-          display: block;
-          left: 0 ;
-          overflow-y: scroll;
-          transition: all 0.5s;
-        }
-        li {
-          color: #53D79F;
-          display: flex;
-          font-family: "Open Sans";
-          font-size: 18px;
-          line-height: 24px;
-          padding: 0 0 rem(32) 0;
-          text-align: right;
-          &:after {
-            content: none;
-          }
-        }
-      }
+      display: none;
     }
   }
 }

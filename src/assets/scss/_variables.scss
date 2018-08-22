@@ -11,20 +11,56 @@ $black:                   #000000;
 $white:                   #ffffff;
 $ligth-grey:              #D4D7DD;
 $dark-grey:               #4A5269;
-$green:                   #53D79F;
+$green:                   #53D79F !default;
 $text-color1:             #687086;
 $text-color2:             #333B50;
 $text-color3:             rgba(51, 59, 80, 0.7);
 $text-color4:             #B1B4BE;
-$background:                linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
-$primary-bg-color:          radial-gradient(circle, #7AF3C0 0%, #53D79F 100%);
-$secondary-bg-color:        linear-gradient(180deg, #4A5269 0%, #222A3D 100%);
+$background:              linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+$primary-bg-color:        radial-gradient(circle, #7AF3C0 0%, #53D79F 100%);
+$secondary-bg-color:      linear-gradient(180deg, #4A5269 0%, #222A3D 100%);
+$secondary:               #F9F9F9 !default;
+
+// Body
+//
+// Settings for the `<body>` element.
+$body-color:                $text-color2 !default;
 
 
+// Fonts
+//
+// Font, line-height, and color for body text, headings, and more.
 
-//== Typography
+// stylelint-disable value-keyword-case
 $font-family-Open-Sans:   "Open Sans";
+$font-family-base:        "Open Sans";
+$line-height-base:            1.35714 !default;
+
+$h1-font-size:                20px;
+
+$headings-line-height:        1.35 !default;
+
+
+// Buttons
+//
+// For each of Bootstrap's buttons, define text, background, and border color.
+$btn-padding-y: 0 !default;
+$btn-line-height:             2 !default;
+
+// Allows for customizing button radius independently from global border radius
+$btn-border-radius:           0 !default;
+$btn-border-radius-lg:        0 !default;
+$btn-border-radius-sm:        0 !default;
+
 
 //--Mixins
 $enable-transitions:        true !default;
 $transition-base:           all .2s ease-in-out !default;
+
+
+// Modals
+
+// Padding applied to the modal body
+$modal-content-border-radius:       0 !default;
+$modal-backdrop-bg:                 $text-color2 !default;
+$modal-backdrop-opacity:            .8 !default;

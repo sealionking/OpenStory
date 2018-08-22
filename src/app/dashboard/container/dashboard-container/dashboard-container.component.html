@@ -1,0 +1,71 @@
+<section class="main-container-right">
+    <div class="searchbar">
+        <div class="d-flex align-items-left">
+            <h1>Dashboard</h1>
+            <app-dashboard-library (confirmWidget)="confirmWidgetFunction($event)" (widgetValue)="getIndex($event)"></app-dashboard-library>
+        </div>
+    </div>
+
+    <!--Loader-->
+    <lottie-animation-view *ngIf="!viewEnd && widgets.length === 0"
+                           [options]="lottieConfig"
+                           [width]="300"
+                           [height]="400">
+    </lottie-animation-view>
+
+    <!--In case there are no widgets present-->
+    <div *ngIf="viewEnd && widgets.length === 0">
+        <h1>Please click the <span class="shadow-sm pl-1 pr-1 bg-white rounded add-widget">Add Widget</span> button to add a widget.</h1>
+    </div>
+
+    <!--Dashboard-->
+    <div class="grid" *ngIf="widgets.length > 0">
+        <div class="grid-item"
+             *ngFor="let widget of widgets; let i = index;"
+             [class.large]="large[i] == 'large'"
+             [class.default]="revert[i] == 'default'"
+             [class.minimized]="mini[i] == 'mini'"
+             [class.expand]="expand[i] == 'expand'"
+             [id]="i">
+            <div class="widget-content">
+                <div class="d-flex justify-content-end">
+                    <!--TODO: Redo after Widget library is done-->
+                    <span *ngIf="optionCollapse == false" (click)="gridShitLayout(i, 'mini');" class="minimize">
+                        <span [inlineSVG]="'assets/images/inline-svg/minimize.svg'"></span>
+                    </span>
+                    <span *ngIf="optionCollapse == true" (click)="gridShitLayout(i, 'expand');" class="expand">
+                        <span [inlineSVG]="'assets/images/inline-svg/plus_1.svg'"></span>
+                    </span>
+                    <span *ngIf="optionResize == false" (click)="gridShitLayout(i, 'large');" class="maximize">
+                        <span [inlineSVG]="'assets/images/inline-svg/maximize.svg'"></span>
+                    </span>
+                    <span *ngIf="optionResize == true" (click)="gridShitLayout(i, 'default');" class="revert">
+                        <span [inlineSVG]="'assets/images/inline-svg/revert.svg'"></span>
+                    </span>
+                    <!--TODO: Redo the remove function after Widget library is done-->
+                    <span (click)="remove(i); gridShitLayout();" class="close_1">
+                        <span [inlineSVG]="'assets/images/inline-svg/close_1.svg'"></span>
+                    </span>
+                </div>
+                <app-widget-body
+                        class="grid-item-body"
+                        [widget]="widget"
+                        [indent]="i"
+                        [selectedWidget]="widget.key"
+                        [visible]= true
+                        (resizeGrid)="resizeGrid()"
+                        id={{i}}>
+                </app-widget-body>
+            </div>
+            <div class="handle" [inlineSVG]="'assets/images/inline-svg/draganddrop.svg'"></div>
+        </div>
+    </div>
+</section>
+
+<div *ngIf="draggedWidgets === true" class="d-flex align-items-center notification" [ngClass]="{'closed': closeDialog == true}">
+    <div class="question-title h3">Save widget changes?</div>
+    <div class="modal-buttons d-flex justify-content-between p-0">
+        <button class="btn btn-secondary" (click)="closePopUp()">No</button>
+        <button class="btn btn-success" (click)="saveConfig()">Yes</button>
+    </div>
+</div>

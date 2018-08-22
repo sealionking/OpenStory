@@ -5,7 +5,7 @@ export class Comment {
     /**
      *Displays the author of the comment.
      */
-    username: string;
+    username: any;
     /**
      *Shows the content of the comment.
      */

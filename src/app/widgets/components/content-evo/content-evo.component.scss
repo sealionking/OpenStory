@@ -1,0 +1,49 @@
+@import '../../../../assets/scss/variables';
+@import '../../../../assets/scss/mixins';
+
+// Statistics.
+.statistics {
+  margin: rem(50) rem(9) rem(16);
+}
+
+.statistic {
+  border-left: 1px solid #eee;
+  margin: rem(4px) 0;
+  padding: 0 0 0 rem(19);
+}
+
+// Name.
+.name {
+  color: $text-color2;
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: rem(19);
+  width: rem(50);
+}
+
+// Value.
+.value {
+  font-size: rem(24);
+  line-height: rem(33);
+}
+
+.all-stories {
+  margin: 0 rem(26) 0 0;
+  width: rem(110);
+  .name {
+    width: auto;
+  }
+  .value {
+    font-weight: 600;
+  }
+}
+
+// Images.
+img {
+  margin: rem(8) rem(14) 0 0;
+}
+
+.none {
+  margin: rem(8) rem(14) 0 0;
+  width: rem(16);
+}

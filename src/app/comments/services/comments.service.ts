@@ -21,9 +21,10 @@ export class CommentsService {
      */
     public getCommentsList() {
             this.wsSocket.sendEvent({
-                event: 'getCommentsList',
+                eventType: 'comment',
+                event: 'ListComment',
                 data: {
-                    token: this.auth.getToken()
+                    token: this.auth.getToken(), sorting: { created: 'DESC' }
             }
         });
     }

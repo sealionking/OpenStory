@@ -1,0 +1,55 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+@import "../../../../assets/scss/overlay";
+@import "../../../../assets/scss/imagegrid";
+
+.item {
+  margin: rem(30) rem(6);
+  &:first-child {
+    margin: rem(24) rem(6) rem(30);
+  }
+  &:last-child {
+    margin: rem(24) rem(6) rem(21);
+  }
+}
+
+.info {
+  margin: 0 0 0 rem(14);
+  position: relative;
+  width: calc(100% - 104px);
+  &:after {
+    background-color: $ligth-grey;
+    bottom: rem(-15);
+    content: "";
+    height: 1px;
+    position: absolute;
+    width: 100%;
+  }
+}
+
+.title {
+  font-size: rem(14);
+  font-weight: 700;
+}
+
+.author {
+  color: #707684;
+  font-size: rem(12);
+  font-weight: 700;
+}
+
+.comment-date {
+  color: $text-color4;
+  font-size: rem(12);
+  font-weight: 600;
+}
+
+// Overwride ng select.
+ng-select.custom {
+  right: rem(70) !important;
+  width: rem(125);
+  z-index: 2;
+  &.opened {
+    width: rem(200);
+  }
+}

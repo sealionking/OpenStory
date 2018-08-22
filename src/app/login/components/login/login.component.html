@@ -2,18 +2,17 @@
   <div class="row">
     <section class="col-lg-8 row section-left ">
       <div class="col-1"></div>
-      <div class="col-11 flex-column custom-story">
-        <h1 class="d-flex">Hello</h1>
-        <p class="d-block">To protect your OpenStory account, as well as the security of the platforms on which OpenStory is installed, keep your password confidential. You are responsible for the activity that happens on or through the Platform’s account.
-        </p><br>
-        <p> Start your demo by inserting the following credentials:
-          <br>
-          Name: <b>demo</b><br>
-          Password: <b>demo</b></p>
-          <br>
-         <p> Log in to your demo account and start editing like a pro!</p>
+      <div class="col-11 flex-column">
+        <h1 class="d-flex">Hello.</h1>
+        <p class="d-block">
+          To protect your OpenStory account, as well as the security of the platforms on which OpenStory is installed, keep your password confidential.</p>
+        <p class="d-block"> You are responsible for the activity that happens on or through the Platform’s account.</p>
+        <p class="d-block"> Log In to your account and start editing like a pro! </p>
       </div>
-      <p class="footer-left">© 2018 Open Story All Rights Reserved</p>
+      <img class="position-absolute login-image" src="../../../../assets/images/cloud-boy.png">
+      <img class="position-absolute login-image z-index-negative cloud-image" src="../../../../assets/images/bg.png">
+      <p class="footer-left position-absolute">© {{currentYear}} Open Story All Rights Reserved</p>
+
     </section>
     <section class="col-lg-4 section-right ">
       <div class="container">
@@ -25,42 +24,40 @@
             <img class="img-fluid" src="../../../assets/images/logo-text.svg">
           </div>
         </div>
-        <div class="col pl-5" >
+        <div class="col" >
           <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
             <label class="log-in">LOG IN</label>
-            <div class="form-container">
-            <span class="input input--name">
-              <input class="input__field" type="text" name="name" [(ngModel)]="model.name" #name="ngModel" placeholder="Name" required  />
-              <label class="input__label">
-		            <span class="input__label-content"></span>
-              </label>
-              <span class="input__focuslabel">
-              </span>
-            </span>
-              <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+            <div class="form-elements">
+              <div class="form-container">
+                <input id="name" type="text" name="name" [(ngModel)]="model.name" #name="ngModel" autocomplete="off" required />
+                <label id="username" for="name">Username</label>
+                <div class="bar"></div>
+                <div *ngIf="f.submitted && !name.valid" class="help-block">Name is required</div>
+              </div>
+              <div class="form-container">
+                <input id="password" type="password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+                <label id="passwords" for="password">Password</label>
+                <div class="bar"></div>
+                <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
+              </div>
             </div>
-            <div class="form-container">
-            <span class="input input--password">
-              <input class="input__field" type="password" name="password" [(ngModel)]="model.password" #password="ngModel" placeholder="Password" required />
-              <label class="input__label">
-		          <span class="input__label-content"></span>
-              </label>
-                <span class="input__focuslabel">
-                  <span class="input__focuslabel-content" aria-hidden="true"></span>
-              </span>
-            </span>
-              <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
-            </div>
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between options">
+              <div class="checkbox">
+                <label >Remember me
+                  <input type="checkbox" checked="checked">
+                  <span class="checkmark"></span>
+                </label>
+              </div>
+              <a class="d-block" href="#">Forgot password?</a>
             </div>
             <button type="submit" class="btn btn-lg btn-block btn-login" [disabled]="!f.form.valid">Log in</button>
           </form>
         </div>
       </div>
-      <p class="footer-right">Privacy Policy & Cookie Information | Terms of use</p>
+      <p class="footer-right position-absolute">Privacy Policy & Cookie Information | Terms of use</p>
     </section>
     <div class="col-12 text-center w-100 m-0 footer-frontpage">
-      <div class="col text-left">© 2018 Open Story All Rights Reserved</div>
+      <div class="col text-left">© {{currentYear}} Open Story All Rights Reserved</div>
       <div class="col text-right"><a href="https://openstory.io/" target="_blank">Privacy Policy & Cookie Information | Terms of use</a></div>
     </div>
   </div>

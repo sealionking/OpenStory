@@ -1,0 +1,46 @@
+<ng-select *ngIf="showFilter == true && contentList"
+        style=" position: absolute;
+                top: 0;
+                right: 0;"
+        class="custom"
+        (open)="filterItems()"
+        [items]="items"
+        bindLabel="name"
+        bindValue="id"
+        [searchable]="false"
+        placeholder="Content Type"
+        [(ngModel)]="selectedFilter"
+        (change)="filter()"
+        (clear)="clearFilter()"
+>
+</ng-select>
+
+<div class="item d-flex" *ngFor="let content of contentList">
+    <div class="img">
+        <img *ngIf="!content?.osContentPicture.url || content?.osContentPicture.url === '';
+            else defaultImage"
+             class="content-image"
+             src="../../../../assets/images/default.svg"
+             width="90"
+             height="auto"/>
+        <ng-template #defaultImage>
+            <img class="content-image"
+                 src="{{ content?.osContentPicture.url }}"
+                 width="90"
+                 height="auto"/>
+        </ng-template>
+        <!--src="{{content.osContentPicture.url}}"-->
+    </div>
+    <div class="info d-flex flex-column justify-content-between">
+        <div>
+            <div class="title">{{ content?.title }}</div>
+            <div class="author">by {{ content?.username?.name }}</div>
+        </div>
+
+        <div class="comment-date">Created on: {{content?.created * 1000 | date}}</div>
+    </div>
+</div>
+<app-doublebounce *ngIf="!contentList"></app-doublebounce>
+<div *ngIf="contentList && contentList.length === 0">
+    <h1>No data present to retrieve.</h1>
+</div>

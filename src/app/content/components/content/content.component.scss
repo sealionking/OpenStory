@@ -7,8 +7,7 @@
 @import "../../../../assets/scss/filter";
 
 app-masonry {
-  margin-left: rem(12);
-  margin-right: rem(-8);
+  margin: 0 rem(-7.5);
 }
 
 a {
@@ -34,14 +33,13 @@ appMasonryItem {
 
 .container {
   background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%);
+  height: inherit !important;
   position: absolute;
   margin: 0;
   max-width: 100%;
-  height: inherit !important;
-  //min-height: 100%;
   .slideP{
     background: #D4D7DD;
-    height: 40px;
+    height: rem(40);
   }
 }
 
@@ -49,4 +47,189 @@ appMasonryItem {
   .searchbar .add-content {
     padding-left: 140px;
   }
+}
+
+.answer-yes {
+  background-color: $green;
+  border: rem(1) solid $green;
+  border-radius: rem(2);
+  color: $white;
+  cursor: pointer;
+  display: none;
+  font-size: rem(14);
+  padding: rem(3.5) rem(22.5);
+  width: rem(70);
+  height: rem(30);
+  left: 50%;
+  margin-left: rem(15);
+  position: absolute;
+  text-decoration: none;
+  top: rem(159);
+}
+
+.answer-no {
+  border: rem(1) solid $green;
+  border-radius: rem(2);
+  color: $white;
+  cursor: pointer;
+  display: none;
+  font-size: rem(14);
+  height: rem(30);
+  margin-right: rem(15);
+  padding: rem(3.5) rem(24);
+  position: absolute;
+  right: 50%;
+  text-decoration: none;
+  top: rem(159);
+  width: rem(70);
+}
+
+.answer-q {
+  color: $white;
+  cursor: pointer;
+  display: none;
+  font-size: rem(14);
+  padding-left: 25%;
+  padding-right: 25%;
+  position: absolute;
+  text-align: center;
+  text-decoration: none;
+  top: 90.96px;
+}
+
+.overlay-over {
+  background-color: rgba(51, 59, 80, 0.9);
+  opacity: 1;
+  z-index: 20;
+}
+
+.statistic {
+  background: #F9F9F9;
+  bottom: 0;
+  display: flex;
+  height: rem(50);
+  .workflow {
+    .isvg {
+      display: block;
+      margin: rem(10) rem(20) rem(10) rem(20);
+      height: rem(30);
+      width: rem(30);
+    }
+  }
+  .social {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 rem(30) 0 rem(5);
+    width: auto;
+    .seperator {
+      align-items: center;
+      color: #EFF0F3;
+      height: rem(20);
+      position: relative;
+      top: rem(-4);
+    }
+    .like {
+      display: inline-flex;
+      position: relative;
+      .lisvg {
+        display: block;
+        height: rem(16);
+        margin: 0 rem(10) 0 0;
+        position: relative;
+        top: 0;
+        width: rem(18);
+      }
+      .count {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 19px;
+        position: relative;
+        top: 0;
+      }
+    }
+    .twitter {
+      display: inline-flex;
+      position: relative;
+      .tsvg {
+        display: block;
+        height: rem(16);
+        margin: 0 rem(10) 0 0;
+        position: relative;
+        top: 0;
+        width: rem(24);
+      }
+      .count {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 19px;
+        position: relative;
+        top: 0;
+      }
+    }
+    .share {
+      display: inline-flex;
+      position: relative;
+      .sisvg {
+        display: block;
+        height: rem(16);
+        position: relative;
+        margin: 0 rem(10) 0 0;
+        top: 0;
+        width: rem(16);
+      }
+      .count {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        position: relative;
+        top: 0;
+      }
+    }
+  }
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(60) 0;
+  min-height: calc(100vh - 190px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: 1px;
+  }
+}
+
+// Loader.
+lottie-animation-view {
+  width: 100%;
+}
+
+button {
+  background-color: $green; /* Green */
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 16px;
+  margin: 8px 8px;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.no-content {
+  margin: 20px 0;
+  font-size: 24px;
 }

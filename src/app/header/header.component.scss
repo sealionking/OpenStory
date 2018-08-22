@@ -2,19 +2,16 @@
 @import "../../assets/scss/mixins";
 
 .header {
-  display: inline-flex;
+  display: block;
   height: 40px;
   width: 100%;
-  position: relative;
   .left {
-    height: 40px;
-    position: absolute;
+    float: left;
     svg {
       &:nth-child(1) {
-        height: 20px;
-        margin-left: 20px;
-        margin-top: 20px;
-        width: 20px;
+        height: rem(20);
+        margin: rem(20) 0 0 rem(30);
+        width: rem(20);
       }
       &:nth-child(2) {
         height: 16px;
@@ -25,42 +22,58 @@
     }
   }
   .right1 {
-    height: 40px;
-    position: absolute;
-    right: 0;
+    float: right;
     svg {
+      cursor: pointer;
       &:nth-child(1) {
-        height: 16px;
-        margin-right: 12px;
-        margin-top: 24px;
-        width: 16px;
+        height: rem(16);
+        margin: rem(23) rem(12) 0 0;
+        width: rem(16);
       }
       &:nth-child(2) {
-        height: 16px;
-        margin-right: 12px;
-        margin-top: 24px;
-        width: 16px;
+        height: rem(16);
+        margin: rem(23) rem(12) 0 0;
+        width: rem(16);
       }
     }
     img {
       border-radius: 50%;
       cursor: pointer;
-      margin: -10px 50px 0 0;
+      margin: rem(21) rem(50) 0 0;
       right: 0;
       width: 20px;
     }
   }
   .right2 {
-    display: none;
-    height: 40px;
-    position: absolute;
-    right: 0;
+    background-color: $ligth-grey;
+    height: rem(40);
+    justify-content: flex-end;
+    width: calc(100% - 50px);
+    z-index: 9;
     svg {
-        height: 16px;
-        margin-right: 12px;
-        margin-top: 2px;
-        width: 16px;
-
+      cursor: pointer;
+      margin: 0 rem(8);
+    }
+    .profil {
+      @include flexbox;
+      flex-direction: column;
+      margin: 0 rem(8) 0 0;
+      padding: 0 rem(16) 0 0;
+      position: relative;
+      text-align: right;
+      span {
+        color: $dark-grey;
+        text-decoration: none;
+      }
+      &:after {
+        background-color: $black;
+        content: "";
+        height: calc(100% - 8px);
+        position: absolute;
+        right: 0;
+        top: 4px;
+        width: 1px;
+      }
     }
   }
 }
@@ -71,23 +84,84 @@
   }
 }
 
-.logout{
-  @include flexbox;
-  padding-right: rem(16);
-  margin-top: rem(20);
+.exit-user {
+  background-color: $text-color4;
+  cursor: pointer;
+  font-size: rem(24);
+  height: rem(40);
+  line-height: rem(40);
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: rem(50);
 }
 
-.logoutText{
+.nameSur {
   color: $dark-grey;
   font-family: $font-family-Open-Sans;
   font-size: rem(14);
-  padding-left: rem(6);
+  font-weight: 600;
+  line-height: rem(19);
+  text-decoration: none;
+}
+.emailAdr {
+  color: $dark-grey;
+  font-family: $font-family-Open-Sans;
+  font-size: rem(12);
+  line-height: rem(17);
+  text-decoration: none;
 }
 
-a.logoutText{
-  font-family: $font-family-Open-Sans;
-  text-decoration: none;
-  &:hover{
+.edit {
+  @include flexbox;
+  cursor: pointer;
+  line-height: rem(40);
+  .editProfText{
     color: $dark-grey;
+    font-family: $font-family-Open-Sans;
+    font-size: rem(14);
+    padding-left: rem(6);
   }
+  svg {
+    position: relative;
+    top: 2px;
+  }
+}
+.logout {
+  @include flexbox;
+  @include user-select;
+  cursor: pointer;
+  line-height: rem(40);
+  margin: 0 16px;
+  .logoutText{
+    color: $dark-grey;
+    font-size: rem(14);
+  }
+  svg {
+    position: relative;
+    top: 2px;
+  }
+}
+
+.avatar {
+  height: 18px;
+}
+
+.cron-close {
+  svg {
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.right3 {
+  background-color: $ligth-grey;
+  height: rem(40);
+  justify-content: flex-end;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 3px 50px 0 0;
 }

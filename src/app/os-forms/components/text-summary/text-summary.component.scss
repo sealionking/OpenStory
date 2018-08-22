@@ -1,0 +1,10 @@
+@import "../../../../assets/scss/variables";
+@import "../../../../assets/scss/mixins";
+
+textarea {
+  border: 1px solid $ligth-grey;
+  margin: rem(4) 0;
+  min-height: rem(150);
+  padding: rem(10);
+  width: 100%;
+}
