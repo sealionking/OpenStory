@@ -11,10 +11,21 @@ import {ContentEvoComponent} from '../components/content-evo/content-evo.compone
 
 @Injectable()
 export class WidgetServiceService {
+    /**
+     * @ignore
+     * @param factoryResolver
+     */
     constructor(private factoryResolver: ComponentFactoryResolver) {
     }
 
-    public addDynamicComponent(widgetName: string, rootViewContainer: ViewContainerRef, dataStatic?: boolean) {
+    /**
+     * Function used to retrieve and add the selected widget to the dashboard dynamically
+     * @param widgetName - the widget type
+     * @param rootViewContainer - angular directive
+     * @param dataStatic - used to determine if we should send live data to the widget
+     * @param filter - used to filter the content widget, for now
+     */
+    public addDynamicComponent(widgetName: string, rootViewContainer: ViewContainerRef, dataStatic?: boolean, filter?: string) {
         let factory: any;
         let component: any;
         switch (widgetName) {
@@ -57,6 +68,10 @@ export class WidgetServiceService {
         if (dataStatic) {
             component.instance.dataStatic = dataStatic;
         }
+        if (filter) {
+            component.instance.filterItem = filter;
+        }
         return component;
     }
+
 }

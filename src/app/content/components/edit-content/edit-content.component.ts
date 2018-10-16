@@ -74,7 +74,7 @@ export class EditContentComponent implements OnInit {
                         });
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');

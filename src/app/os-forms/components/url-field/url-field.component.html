@@ -1,6 +1,6 @@
 <div class="links ">
   <div class="link">
-    <label for="">Url title</label>
+    <label *ngIf="urlTitleDisabled === false" for="">Url title</label>
     <input *ngIf="urlTitleDisabled === false"
             type="text"
             [placeholder]="'Type here'"

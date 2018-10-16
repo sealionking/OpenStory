@@ -1,0 +1,117 @@
+@import "~assets/scss/variables";
+@import "~assets/scss/mixins";
+@import "~assets/scss/tooltip";
+.drop-zone-container {
+  width: rem(370);
+}
+.my-drop-zone {
+  background: $secondary;
+  border: dashed 1px lightgray;
+  border-radius: rem(2);
+  font-family: $font-family-Open-Sans;
+  max-height: rem(160);
+  text-align: center;
+  width: rem(370);
+  span.d-block.text-secondary {
+    color: $text-color1;
+    font-size: rem(14);
+    font-weight: 600;
+    line-height: rem(19);
+    margin-top: rem(31) ;
+  }
+  span.btn-success{
+    font-size: rem(14);
+    font-weight: 400;
+    height: rem(30);
+    line-height: rem(30);
+    margin: rem(24) 0 rem(56);
+    padding: 0 rem(12);
+    width: rem(113);
+  }
+  .progress-layout {
+    margin: rem(10);
+    text-align: left;
+    span {
+      color: $dark-grey;
+      font-size: rem(12);
+      font-weight: 600;
+      height: rem(17);
+      line-height: rem(17);
+    }
+    span.float-right {
+      font-size: rem(16);
+      font-weight: 600;
+      height: rem(16);
+      padding: 0;
+      width: rem(16);
+    }
+    .progress {
+      border-radius: rem(4);
+      background-color: #D4D7DD;
+      height: rem(8);
+      margin-top: rem(4);
+      width: rem(350);
+    }
+  }
+}
+.info-zone {
+  background-color: $secondary;
+  margin-bottom: rem(2);
+  width: rem(370);
+  img.notice {
+    margin: rem(10);
+    position: absolute;
+  }
+  ul {
+    color: $text-color1;
+    font-family: $font-family-Open-Sans;
+    font-size: rem(12);
+    font-weight: 600;
+    line-height: rem(17);
+    margin: rem(4) 0 0;
+    padding: rem(10) rem(10) rem(10) rem(62);
+    li {
+      padding-left: rem(10);
+    }
+  }
+}
+.files {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 rem(-2);
+  .upload-list {
+    font-family: $font-family-Open-Sans;
+    background: #EFF0F3;
+    height: rem(24);
+    margin: rem(2);
+    position: relative;
+    &:hover .tooltip{
+      opacity: 0.8;
+      visibility: visible;
+    }
+    img.file-img {
+      border-radius: 0;
+      display: inline;
+      height: rem(16);
+      margin: rem(1) 0 rem(4) rem(4);
+      vertical-align: middle;
+      width: rem(16);
+    }
+    a span {
+      color: $text-color2 !important;
+      font-size: rem(14);
+      font-weight: 600;
+      line-height: rem(24);
+      text-decoration: none;
+    }
+    span.btn.text-danger {
+      padding: 0;
+      margin-right: rem(4);
+      img.remove {
+        height: rem(16);
+        margin: rem(1) 0 rem(4);
+        width: rem(16);
+      }
+    }
+  }
+}

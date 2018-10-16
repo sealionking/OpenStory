@@ -98,7 +98,7 @@
                 <small class="text-muted">
                     by {{content.username.name}}
                 </small>
-                <div *ngIf="content.body != null ; else bodyContent" [innerHTML]="bodySummary(content.body)"></div>
+                <div class="card-content" *ngIf="content.body != null ; else bodyContent" >{{content.body | truncate: 300}}</div>
                 <ng-template #bodyContent></ng-template>
             </div>
             <div class="statistic">
@@ -124,5 +124,5 @@
             </div>
         </appMasonryItem>
     </app-masonry>
-    <button *ngIf="contentList && limit < tmpContentList.length" (click)="showMore()">Show More</button>
+    <button class="show-more" *ngIf="contentList && limit < tmpContentList.length" (click)="showMore()">Show More</button>
 </section>

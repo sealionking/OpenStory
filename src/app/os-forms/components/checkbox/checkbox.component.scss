@@ -77,3 +77,22 @@
     }
   }
 }
+
+.single {
+  color: $text-color2;
+  cursor: pointer;
+  font-size: rem(16);
+  line-height: rem(24);
+  position: relative;
+}
+
+.checkbox-container input[type="checkbox"]:checked {
+  & ~ .single {
+    font-weight: 600;
+  }
+}
+
+.required {
+  color: firebrick;
+  font-weight: bolder;
+}

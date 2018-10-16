@@ -14,6 +14,43 @@ export const FormData: FormElement[] = [
         suffix: 'Suffix'
     },
     {
+        id: 'upload-file',
+        type: 'upload',
+        label: 'Upload a file or two',
+        accept: {
+            type: '*'
+        },
+        required: false,
+        multiValues: 3,
+        defaultValue: [{
+            id: 0,
+            type: 'image',
+            name: 'people',
+            path: 'http://google.com'
+        }],
+        validators: ['required', 'max-length'],
+        placeholder: 'This is placeholder'
+    },
+    {
+        id: 'date',
+        type: 'date',
+        label: 'Birthday',
+        required: false,
+        multiValues: 3,
+        defaultValue: ['2018-09-11T07:55:00Z'],
+        timePicker: true,
+        validators: [''],
+    },
+    {
+        id: 'password',
+        type: 'input',
+        label: 'Password',
+        required: true,
+        multiValues: 1,
+        defaultValue: [],
+        validators: []
+    },
+    {
         id: 'address',
         type: 'text',
         label: 'Home Address',

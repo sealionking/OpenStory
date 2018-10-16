@@ -1,0 +1,30 @@
+@import '/variables';
+
+.tooltip {
+    background-color: $text-color2;
+    bottom: 125%;
+    color: #fff;
+    font-family: "Open Sans";	
+    font-size: rem(12);
+    height: rem(30);	
+    line-height: rem(17);
+    opacity: 0;
+    padding: rem(6) rem(15);
+    position: absolute;
+    transition: opacity 0.3s;
+    text-align: center;
+    visibility: hidden;
+    width: auto;
+    z-index: 9999;
+}
+
+.tooltip::after {
+    border-color: $text-color2 transparent transparent transparent;
+    border-style: solid;
+    border-width: rem(5);
+    content: "";
+    left: 50%;
+    margin-left: rem(-5);
+    position: absolute;
+    top: 100%;
+}

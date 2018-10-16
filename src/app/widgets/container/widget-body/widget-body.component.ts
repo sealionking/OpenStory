@@ -29,30 +29,45 @@ export class WidgetBodyComponent implements OnInit {
     @Input() selectedWidget: string;
     @Input() viewLibrary: string;
     @Output() resizeGrid: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() selectedFilterItem: EventEmitter<string> = new EventEmitter<string>();
     showButton = true;
 
     hightlightStatus = false;
 
+    /**
+     * @ignore
+     * @param widgetService - widget module service
+     * @param route - angular component
+     */
     constructor(
         private widgetService: WidgetServiceService,
         private route: Router,
     ) {
     }
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
         if (this.indent && this.selectedWidget) {
             this.widget.weight = this.indent;
         }
         const viewRef = this.widgetService.addDynamicComponent(this.selectedWidget, this.viewContainerRef,
-            this.widget.dataStatic);
+            this.widget.dataStatic, this.widget.filterItem);
         if (viewRef.instance.hasOwnProperty('dataLoaded')) {
             viewRef.instance.dataLoaded.subscribe(() => this.resizeGrid.emit(true));
+        }
+        if (viewRef.instance.hasOwnProperty('selectedFilterItem')) {
+            viewRef.instance.selectedFilterItem.subscribe(() => this.selectedFilterItem.emit(viewRef.instance.selectedFilter));
         }
         this.viewContainerRef.insert(viewRef.hostView);
         this.showButton = !!(this.visible && this.widget.viewMore);
     }
 
-    onClick() {
+    /**
+     * Used to determine the selected widget
+     */
+    onClick(): void {
         this.hightlightStatus = true;
         if (this.hightlightStatus === true) {
             this.hightlightStatus = false;
@@ -63,7 +78,7 @@ export class WidgetBodyComponent implements OnInit {
      * Function used to redirect users to the page based on the button they clicked.
      * @param key - the name of the widget
      */
-    viewMoreEvent(key) {
+    viewMoreEvent(key): void {
         const currentWidget = availableWidgets.find((widget) => {
             return widget.key === key;
         });

@@ -46,6 +46,7 @@ export class EditUserComponent implements OnInit {
             event: 'EditEntity', data: {token: this.auth.getToken(), entityType: 'user', bundle: 'user', id: this.getUserId()}
         })
             .subscribe(data => {
+                console.log(data);
                 // Set the loader visibility.
                 this.lottieLoader = true;
                 switch (data.statusCode) {
@@ -81,7 +82,7 @@ export class EditUserComponent implements OnInit {
                         this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
@@ -130,7 +131,7 @@ export class EditUserComponent implements OnInit {
                         this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
@@ -171,7 +172,7 @@ export class EditUserComponent implements OnInit {
                         this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');

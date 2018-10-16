@@ -6,6 +6,7 @@ import {AuthGuard} from './guard/auth-guard';
 import {GlobalObjectsRefService} from './services/global-objects-ref.service';
 import {MessageService} from './services/message.service';
 import {WebsocketService} from './services/websocket.service';
+import {StatusCodesService} from './services/status-code.service';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {WebsocketService} from './services/websocket.service';
         AuthGuard,
         GlobalObjectsRefService,
         MessageService,
-        WebsocketService
+        WebsocketService,
+        StatusCodesService
     ]
 })
 export class CoreModule {

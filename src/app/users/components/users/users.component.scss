@@ -69,7 +69,7 @@ a {
 
 .email {
   color: #333B50;
-  font-weight: 600;
+  font-weight: 400;
   height: rem(19);
   line-height: rem(19);
   margin-top: rem(10);
@@ -140,36 +140,6 @@ label {
   }
 }
 
-.searchbar {
-  margin-bottom: rem(7);
-  h1 {
-    color: #687086;
-  }
-  .add-content {
-    width: rem(30);
-    height: rem(30);
-    margin-left: rem(16);
-    svg {
-      box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.15);
-      width: rem(30);
-      height: rem(30);
-      &:hover {
-        -webkit-filter: drop-shadow(0 2px 2px rgb(211, 211, 211));
-        filter: drop-shadow(0 2px 2px rgb(211, 211, 211));
-      }
-    }
-  }
-  .search {
-    position: absolute;
-    right: 0;
-    top: 0;
-    svg {
-      height: rem(27);
-      width: rem(27);
-    }
-  }
-}
-
 .sidemenu {
   top: rem(132);
 }
@@ -195,7 +165,6 @@ label {
     height: rem(17);
     text-align: end;
     width: rem(114);
-    font-weight: 600;
     font-size: rem(12);
   }
   .stories-count {
@@ -208,10 +177,10 @@ label {
 
 .username {
   color: #333B50;
-  margin-top: rem(16);
+  margin-top: rem(21);
   text-align: center;
   line-height: rem(19);
-  font-weight: 600;
+  font-weight: 400;
   padding: 0;
 }
 
@@ -267,25 +236,6 @@ label {
   top: rem(90.96);
   text-align: center;
   display: none;
-}
-
-// Right container.
-.main-container-right {
-  display: inline-block;
-  float: right;
-  margin: rem(46) rem(50) rem(60) 0;
-  min-height: calc(100vh - 190px);
-  position: relative;
-  width: calc(100% - 150px);
-  &:before {
-    background-color: $text-color1;
-    content: "";
-    height: 100%;
-    left: rem(-20);
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
 }
 
 // Loader.

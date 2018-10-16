@@ -17,7 +17,7 @@
     }
   }
 }
-app-masonry {
+ngx-masonry  {
   margin: 0 rem(-7.5);
   img {
     max-height: rem(600);
@@ -25,44 +25,13 @@ app-masonry {
   }
 }
 
-appMasonryItem {
-  box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.15);
+ngxMasonryItem {
+  @include common-shadow(2px, 2px, 2px, 0px, rgba(0, 0, 0, 0.15));
   border-radius: rem(2);
 }
 
 .overlay {
   width: 100%;
-}
-button {
-  background-color: $green; /* Green */
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  margin: 8px 8px;
-  padding: 10px 24px;
-  text-align: center;
-  text-decoration: none;
-}
-
-// Right container.
-.main-container-right {
-  display: inline-block;
-  float: right;
-  margin: rem(46) rem(50) rem(60) 0;
-  min-height: calc(100vh - 190px);
-  position: relative;
-  width: calc(100% - 150px);
-  &:before {
-    background-color: $text-color1;
-    content: "";
-    height: 100%;
-    left: rem(-20);
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
 }
 
 // Loader.
@@ -71,6 +40,11 @@ lottie-animation-view {
 }
 
 .no-content {
-  margin: 20px 0;
-  font-size: 24px;
+  font-size: rem(24);
+  color: $dark-grey;
+  margin: rem(20) 0;
+}
+
+.description {
+  padding-top: rem(7);
 }

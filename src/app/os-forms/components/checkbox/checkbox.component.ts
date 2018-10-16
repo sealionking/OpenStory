@@ -15,6 +15,10 @@ export class CheckboxComponent implements ControlValueAccessor {
 
     @Input() value: any;
 
+    @Input() required: any;
+
+    @Input() single: any;
+
     @Input() name: string;
 
     @Input() disabled: boolean;
@@ -43,11 +47,12 @@ export class CheckboxComponent implements ControlValueAccessor {
 
     checked = false;
 
-    onModelChange: Function = () => {};
+    onModelChange: Function = () => { };
 
-    onModelTouched: Function = () => {};
+    onModelTouched: Function = () => { };
 
-    constructor(private cd: ChangeDetectorRef) {}
+    constructor(private cd: ChangeDetectorRef) {
+    }
 
     onClick(event, checkbox, focus: boolean) {
         event.preventDefault();
@@ -84,7 +89,7 @@ export class CheckboxComponent implements ControlValueAccessor {
         this.Changed.emit(this.checked);
     }
 
-    handleChange(event) {
+    handleChange(event) {
         this.checked = event.target.checked;
         this.updateModel();
     }

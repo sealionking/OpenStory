@@ -7,9 +7,9 @@ export interface UrlField {
 }
 
 @Component({
-  selector: 'app-url-field',
-  templateUrl: './url-field.component.html',
-  styleUrls: ['./url-field.component.scss'],
+    selector: 'app-url-field',
+    templateUrl: './url-field.component.html',
+    styleUrls: ['./url-field.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
@@ -22,6 +22,7 @@ export class UrlFieldComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder = '';
     @Input() description: string;
     @Input() urlTitleDisabled: boolean;
+    @Input() required: boolean;
     inputVal: UrlField = {
         title: '',
         url: ''
@@ -32,7 +33,8 @@ export class UrlFieldComponent implements OnInit, ControlValueAccessor {
     }
 
     validate(control: FormControl) {
-        return ((this.inputVal.title && this.inputVal.title === '') || this.inputVal.url === '') ?
+        const valid = ((control.value.title && control.value.title.length === 0) || control.value.url.length === 0) && this.required;
+        return valid ?
             {'url-required': {valid: false}} : null;
     }
 

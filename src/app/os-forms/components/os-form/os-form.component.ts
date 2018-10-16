@@ -18,18 +18,20 @@ export class OsFormComponent implements OnInit, OnChanges {
     formSubmitted = false;
     multiValuesData: any = {};
 
-    private notChangeDefault = ['select', 'checkbox', 'radio'];
-    private arrayListControls = ['text', 'number', 'email', 'text-area', 'slider', 'text-editor', 'url', 'text-summary', 'password'];
+    private notChangeDefault = ['select', 'checkbox', 'radio', 'upload'];
+    private arrayListControls = ['text', 'number', 'email', 'text-area',
+        'slider', 'text-editor', 'url', 'text-summary', 'password', 'date'];
 
     constructor(
         private _fb: FormBuilder,
         private msgService: MessageService
     ) {
-        // this.formData = FormData;
         this.osValidators = OsValidators;
     }
 
     ngOnInit() {
+        // this.formData = FormData;
+        // this.initForm();
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -55,8 +57,7 @@ export class OsFormComponent implements OnInit, OnChanges {
         const controls = {};
         formData.forEach(formElement => {
             if (formElement.defaultValue.length === 0 && this.notChangeDefault.indexOf(formElement.type) === -1) {
-                formElement['defaultValue'] = formElement.type === 'slider' ? [formElement.minimumValue] : [''] ;
-
+                formElement['defaultValue'] = formElement.type === 'slider' ? [formElement.minimumValue] : [''];
             }
             const validators = this.extractValidators(formElement.validators);
             const value = formElement.defaultValue;
@@ -91,8 +92,10 @@ export class OsFormComponent implements OnInit, OnChanges {
         const validators = this.formData.find(f => f.id === formName).processedValidators;
         // Get the rendered controls and store in custom variables.
         this.multiValuesData[formName] = this.configForm.get(formName) as FormArray;
-        if (formType) {
+        if (formType && formType === 'slide') {
             this.multiValuesData[formName].push(this.addNewItem(formName, [0], validators.map(val => val.func)));
+        } else if (formType && formType === 'date') {
+            this.multiValuesData[formName].push(this.addNewItem(formName, new Date(), validators.map(val => val.func)));
         } else {
             this.multiValuesData[formName].push(this.addNewItem(formName, null, validators.map(val => val.func)));
         }

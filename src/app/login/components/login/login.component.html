@@ -41,11 +41,20 @@
                 <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
               </div>
             </div>
-            <div class="d-flex justify-content-between options">
-              <div class="checkbox">
+            <div class="rectangle-captcha">
+                <re-captcha
+                        [(ngModel)]="model.captcha"
+                        name="captcha"
+                        required
+                        #captchaControl="ngModel"
+                ></re-captcha>
+            <div [hidden]="captchaControl.valid || captchaControl.pristine" class="error">Captcha must be solved</div>
+            </div>
+            <div class="d-flex justify-content-between options-login">
+              <div class="checkbox-login">
                 <label >Remember me
                   <input type="checkbox" checked="checked">
-                  <span class="checkmark"></span>
+                  <span class="checkmark-login"></span>
                 </label>
               </div>
               <a class="d-block" href="#">Forgot password?</a>

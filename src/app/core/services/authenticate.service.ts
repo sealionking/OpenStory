@@ -37,33 +37,26 @@ export class AuthenticateService {
                         this.route.navigate(['/dashboard']);
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 401:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Unprocessable Entity.');
                         break;
                     case 423:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Locked');
                         this.wsService.ioReconnect();
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
@@ -135,101 +128,6 @@ export class AuthenticateService {
     getYear(): number {
         const data = new Date().getFullYear();
         return data;
-    }
-
-    /**
-     * Allows us to perform checks on the resulting form after submit
-     * @param data
-     * @param array
-     */
-    checkForm(data, list, defaultList) {
-        for (const i in data) {
-            const prop = data[i];
-            if (prop instanceof Object && Object.keys(prop).length > 0) {
-                const propLength = Object.keys(prop).length;
-                for (let j = 0; j < propLength; j++) {
-                    const propItem = prop[j];
-                    if (propItem instanceof Object) {
-                        if (Object.keys(propItem).length > 0) {
-                            for (const k in propItem) {
-                                if (propItem[k] instanceof Array) {
-                                    const propValue = propItem[k];
-                                    const values = [];
-                                    for (const value in propValue) {
-                                        if (Object.keys(list).length > 0) {
-                                            if (list.hasOwnProperty(i)) {
-                                                if (propValue[value] === 'true') {
-                                                    values.push({value: true});
-                                                } else if (propValue[value] === 'false') {
-                                                    values.push({value: false});
-                                                } else {
-                                                    values.push({value: propValue[value]});
-                                                }
-                                            } else {
-                                                values.push({value: propValue[value]});
-                                            }
-                                        } else {
-                                            values.push({value: propValue[value]});
-                                        }
-                                    }
-                                    data[i] = values;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        for (const m in defaultList) {
-            if (!data.hasOwnProperty(m)) {
-                data[m] = [];
-            }
-        }
-    }
-
-    /**
-     * Allow us to create an array with the keys from the schema Form
-     * We use this to check the 'checkbox' type in order to change string to boolean
-     * @param data
-     * @param array
-     */
-    checkboxCheck(data, list) {
-        for (const i in data) {
-            const prop = data[i];
-            if (typeof prop === 'object') {
-                let fieldKey = '';
-                if (prop.hasOwnProperty('key')) {
-                    fieldKey = prop['key'];
-                }
-                if (prop.hasOwnProperty('items')) {
-                    const items = prop['items'];
-                    if (items.hasOwnProperty('items')) {
-                        const nestedItems = items['items'];
-                        if (nestedItems instanceof Array) {
-                            const itemObject = nestedItems[0];
-                            if (itemObject.hasOwnProperty('type')) {
-                                if (itemObject['type'] === 'checkboxes') {
-                                    list[fieldKey] = itemObject['type'];
-                                } else if (itemObject['type'] === 'radios') {
-                                    list[fieldKey] = itemObject['type'];
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    /**
-     * Allows us to send empty data needed for the CSM
-     * @param schema
-     * @param defaultList
-     */
-    neededList(schema, defaultList) {
-        for (const i in schema) {
-            defaultList[i] = i;
-        }
     }
 }
 

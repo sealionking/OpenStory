@@ -7,6 +7,7 @@ export interface WidgetModel {
     id: any;
     viewMoreLink?: string;
     viewMore?: boolean;
+    filterItem?: string;
 }
 
 export interface SavedWidget {

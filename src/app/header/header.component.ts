@@ -44,23 +44,23 @@ export class HeaderComponent implements OnInit {
                         this.mService.add(data.body, 'success');
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Unprocessable Entity.');
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Internal Server Error.');
                         break;
                     default:
@@ -81,23 +81,23 @@ export class HeaderComponent implements OnInit {
                         this.mService.add(data.body, 'success');
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Unprocessable Entity.');
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
+
                         this.mService.add('Internal Server Error.');
                         break;
                     default:

@@ -3,24 +3,28 @@
 </span>
 
 <ng-template #template>
-  <h1>Select widget</h1>
-  <div class="btn-group" role="group">
-    <button type="button" class="btn" [ngClass]="{'btn-success': view == 'content'}" (click)="view = 'content'; filter()">Contents</button>
-    <button type="button" class="btn" [ngClass]="{'btn-success': view == 'user'}" (click)="view = 'user'; filter()">Users</button>
-    <button type="button" class="btn" [ngClass]="{'btn-success': view == 'comment'}" (click)="view = 'comment'; filter()">Comments</button>
-    <button type="button" class="btn" [ngClass]="{'btn-success': view == 'activity'}" (click)="view = 'activity'; filter()">Activity</button>
+  <div class="select-widget-wrapper">
+    <h1>Select widget</h1>
+    <!--<div class="btn-group" role="group">
+      <button type="button" class="btn" [ngClass]="{'btn-success': view == 'content'}" (click)="view = 'content'; filter()">Contents</button>
+      <button type="button" class="btn" [ngClass]="{'btn-success': view == 'user'}" (click)="view = 'user'; filter()">Users</button>
+      <button type="button" class="btn" [ngClass]="{'btn-success': view == 'comment'}" (click)="view = 'comment'; filter()">Comments</button>
+      <button type="button" class="btn" [ngClass]="{'btn-success': view == 'activity'}" (click)="view = 'activity'; filter()">Activity</button>
+    </div>-->
+    <div class="widget-list">
+      <app-widget-body *ngFor="let widget of widgetList"
+                       [widget]="widget"
+                       [selectedWidget]="widget.key"
+                       style="width: 435px; overflow: hidden; padding: 0 7.5px;"
+                       (click)="valueChanged(widget)"
+                       [ngClass]="{'selected': selectedItem == widget}" (click)="clickedItem($event, widget)">
+      </app-widget-body>
+    </div>
   </div>
-  <div class="row widget-list">
-    <app-widget-body *ngFor="let widget of widgetList"
-                     [widget]="widget"
-                     [selectedWidget]="widget.key"
-                     style="min-width: 420px; overflow: hidden; padding: 7.5px;"
-                     (click)="valueChanged(widget)"
-                     [ngClass]="{'selected': selectedItem == widget}" (click)="clickedItem($event, widget)">
-    </app-widget-body>
-  </div>
-  <div class="form-actions text-right">
-    <button class="btn" (click)="hideModal('back')">Back to Dashboard</button>
-    <button class="btn btn-success" (click)="hideModal('add')">Add Widget</button>
+  <div class="footer w-100 d-flex align-items-center justify-content-center">
+    <div class="form-actions">
+      <button class="btn" (click)="hideModal('back')">Back to Dashboard</button>
+      <button class="btn btn-success" (click)="hideModal('add')">Add Widget</button>
+    </div>
   </div>
 </ng-template>

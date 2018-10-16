@@ -85,7 +85,7 @@ export class NewUserComponent implements OnInit {
                         this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
@@ -132,7 +132,7 @@ export class NewUserComponent implements OnInit {
                         this.messageService.add(data.body.message);
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
