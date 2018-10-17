@@ -1,8 +1,10 @@
 <div>
-    <form [formGroup]="configForm" (ngSubmit)="onSubmit(configForm.value, configForm.valid)">
+    <form [formGroup]="configForm">
         <!--Value: {{ configForm.value | json }}-->
         <div *ngFor="let fData of formData">
-            <div [ngSwitch]="fData.type" class="form-group">
+            <div [ngSwitch]="fData.type"
+                 [ngClass]="{'form-group-publish': fData.id == 'promote' || fData.id == 'sticky' || fData.id == 'status'}"
+                 class="form-group">
 
                 <!--Text field type-->
                 <ng-container *ngSwitchCase="'text'">
@@ -37,6 +39,44 @@
                             <span class="add btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
                             fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
                                   (click)="addNewElement(fData.id)">Add new item
+                            </span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <!--Date field type-->
+                <ng-container *ngSwitchCase="'date'">
+                    <div class="form-group ">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <div [formArrayName]="fData.id" class="">
+                            <div class="field"
+                                 *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
+                                <span class="prefix" *ngIf="fData.prefix" [innerHTML]="fData.prefix"></span>
+                                <app-date
+                                        [id]="fData.id"
+                                        [timePicker]="fData.timePicker"
+                                        [formControlName]="i"
+                                        [tooltip]="fData.description" placement="right"
+                                >
+                                </app-date>
+                                <span class="suffix" *ngIf="fData.suffix" [innerHTML]="fData.suffix"></span>
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                      (click)="removeElement(fData.id, i)">Remove
+                                </span>
+                                <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                                    <small class="text-danger"
+                                           *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                        {{validator.errorMsg}}
+                                    </small>
+                                </ng-template>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <span class="add btn btn-success" *ngIf="((fData.multiValues !== null && configForm.get(fData.id)['controls'].length > 0 &&
+                            fData.multiValues > configForm.get(fData.id)['controls'].length) || (fData.multiValues == -1))"
+                                  (click)="addNewElement(fData.id, 'date')">Add new item
                             </span>
                         </div>
                     </div>
@@ -146,6 +186,7 @@
                                 <app-text-summary [placeholder]="fData.placeholder"
                                                   [maxLength]="fData.maxLength"
                                                   [description]="fData.description"
+                                                  [required]="fData.required"
                                                   [formControlName]="i"
                                                   [id]="fData.id"
                                 >
@@ -209,7 +250,7 @@
                         <label [for]="fData.id">{{ fData.label }}</label>
                         <span class="required" *ngIf="fData.required === true">*</span>
                         <div class="numberfields" [formArrayName]="fData.id">
-                            <div class="numberfield"
+                            <div class="field numberfield"
                                  *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
                                 <span class="prefix" *ngIf="fData.prefix" [innerHTML]="fData.prefix"></span>
                                 <input type="number"
@@ -221,7 +262,7 @@
                                        [tooltip]="fData.description" placement="right"
                                 >
                                 <span class="suffix" *ngIf="fData.suffix" [innerHTML]="fData.suffix"></span>
-                                <span class="remove btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
                                       (click)="removeElement(fData.id, i)">Remove
                                 </span>
                                 <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
@@ -256,7 +297,8 @@
                                         [tooltips]="true"
                                         [formControl]="valueData"
                                 ></nouislider>
-                                <span class="json-description" *ngIf="fData.description" [innerHTML]="fData.description"></span>
+                                <span class="json-description" *ngIf="fData.description"
+                                      [innerHTML]="fData.description"></span>
                                 <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
                                     <small class="text-danger"
                                            *ngIf="configForm.get(fData.id).hasError(validator.name) &&
@@ -282,7 +324,7 @@
                         <label [for]="fData.id">{{ fData.label }}</label>
                         <span class="required" *ngIf="fData.required === true">*</span>
                         <div class="emailfields" [formArrayName]="fData.id">
-                            <div class="emailfield"
+                            <div class="field emailfield"
                                  *ngFor="let valueData of configForm.get(fData.id)['controls']; let i=index">
                                 <input type="text"
                                        [placeholder]="fData.placeholder"
@@ -291,13 +333,13 @@
                                        [attr.maxlength]="fData.maxLength"
                                        [tooltip]="fData.description" placement="right"
                                 >
-                                <span class="remove btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
+                                <span class="btn btn-secondary" *ngIf="fData.multiValues !== 1 && i > 0"
                                       (click)="removeElement(fData.id, i)">Remove
                                 </span>
                                 <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
                                     <small class="text-danger"
                                            *ngIf="configForm.get(fData.id)['controls'][i].hasError(validator.name) &&
-                        formSubmitted === validator.onFormSubmit">
+                        formSubmitted === validator.onFormSubmit && !configForm.get(fData.id)['controls'][i].pristine">
                                         {{validator.errorMsg}}
                                     </small>
                                 </ng-template>
@@ -323,6 +365,7 @@
                                 <app-url-field [placeholder]="fData.placeholder"
                                                [description]="fData.description"
                                                [urlTitleDisabled]="fData.urlTitleDisabled"
+                                               [required]= "fData.required"
                                                [formControlName]="i"
                                                [id]="fData.id">
                                 </app-url-field>
@@ -347,18 +390,22 @@
 
                 <!--Checkbox field type-->
                 <ng-container *ngSwitchCase="'checkbox'">
-                    <div class="form-group">
-                        <label [for]="fData.id">{{ fData.label }}</label>
-                        <span class="required" *ngIf="fData.required === true">*</span>
+                    <div class="form-group"
+                         [ngClass]="{'form-group-publish': fData.options.length === 1 }">
+                        <label *ngIf="fData.options.length > 1" [for]="fData.id">{{ fData.label }}</label>
+                        <label *ngIf="fData.id == 'status'">Publishing Options</label>
+                        <span class="required" *ngIf="fData.required === true && fData.options.length > 1">*</span>
                         <app-checkbox *ngFor="let check of fData.options"
                                       [value]="check.id"
-                                      [label]="check.name"
+                                      [label]="check.name.length > 0 ? check.name : fData.label"
+                                      [single]="fData.options.length == 1"
+                                      [required]="fData.required"
                                       [formControl]="configForm.controls[fData.id]"></app-checkbox>
                         <span *ngIf="fData.description" [innerHTML]="fData.description"></span>
                         <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
                             <small class="text-danger"
                                    *ngIf="configForm.get(fData.id).hasError(validator.name) &&
-                        formSubmitted === validator.onFormSubmit">
+                        formSubmitted === validator.onFormSubmit && configForm.get(fData.id).value.length === 0">
                                 {{validator.errorMsg}}
                             </small>
                         </ng-template>
@@ -387,6 +434,28 @@
                     </div>
                 </ng-container>
 
+                <!--File Upload field-->
+                <ng-container *ngSwitchCase="'upload'">
+                    <div class="form-group">
+                        <label [for]="fData.id">{{ fData.label }}</label>
+                        <span class="required" *ngIf="fData.required === true">*</span>
+                        <app-file-upload
+                                [accept]="fData.accept"
+                                [multiValue]="fData.multiValues"
+                                [id]="fData.id"
+                                [formControlName]="fData.id">
+                        </app-file-upload>
+                        <span *ngIf="fData.description" [innerHTML]="fData.description"></span>
+                        <ng-template ngFor let-validator [ngForOf]="fData.processedValidators">
+                            <small class="text-danger"
+                                   *ngIf="configForm.get(fData.id).hasError(validator.name) &&
+                        formSubmitted === validator.onFormSubmit">
+                                {{validator.errorMsg}}
+                            </small>
+                        </ng-template>
+                    </div>
+                </ng-container>
+
                 <!--Unsupported Field-->
                 <ng-container *ngSwitchDefault>
                     <label [for]="fData.id">{{ fData.label }}</label>
@@ -396,7 +465,8 @@
             </div>
         </div>
         <div class="form-actions text-right">
-            <button type="submit" class="btn btn-success">Save</button>
+            <button type="submit" class="btn btn-success" (click)="configForm.updateValueAndValidity(); onSubmit(configForm.value, configForm.valid)">Save
+            </button>
         </div>
     </form>
 </div>

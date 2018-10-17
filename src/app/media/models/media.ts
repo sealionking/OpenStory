@@ -19,6 +19,10 @@ export class Media {
      */
     filename: string;
     /**
+     * Image resolution
+     */
+    height?: number;
+    /**
      *Shows the file location.
      */
     uri: string;
@@ -26,4 +30,8 @@ export class Media {
      *Provides the size of the uploaded file.
      */
     filesize: number;
+    /**
+     * Image resolution
+     */
+    width?: number;
 }

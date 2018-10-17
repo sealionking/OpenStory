@@ -1,5 +1,5 @@
 import {Component, OnInit, forwardRef, Input} from '@angular/core';
-import {FormControl, FormGroup, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms';
+import {FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} from '@angular/forms';
 
 export interface TextSummary {
     summary: string;
@@ -22,6 +22,7 @@ export class TextSummaryComponent implements OnInit, ControlValueAccessor {
     @Input() placeholder = '';
     @Input() maxLength: number;
     @Input() description: string;
+    @Input() required: boolean;
     ckeConfig: any;
     inputVal: TextSummary = {
         summary: '',
@@ -33,7 +34,8 @@ export class TextSummaryComponent implements OnInit, ControlValueAccessor {
     }
 
     validate(control: FormControl) {
-        return (this.inputVal.summary === '' || this.inputVal.body === '') ?
+        const valid = (control.value.summary.length === 0 || control.value.body.length === 0) && this.required;
+        return valid ?
             {'summary-required': {valid: false}} : null;
     }
 

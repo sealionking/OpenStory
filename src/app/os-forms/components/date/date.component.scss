@@ -1,0 +1,5 @@
+@import "~assets/scss/mixins";
+
+.years-view ~ .cal-util {
+  margin-left: rem(-30);
+}

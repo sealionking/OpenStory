@@ -3,9 +3,10 @@ export interface FormElement {
     type: string;
     label: string;
     description?: string;
+    accept?: Object;
     required: boolean;
     validators: Array<string>;
-    placeholder:  string;
+    placeholder?:  string;
     multiValues: number;
     processedValidators?: Array<any>;
     defaultValue?: any;
@@ -18,4 +19,5 @@ export interface FormElement {
     maxLength?: number;
     step?: number;
     urlTitleDisabled?: boolean;
+    timePicker?: boolean;
 }

@@ -109,6 +109,7 @@ appMasonryItem {
   display: flex;
   height: rem(50);
   .workflow {
+    margin-right: rem(20);
     .isvg {
       display: block;
       margin: rem(10) rem(20) rem(10) rem(20);
@@ -121,7 +122,7 @@ appMasonryItem {
     display: flex;
     justify-content: space-between;
     position: relative;
-    padding: 0 rem(30) 0 rem(5);
+    padding: 0 rem(20) 0 rem(5);
     width: auto;
     .seperator {
       align-items: center;
@@ -192,44 +193,17 @@ appMasonryItem {
   }
 }
 
-// Right container.
-.main-container-right {
-  display: inline-block;
-  float: right;
-  margin: rem(46) rem(50) rem(60) 0;
-  min-height: calc(100vh - 190px);
-  position: relative;
-  width: calc(100% - 150px);
-  &:before {
-    background-color: $text-color1;
-    content: "";
-    height: 100%;
-    left: rem(-20);
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
-}
-
 // Loader.
 lottie-animation-view {
   width: 100%;
 }
 
-button {
-  background-color: $green; /* Green */
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  margin: 8px 8px;
-  padding: 10px 24px;
-  text-align: center;
-  text-decoration: none;
+.no-content {
+  margin: rem(20) 0;
+  font-size: rem(24);
 }
 
-.no-content {
-  margin: 20px 0;
-  font-size: 24px;
+// Overwride ng select.
+ng-select.custom {
+  width: rem(200);
 }

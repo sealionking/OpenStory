@@ -29,18 +29,18 @@
              [id]="i">
             <div class="widget-content">
                 <div class="d-flex justify-content-end">
-                    <!--TODO: Redo after Widget library is done-->
-                    <span *ngIf="optionCollapse == false" (click)="gridShitLayout(i, 'mini');" class="minimize">
+                    <span *ngIf="optionResize == false && large[i] != 'large'" (click)="gridShitLayout(i, 'large');" class="maximize">
+                        <span [inlineSVG]="'assets/images/inline-svg/expand_1.svg'"></span>
+                    </span>
+                    <span *ngIf="large[i] != null" (click)="gridShitLayout(i, 'default');" class="revert">
+                        <span [inlineSVG]="'assets/images/inline-svg/colapse_1.svg'"></span>
+                    </span>
+                    <span *ngIf="optionCollapse == false && mini[i] != 'mini'" (click)="gridShitLayout(i, 'mini');" class="minimize">
                         <span [inlineSVG]="'assets/images/inline-svg/minimize.svg'"></span>
                     </span>
-                    <span *ngIf="optionCollapse == true" (click)="gridShitLayout(i, 'expand');" class="expand">
+                    <span *ngIf="mini[i] != null"
+                          (click)="gridShitLayout(i, 'expand');" class="expand">
                         <span [inlineSVG]="'assets/images/inline-svg/plus_1.svg'"></span>
-                    </span>
-                    <span *ngIf="optionResize == false" (click)="gridShitLayout(i, 'large');" class="maximize">
-                        <span [inlineSVG]="'assets/images/inline-svg/maximize.svg'"></span>
-                    </span>
-                    <span *ngIf="optionResize == true" (click)="gridShitLayout(i, 'default');" class="revert">
-                        <span [inlineSVG]="'assets/images/inline-svg/revert.svg'"></span>
                     </span>
                     <!--TODO: Redo the remove function after Widget library is done-->
                     <span (click)="remove(i); gridShitLayout();" class="close_1">
@@ -54,6 +54,7 @@
                         [selectedWidget]="widget.key"
                         [visible]= true
                         (resizeGrid)="resizeGrid()"
+                        (selectedFilterItem)='addFilter($event, widget.id)'
                         id={{i}}>
                 </app-widget-body>
             </div>

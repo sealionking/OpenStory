@@ -3,7 +3,7 @@
 
 .header {
   display: block;
-  height: 40px;
+  height: rem(40);
   width: 100%;
   .left {
     float: left;
@@ -14,10 +14,10 @@
         width: rem(20);
       }
       &:nth-child(2) {
-        height: 16px;
-        margin-left: 46px;
-        margin-top: 24px;
-        width: 110px;
+        height: rem(16);
+        margin-left: rem(46);
+        margin-top: rem(24);
+        width: rem(110);
       }
     }
   }
@@ -41,7 +41,7 @@
       cursor: pointer;
       margin: rem(21) rem(50) 0 0;
       right: 0;
-      width: 20px;
+      width: rem(20);
     }
   }
   .right2 {
@@ -71,8 +71,8 @@
         height: calc(100% - 8px);
         position: absolute;
         right: 0;
-        top: 4px;
-        width: 1px;
+        top: rem(4);
+        width: rem(1);
       }
     }
   }
@@ -89,7 +89,7 @@
   cursor: pointer;
   font-size: rem(24);
   height: rem(40);
-  line-height: rem(40);
+  line-height: rem(33);
   position: absolute;
   right: 0;
   text-align: center;
@@ -121,11 +121,10 @@
     color: $dark-grey;
     font-family: $font-family-Open-Sans;
     font-size: rem(14);
-    padding-left: rem(6);
   }
   svg {
     position: relative;
-    top: 2px;
+    top: rem(-1);
   }
 }
 .logout {
@@ -133,25 +132,26 @@
   @include user-select;
   cursor: pointer;
   line-height: rem(40);
-  margin: 0 16px;
+  margin: 0 rem(15) 0 rem(8);
   .logoutText{
     color: $dark-grey;
     font-size: rem(14);
+    margin-left: rem(-1);
   }
   svg {
     position: relative;
-    top: 2px;
+    top: rem(-1);
   }
 }
 
 .avatar {
-  height: 18px;
+  height: rem(20);
 }
 
 .cron-close {
   svg {
-    height: 20px;
-    width: 20px;
+    height: rem(20);
+    width: rem(20);
   }
 }
 
@@ -163,5 +163,5 @@
   top: 0;
   width: 100%;
   z-index: 1;
-  padding: 3px 50px 0 0;
+  padding: rem(3) rem(50) 0 0;
 }

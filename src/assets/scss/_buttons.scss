@@ -7,6 +7,8 @@
 }
 
 .btn-success {
+  background-color: $green !important;
+  border-color: $green !important;
   color: $white;
   &:focus,
   &:hover {
@@ -17,4 +19,20 @@
 .btn-group > .btn:hover, .btn-group-vertical > .btn:hover,
 .btn-group > .btn:focus, .btn-group > .btn:active, .btn-group > .btn.active, .btn-group-vertical > .btn:focus, .btn-group-vertical > .btn:active, .btn-group-vertical > .btn.active {
   z-index: 0;
+}
+
+button.show-more {
+  background-color: $green; /* Green */
+  border: none;
+  border-radius: rem(2);
+  color: $white;
+  cursor: pointer;
+  display: inline-block;
+  float: right;
+  font-size: rem(14);
+  font-weight: 600;
+  margin: rem(8) 0;
+  padding: rem(6) rem(11) rem(5) rem(11);
+  text-align: center;
+  text-decoration: none;
 }

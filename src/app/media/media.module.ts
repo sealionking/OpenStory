@@ -5,9 +5,10 @@ import {FormsModule} from '@angular/forms';
 import {MediaComponent} from './components/media/media.component';
 import {MediaRoutingModule} from './media-routing.module';
 import {MediaService} from './services/media.service';
-import {NgxMasonryModule} from '../masonry/masonry.module';
+import { NgxMasonryModule } from 'ngx-masonry';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {LottieAnimationViewModule} from 'ng-lottie';
+import {TruncateModule} from '@yellowspot/ng-truncate';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import {LottieAnimationViewModule} from 'ng-lottie';
         MediaRoutingModule,
         NgxMasonryModule,
         NgSelectModule,
-        LottieAnimationViewModule.forRoot()
+        LottieAnimationViewModule.forRoot(),
+        TruncateModule
     ],
     providers: [MediaService],
     declarations: [MediaComponent]

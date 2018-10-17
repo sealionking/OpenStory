@@ -1,8 +1,9 @@
 @import 'overlay';
+@import "../scss/mixins";
 @import'../scss/variables';
 
 .hero-grid.clearfix {
-margin: 0 -8px 0 12px;
+margin: 0 rem(-8) 0 rem(12);
 }
 
 .hero-grid__grid-sizer {
@@ -58,8 +59,8 @@ margin: 0 -8px 0 12px;
   position: relative;
   @include transition(.5s ease);
   .triangle-up {
-      margin-left: 20px;
-      top: -15px;
+      margin-left: rem(20);
+      top: rem(-15);
       position: absolute;
       width: 0;
       height: 0;
@@ -70,16 +71,17 @@ margin: 0 -8px 0 12px;
   }
   .hero__tagline {
       font-size: 12px;
-      margin-top: 0px;
-      padding-top: 25px;
-      margin-left: 21px;
+      font-weight: 600;
+      margin-top: 0;
+      padding-top: rem(25);
+      margin-left: rem(21);
       color: #53D79F;
-      line-height: 5px;
+      line-height: rem(5);
     transition: color 0.5s ease;
   }
   .hero__author {
-    font-size: 12px;
-    margin-left: 21px;
+    font-size: rem(12);
+    margin-left: rem(21);
     color: $text-color2;
     line-height: 0;
     transition: color 0.5s ease;
@@ -89,8 +91,7 @@ margin: 0 -8px 0 12px;
 .content-block {
   margin: rem(10) rem(20) 0 rem(20) !important;
   h4.card-title {
-    color: #333B50;	
-    font-family: "Open Sans";	
+    color: #333B50;
     font-size: rem(16);	
     font-weight: 600;	
     line-height: rem(22);
@@ -104,105 +105,69 @@ margin: 0 -8px 0 12px;
     position: relative;
     padding: 0;
     margin: 0;
-    color: #333B50;
+    color: #333B50 !important;
+    opacity: 0.7;
   }
   .card-text {
     color: #333B50;
-    font-size: rem(14);
-    min-height: rem(70);
+    font-size: rem(14) !important;
     line-height: rem(19);
     margin-bottom: rem(10);
+    opacity: 0.7;
+  }
+  .card-content {
+    color: #333B50;
     opacity: 0.7;
   }
 }
 
 .statistic {
-display: flex;
-height: rem(50);
-background: #F9F9F9;
-bottom: 0;
-.workflow svg {
   display: flex;
-  margin: rem(10) rem(20) rem(10) rem(20);
-  height: rem(30);
-  width: rem(30);
-}
-.social {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  padding: 0 rem(30) 0 rem(5);
-  width: auto;
-  .seperator {
-    height: rem(20);
-    color: #EFF0F3;
+  height: rem(50);
+  background: #F9F9F9;
+  bottom: 0;
+  .workflow svg {
+    display: flex;
+    margin: rem(10) rem(20) rem(10) rem(20);
+    height: rem(30);
+    width: rem(30);
+  }
+  .social {
     align-items: center;
-    top: rem(-4);
+    display: flex;
+    justify-content: space-between;
     position: relative;
-  }
-  .like {
-    display: inline-flex;
-    position: relative;
-    svg {
-      display: flex;
-      top: 0;
-      height: rem(16);
-      width: rem(18);
-      position: relative;
-      margin: 0 rem(10) 0 0;
-    }
-    .count {
-      top: 0;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 19px;
-      display: flex;
+    padding: 0 rem(30) 0 rem(5);
+    width: auto;
+    .seperator {
+      height: rem(20);
+      color: #EFF0F3;
+      align-items: center;
+      top: rem(-4);
       position: relative;
     }
-  }
-  
-  .twitter {
-    display: inline-flex;
-    position: relative;
-    svg {
-      display: flex;
-      top: 0;
-      height: rem(16);
-      width: rem(24);
+    .like, .twitter, .share {
+      display: inline-flex;
       position: relative;
-      margin: 0 rem(10) 0 0;
-    }
-    .count {
-      top: 0;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 19px;
-      display: flex;
-      position: relative;
+      svg {
+        display: flex;
+        top: 0;
+        height: rem(16);
+        width: rem(18);
+        position: relative;
+        margin: 0 rem(10) 0 0;
+      }
+      .count {
+        color: $text-color2;
+        display: flex;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 19px;
+        position: relative;
+        top: 0;
+      }
     }
   }
-  .share{
-    display: inline-flex;
-    position: relative;
-    svg {
-      display: flex;
-      top: 0;
-      height: rem(16);
-      width: rem(16);
-      position: relative;
-      margin: 0 rem(10) 0 0;
-    }
-    .count {
-      top: 0;
-      font-size: 14px;
-      font-weight: 600;
-      line-height: 19px;
-      display: flex;
-      position: relative;
-    }
-  }
-}
 }
   
 img {
@@ -214,19 +179,20 @@ img {
 }
 
 .image_size {
-  z-index: 1;
-  position: absolute;
-  margin-top: 15px;
-  right: -5px;
-  height: 20px;
-  width: 100px;
-  line-height: 17px;
-  font-weight: 600;
-  text-align: center;
-  font-size: 12px;
-  color: #fff;
   background-color: #53D79F;
+  color: #fff;
+  height: rem(20);
+  line-height: rem(17);
+  font-size: rem(12);
+  font-weight: 600;
+  margin-top: rem(15);
+  padding-top: rem(1.25);
+  position: absolute;
   overflow: hidden;
+  right: rem(-5);
+  text-align: center;
+  width: rem(100);
+  z-index: 1;
 }
 .options {
   display: flex;
@@ -245,9 +211,8 @@ img {
   
 
 .text {
-  font-family: "Open Sans";
-  font-size: 14px;
-  padding: 10.5px 32.5px;
+  font-size: rem(14);
+  padding: rem(10.5) rem(32.5);
   border: 1px solid #53D79F;
   color: white;
   position: absolute;
@@ -261,7 +226,7 @@ img {
 
   .hero-grid__item, .hero-grid__grid-sizer {
     width: calc(20% - 15px) !important;
-    margin: 15px 7.5px 0 7.5px;
+    margin: rem(15) rem(7.5) 0 rem(7.5);
   }
 }
 
@@ -270,8 +235,8 @@ img {
 @media screen and ( max-width: 1440px ) {
 
   .hero-grid__item, .hero-grid__grid-sizer {
-    width: calc(33.3% - 15px) !important;
-    margin: 15px 7.5px 0 7.5px;
+    width: calc(25% - 15px) !important;
+    margin: rem(15) rem(7.5) 0 rem(7.5);
 }
 }
   
@@ -279,7 +244,7 @@ img {
   
     .hero-grid__item, .hero-grid__grid-sizer {
       width: calc(50% - 15px) !important;
-      margin: 15px 7.5px 0 7.5px;
+      margin: rem(15) rem(7.5) 0 rem(7.5);
   }
   }
 
@@ -287,13 +252,13 @@ img {
     
       .hero-grid__item, .hero-grid__grid-sizer {
         width: calc(100% - 15px) !important;
-        margin: 15px 7.5px 0 7.5px;
+        margin: rem(15) rem(7.5) 0 rem(7.5);
     }
     }
 
     @media screen and ( max-width: 500px ) {
       .hero {
-        margin-top: -28px;
+        margin-top: rem(-28);
       }
       .hero-grid.clearfix {
         margin: 0;

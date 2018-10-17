@@ -55,7 +55,7 @@
                      alt="profile image"/>
                 <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg"
                                                  alt="profile image"/></ng-template>
-                <label class="fullname w-100">{{user.fieldFirstName}} {{user.fieldLastName}}</label>
+                <label class="fullname w-100">{{user.fieldFirstName  | truncate: 12}} {{user.fieldLastName  | truncate: 12}}</label>
                 <div>
                     <label *ngFor="let role of user.roles; let i = index">
                         <label *ngIf="role.id && i <= 1" class="role">{{role.label}}</label>

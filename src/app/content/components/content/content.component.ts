@@ -112,23 +112,18 @@ export class ContentComponent implements OnInit {
                             this.getContent();
                             break;
                         case 400:
-                            // TODO: add general messages - bootstrap.
                             this.messageService.add('Bad request.');
                             break;
                         case 403:
-                            // TODO: add general messages - bootstrap.
                             this.messageService.add('Access denied.');
                             break;
                         case 404:
-                            // TODO: add general messages - bootstrap.
                             this.messageService.add('Not Found.');
                             break;
                         case 422:
-                            // TODO: add general messages - bootstrap.
                             this.messageService.add('Unprocessable Entity.');
                             break;
                         case 500:
-                            // TODO: add general messages - bootstrap.
                             this.messageService.add('Internal Server Error.');
                             break;
                         default:
@@ -149,9 +144,13 @@ export class ContentComponent implements OnInit {
                         // TODO: Remove this functionality, when back-end fix multiple emits issue.
                         if (this.initContent) { return; } else {this.initContent = true; }
                         for (const item in data.body) {
+                            const rex = data.body[item]['body'];
                             if (data.body[item]['type']) {
                                 data.body[item]['contentMachineName'] = data.body[item]['type'];
                                 data.body[item]['type'] = this.contentNames[data.body[item]['type']];
+                            }
+                            if (data.body[item]['body'] && data.body[item]['body'].length > 0) {
+                                data.body[item]['body'] = rex.replace(/<[^>]*>/g, '');
                             }
                         }
                         this.contentList = data.body.slice(0, 10);
@@ -166,38 +165,24 @@ export class ContentComponent implements OnInit {
                         this.tmpContentList = data.body;
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Unprocessable Entity.');
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');
                 }
             });
-    }
-
-    /**
-     * Returns Content body from the server
-     * @param text
-     * @return {Content}
-     */
-    bodySummary(text): Content {
-        return this.contentService.summary(text);
     }
 
     /**
@@ -211,7 +196,7 @@ export class ContentComponent implements OnInit {
                     data.langcode.toUpperCase() === this.selectedFilter.language.toUpperCase().slice(0, 2) : true) &&
                 ((this.selectedFilter.status !== null) ? ~~data.status === this.selectedFilter.status : true)
             );
-        });
+        }).slice(0, 10);
     }
 
     /**
@@ -219,6 +204,7 @@ export class ContentComponent implements OnInit {
      */
     clearFilter(): void {
        this.contentList = this.tmpContentList.slice(0, 10);
+       this.limit = 10;
     }
 
     /**
@@ -243,7 +229,7 @@ export class ContentComponent implements OnInit {
             this.selectedFilter.status = null;
             this.selectedFilter.language = null;
             return x.nid !== nid;
-        });
+        }).slice(0, 10);
     }
 
     /**

@@ -40,24 +40,19 @@ export class ActiveUsersComponent implements OnInit {
                         this.activeUsers = data.body;
                         break;
                     case 400:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Bad request.');
                         break;
                     case 403:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Access denied.');
                         break;
                     case 404:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        // TODO: add general messages - bootstrap.
                         this.messageService.add('Unprocessable Entity.');
                         break;
                     case 500:
-                        // TODO: add general messages - bootstrap.
-                        this.messageService.add('Internal Server Error.');
+                        this.messageService.add(data.body);
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');

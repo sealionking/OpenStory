@@ -1,23 +1,54 @@
-@import "assets/scss/variables";
-@import '../node_modules/bootstrap/scss/bootstrap';
 @import "../node_modules/bootstrap/scss/bootstrap-grid.scss";
+@import "assets/scss/variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
 @import "~@ng-select/ng-select/themes/default.theme.css";
 @import "~nouislider/distribute/nouislider.min.css";
 @import "assets/scss/mixins";
 @import "assets/scss/buttons";
 @import "assets/scss/modal";
 
+@font-face {
+  font-family: 'icomoon';
+  src:  url('assets/fonts/icomoon.eot?8ni53q');
+  src:  url('assets/fonts/icomoon.eot?8ni53q#iefix') format('embedded-opentype'),
+    url('assets/fonts/icomoon.ttf?8ni53q') format('truetype'),
+    url('assets/fonts/icomoon.woff?8ni53q') format('woff'),
+    url('assets/fonts/icomoon.svg?8ni53q#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-calendar1:before {
+  content: "\e900";
+  color: #687086;
+}
+
 html {
   min-height: 100%;
   background: linear-gradient(180deg, #F8F9FA 0%, #D2D7E0 100%) !important;
+  position: relative;
 }
 
-body{
-  background: transparent;
-  font-family: "Open Sans", sans-serif;
+body {
+  font-family: $font-family-Open-Sans !important;
   font-size: rem(14);
   line-height: rem(19);
-  height: 100%;
+  min-height: auto;
 
   /* Font varient */
   font-variant-ligatures: none;
@@ -28,6 +59,7 @@ body{
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
   text-shadow: rgba(0, 0, 0, .01) 0 0 1px;
+  background: none !important;
 }
 
 :focus {
@@ -56,8 +88,24 @@ body{
   background: $text-color4;
 }
 
+// Overwride ng select.
+
+.ng-arrow-zone {
+  margin: rem(-4) rem(10) 0 rem(10);
+}
+
+.ng-dropdown-panel {
+  width: inherit !important;
+}
+
+.ng-value {
+  color: $text-color1;
+  font-size: rem(14);
+  line-height: rem(19);
+}
+
 .ng-select.custom {
-  border:0;
+  border: 0;
   outline: 0;
   min-height: 0;
   border-radius: 0;
@@ -65,8 +113,8 @@ body{
 
 .ng-select .ng-control {
   min-height: 0;
-  background-color: #fff;
-  color: #687086;
+  background-color: $white;
+  color: $text-color1;
   border-radius: 0;
   border: 0;
   &:hover {
@@ -74,11 +122,48 @@ body{
     box-shadow: none;
   }
   .ng-placeholder {
+    color: $text-color1;
     height: rem(19);
     font-size: rem(14);
     line-height: rem(19);
-    color: black !important;
   }
+}
+
+.ng-select.focused:not(.opened) > .ng-control {
+  border-color: transparent;
+  box-shadow: 0 0 0 transparent;
+}
+
+.ng-select .ng-clear-zone .ng-clear {
+  margin: rem(4) 0 0 rem(3);
+}
+
+.ng-select.opened > .ng-control .ng-arrow {
+  border: solid $text-color1;
+  border-width: 0 2px 2px 0;
+  padding: rem(3.5);
+  transform: rotate(45deg);
+  top: 0;
+  -webkit-transform: rotate(45deg);
+  &:hover {
+    border-color: $text-color1;
+  }
+}
+
+.marked {
+  background-color: #f9f9f9 !important;
+}
+
+.selected {
+  background-color: #f9f9f9 !important;
+}
+
+.ng-select .ng-arrow-zone .ng-arrow {
+  border: solid $text-color1;
+  border-width: 0 2px 2px 0;
+  padding: rem(3.5);
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 
 // Select in forms.
@@ -94,7 +179,190 @@ body{
   }
 
   .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.marked {
-    background-color: #f9f9f9;
+    background-color: $secondary !important;
+  }
+
+  .form-group {
+      line-height: rem(25) !important;
+  }
+
+  .winkel-calendar {
+    font-family: $font-family-Open-Sans !important;
+    width: rem(250);
+  }
+
+  .wc-date-container {
+    border: 0 !important;
+    display: contents;
+    span {
+      color: $green !important;
+      margin-left: rem(15);
+    }
+  }
+  .wc-date-container > i {
+    color: #687086 !important;
+    float: left !important;
+  }
+  .wc-date-container {
+    i.fa.fa-calendar:before {
+      content: "\e900";
+      font-family: 'icomoon';
+      height: rem(16);
+      width: rem(16);
+    }
+  }
+  .wc-date-popover {
+    .wc-banner {
+      background: $green !important;
+      height: rem(158);
+      .wc-day-row {
+        margin-bottom: rem(30) !important;
+        margin-top: rem(10);
+        padding: 0 !important;
+      }
+      .wc-my-sec, .wc-month-row {
+        font-weight: 400;
+        padding: 0;
+      }
+      .wc-month-row {
+        margin-top: rem(-8);
+      }
+      .wc-date-row {
+        font-size: 48px;
+        font-weight: 400;
+        margin-left: rem(54);
+        margin-right: rem(10);
+        padding: 0;
+        width: auto;
+      }
+      .wc-time-sec {
+        line-height: rem(19);
+        margin-left: rem(54);
+        margin-top: rem(20);
+        width: auto;
+        .time {
+          font-size: 16px;
+          font-weight: 400;
+        }
+        span {
+          margin-left: rem(10);
+        }
+      }
+    }
+    .wc-details {
+      background: $green !important;
+      .month-year {
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .wc-prev, .wc-next {
+        padding: 0 rem(10);
+        width: 0;
+      }
+      .wc-next {
+        margin-right: rem(48);
+        padding-left: 0;
+      }
+    }
+    .months-view, .years-list-view {
+      color: $secondary;
+    }
+    .year-title {
+      background: $green !important;
+    }
+    .months-view > span:hover, .years-list-view > span:hover, .current-year, .current-month {
+      color: $green !important;
+    }
+    .calendar-days {
+      border-bottom: rem(1) solid #D4D7DD;
+      color: $secondary;
+      .calendar-day {
+        span {
+          &:hover {
+            background: $green;
+          }
+        }
+      }
+      .selected-day {
+        span {
+          background: $green;
+        }
+      }
+      .today {
+        span {
+          border: rem(1) solid $green;
+        }
+      }
+    }
+    .cal-util {
+      height: rem(50);
+      width: auto;
+      .ok {
+        background: $green;
+        border: 0;
+        border-radius: rem(3);
+        color: $white !important;
+        font-weight: 500;
+        height: rem(30);
+        margin-top: rem(10);
+        margin-left: rem(91);
+        padding: 0 rem(10) !important;
+        width: rem(70) !important;
+        .fa-check {
+          color: transparent;
+          position: absolute;
+        }
+      }
+    }
+    .time-view {
+      button:focus {
+        outline: 0 !important;
+      }
+      border: 0 !important;
+      padding: rem(66) rem(35) rem(35) rem(35);
+      .time-divider {
+        margin-top: rem(16);
+        font-size: rem(48);
+      }
+      .time {
+        color: $secondary !important;
+        .hour, .minutes {
+          input {
+            color: $secondary !important;
+            font-size: 48px !important;
+            font-weight: 600 !important;
+          }
+        }
+      }
+      .meridian {
+        .cuppa-btn-group {
+          .button {
+            border: rem(0.5) solid #D4D7DD;
+            border-radius: rem(2);
+            color: #D4D7DD;
+            font-size: rem(10);
+            height: rem(33.5);
+            width: rem(35.5);
+          }
+          .active {
+            background: $green !important;
+            color: #4A5269 !important;
+            font-size: 10px;
+          }
+        }
+      }
+      .time-view-btn {
+        .button {
+          background-color: #53D79F;
+          border: 0;
+          border-radius: rem(2);
+          height: rem(30);
+          margin-top: rem(30);
+          padding: 0;
+          width: rem(100);
+        }
+      }
+    }
   }
 }
 
@@ -138,4 +406,23 @@ body{
 
 .noUi-connect:nth-child(1) {
       background-color: #53D79F;
+}
+
+// Right container.
+.main-container-right {
+  display: inline-block;
+  float: right;
+  margin: rem(46) rem(50) rem(100) 0;
+  min-height: calc(100vh - 187px);
+  position: relative;
+  width: calc(100% - 150px);
+  &:before {
+    background-color: $text-color1;
+    content: "";
+    height: 100%;
+    left: rem(-20);
+    position: absolute;
+    top: 0;
+    width: rem(1);
+  }
 }

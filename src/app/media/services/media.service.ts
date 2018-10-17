@@ -1,33 +1,17 @@
 import {Injectable} from '@angular/core';
 
-import {AuthenticateService} from '../../core/services/authenticate.service';
 import {Media} from '../models/media';
-import {WebsocketService} from '../../core/services/websocket.service';
 import * as moment from 'moment';
 
 /**
- *Class that sends request to the server.
+ * Media module service file
  */
 @Injectable()
 export class MediaService {
     /**
      * @ignore
      */
-    constructor(private wsSocket: WebsocketService,
-                private auth: AuthenticateService) {
-    }
-
-    /**
-     * Function that sends token and request to the server.
-     */
-    public getMedia() {
-        this.wsSocket.sendEvent({
-            eventType: 'media',
-            event: 'ListMedia',
-            data: {
-                token: this.auth.getToken(), sorting: { created: 'DESC' }
-            }
-        });
+    constructor() {
     }
 
     /**
@@ -51,20 +35,26 @@ export class MediaService {
     }
 
     /**
-     * Populate filters from media listing with date.
+     * Populate the data filter from media listing
+     * the object built contains the start and end date of any month, regardless of year
      * @param {Array<Media>} medias - The media from listing
      * @returns {Array<any>} - The filter data
      */
     public populateFilters(medias: Array<Media>): Array<any> {
         const filterDate = [];
-        medias.forEach(med => {
-            const date = moment(med.created * 1000);
-            med['month'] = date.format('MM');
-            if (filterDate.filter(d => d.id === date.format('MM')).length === 0) {
-                filterDate.push({id: date.format('MM'), name: date.format('MMMM')});
-            }
-        });
-
+        const now = new Date();
+        const currentMonth = moment(now).format('MMMM');
+        for (let x = 0; x < 6; x++) {
+            filterDate.push({
+                id: moment().month(currentMonth).subtract(x, 'months').format('MM'),
+                interval: {
+                    start: moment().month(currentMonth).subtract(x, 'months').utc().startOf('month').unix().valueOf(),
+                    end: moment().month(currentMonth).subtract(x, 'months').endOf('month').unix().valueOf()
+                },
+                name: moment().month(currentMonth).subtract(x, 'months').format('MMMM') + ' ' +
+                    moment().month(currentMonth).subtract(x, 'months').format('YYYY')
+            });
+        }
         return filterDate;
     }
 }

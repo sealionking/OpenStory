@@ -120,26 +120,7 @@
 }
 
 app-masonry {
-  margin-left: rem(12);
-}
-
-// Right container.
-.main-container-right {
-  display: inline-block;
-  float: right;
-  margin: rem(46) rem(50) rem(60) 0;
-  min-height: calc(100vh - 190px);
-  position: relative;
-  width: calc(100% - 150px);
-  &:before {
-    background-color: $text-color1;
-    content: "";
-    height: 100%;
-    left: rem(-20);
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
+  margin-left: rem(-8);
 }
 
 button {
@@ -148,14 +129,19 @@ button {
   color: white;
   cursor: pointer;
   display: inline-block;
-  font-size: 16px;
-  margin: 8px 8px;
-  padding: 10px 24px;
+  font-size: rem(16);
+  margin: rem(8) rem(8) rem(8) 0;
+  padding: rem(10) rem(24);
   text-align: center;
   text-decoration: none;
 }
 
 .no-content {
-  margin: 20px 0;
-  font-size: 24px;
+  margin: rem(20) 0;
+  font-size: rem(24);
+}
+
+// Overwride ng select.
+ng-select.custom {
+  width: rem(200);
 }

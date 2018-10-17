@@ -5,8 +5,6 @@
 @import '../../../../assets/scss/header';
 @import "../../../../assets/scss/imagegrid";
 
-//Temp Css
-//TODO: Apply the correct CSS code
 .grid {
   width: 100%;
   xmin-height: rem(700);
@@ -23,13 +21,11 @@
 }
 
 .grid-item {
-  -webkit-box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
-  -moz-box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
-  box-shadow: 0px 3px 5px 0px rgba(51,59,80,0.6);
+  @include common-shadow(1px, 1px, 1px, 0px, rgba(0, 0, 0, 0.15));
   float: left;
   overflow: hidden;
   position: relative;
-  width: 420px;
+  width: rem(420);
   &:hover {
     .handle {
       display: block;
@@ -39,45 +35,35 @@
 
 .large {
   height: auto;
-  width: 855px;
+  width: rem(855);
+  &:after {
+    background-color: $ligth-grey;
+    content: "";
+    height: rem(1);
+    position: absolute;
+    right: 0;
+    top: rem(36);
+    width: rem(855);
+  }
 }
 
 .default {
   height: auto;
-  width: 420px;
+  width: rem(420);
 }
 
 .minimized {
-  height: 43px;
-  width: 420px;
+  height: rem(36);
+  width: rem(420);
 }
 
 .expand {
   height: auto;
 }
 
-// Right container.
-.main-container-right {
-  display: inline-block;
-  float: right;
-  margin: rem(46) rem(50) rem(60) 0;
-  min-height: calc(100vh - 190px);
-  position: relative;
-  width: calc(100% - 150px);
-  &:before {
-    background-color: $text-color1;
-    content: "";
-    height: 100%;
-    left: rem(-20);
-    position: absolute;
-    top: 0;
-    width: 1px;
-  }
-}
-
 .widget-content > div {
   background-color: $white;
-  padding: rem(10) rem(7.5);
+  padding: rem(5) rem(7.5);
   position: absolute;
   right: 0;
   z-index: 2;
@@ -91,8 +77,8 @@
 .handle {
   cursor: pointer;
   display: none;
-  height: 30px;
-  line-height: 36px;
+  height: rem(30);
+  line-height: rem(36);
   position: absolute;
   text-align: center;
   top: 0;
@@ -104,11 +90,11 @@
 .notification {
   animation: 0.4s ease-out slideLeftIn;
   background-color: rgba(104, 112, 134, 0.7);
-  bottom: 60px;
-  min-height: 60px;
-  padding: 0 32px;
+  bottom: rem(60);
+  min-height: rem(60);
+  padding: 0 rem(32);
   position: fixed;
-  right: 24px;
+  right: rem(50);
   z-index: 4;
   &.closed {
     animation: 0.4s ease-out slideLeftOut;
@@ -117,19 +103,19 @@
 
 .question-title {
   color: $white;
-  font-size: 12px;
+  font-size: rem(12);
   font-weight: 600;
-  line-height: 14px;
+  line-height: rem(14);
   margin: 0;
   padding: 0;
 }
 
 .modal-buttons {
-  margin: 0 -12px 0 50px;
+  margin: 0 rem(-12) 0 rem(50);
 }
 
 button {
-  margin: 0 4px;
+  margin: 0 rem(4);
 }
 
 @keyframes slideLeftIn {
@@ -157,10 +143,14 @@ button {
 }
 .add-widget {
   color: #B1B4BE;
-  font-size: 12px;
+  font-size: rem(12);
   img {
     margin: 0 rem(8) 0 0;
     transform: rotate(45deg);
     width: rem(11.32);
   }
+}
+
+.grid-gutter {
+  width: 2%;
 }
