@@ -137,20 +137,40 @@ export class ContentComponent implements OnInit {
      */
     public getContent(): void {
         this.wsService.sendRequest({eventType: 'content', event: 'ListContent',
-                        data: {token: this.auth.getToken(), sorting: { created: 'DESC' }}})
+            data: {token: this.auth.getToken(), sorting: { created: 'DESC' }}})
             .subscribe(data => {
                 switch (data.statusCode) {
                     case 200:
                         // TODO: Remove this functionality, when back-end fix multiple emits issue.
                         if (this.initContent) { return; } else {this.initContent = true; }
-                        for (const item in data.body) {
-                            const rex = data.body[item]['body'];
-                            if (data.body[item]['type']) {
-                                data.body[item]['contentMachineName'] = data.body[item]['type'];
-                                data.body[item]['type'] = this.contentNames[data.body[item]['type']];
-                            }
-                            if (data.body[item]['body'] && data.body[item]['body'].length > 0) {
-                                data.body[item]['body'] = rex.replace(/<[^>]*>/g, '');
+                        if (Object.keys(data.body).length > 0) {
+                            for (const item in data.body) {
+                                if (item) {
+                                    // Removes HTML tag from the body and checks if the body is of valid format.
+                                    let stripTag: any;
+                                    if (data.body[item].hasOwnProperty('body')) {
+                                        stripTag = data.body[item]['body'];
+                                        if (data.body[item]['body'] && data.body[item]['body'].length > 0) {
+                                            if (data.body[item]['body'] instanceof Object) {
+                                                if (data.body[item]['body'].find(x => x.hasOwnProperty('value'))) {
+                                                    if (data.body[item]['body'][0]['value'] === '') {
+                                                        data.body[item]['body'] = '';
+                                                    }
+                                                }
+                                            } else {
+                                                data.body[item]['body'] = stripTag.replace(/<[^>]*>/g, '');
+                                            }
+                                        }
+                                    }
+                                    // end check.
+
+                                    if (data.body[item].hasOwnProperty('type')) {
+                                        if (data.body[item]['type']) {
+                                            data.body[item]['contentMachineName'] = data.body[item]['type'];
+                                            data.body[item]['type'] = this.contentNames[data.body[item]['type']];
+                                        }
+                                    }
+                                }
                             }
                         }
                         this.contentList = data.body.slice(0, 10);
@@ -203,8 +223,8 @@ export class ContentComponent implements OnInit {
      * Clear the filter functions
      */
     clearFilter(): void {
-       this.contentList = this.tmpContentList.slice(0, 10);
-       this.limit = 10;
+        this.contentList = this.tmpContentList.slice(0, 10);
+        this.limit = 10;
     }
 
     /**
@@ -222,7 +242,7 @@ export class ContentComponent implements OnInit {
      */
     deleteContent(id, nid, name): void {
         this.wsService.sendRequest({eventType: 'content', event: 'DeleteEntity', data: {
-            token: this.auth.getToken(), entityType: 'node', bundle: name, id: id
+                token: this.auth.getToken(), entityType: 'node', bundle: name, id: id
             }});
         this.contentList = this.tmpContentList.filter( x => {
             this.selectedFilter.type = null;

@@ -1,5 +1,5 @@
     <div class="drop-zone-container">
-        <div class="my-drop-zone">
+        <div class="my-drop-zone" >
             <div
                     *ngIf="!show && ((multiValue !== null && multiValue > inputValue.length) || (multiValue == -1))"
                     ngfDrop
@@ -10,7 +10,8 @@
                     [maxSize]="accept.maxSize ? accept.maxSize : 500000000"
                     [(dragFiles)]="dragFiles"
                     [class.border-danger]="validComboDrag === false"
-                    (fileChange)="uploadFiles(files)"
+                    (fileChange)="uploadFiles(files); "
+                    class="drop-zone"
             >
                 <span class="d-block text-secondary">Drop files here to upload or</span>
                 <span class="btn btn-success">Select files</span>
@@ -19,7 +20,7 @@
                 <div *ngIf="files.length > 0 && show && i == files.length - 1"
                      class="progress-layout">
                     <span class="btn float-right text-secondary" (click)="cancel()"><img src="../../../../assets/images/forms-svg/close.svg"></span>
-                    <span class="text-secondary" [innerHTML]="x.name | truncate: 43"></span>
+                    <span class="text-secondary" [innerHTML]="x.name | truncate: 30"></span>
                     <div class="progress">
                         <div class="progress-bar"
                              role="progressbar"
@@ -35,7 +36,7 @@
                  style="width: 15px; height: 15px">
             <ul>
                 <li>Please only use files with the following extensions: {{accept.type}}</li>
-                <li *ngIf="accept.maxSize">Please only load files with file sizes between 0kb and {{accept.maxSize/1048576}}Mb.</li>
+                <li *ngIf="accept.maxSize">Please only load files with file sizes between 1KB and {{sizeConversion(accept.maxSize)}}.</li>
                 <li *ngIf="accept.maxRez">Please note: The maximum image resolution allowed is: {{accept.maxRez}}.</li>
                 <li *ngIf="accept.minRez">Please note: The minimum image resolution allowed is: {{accept.minRez}}.</li>
             </ul>
@@ -44,30 +45,30 @@
             <div class="upload-list" *ngFor="let item of inputValue; let i = index" [ngSwitch]="item.type.slice(0, 3)">
                 <div *ngSwitchCase="'ima'" >
                     <img class="file-img" src="../../../../assets/images/forms-svg/image.svg">
-                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 43" class="text-primary"></span></a>
-                    <span class="btn text-danger" (click)="inputValue.splice(i,1)"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
+                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 30" class="text-primary"></span></a>
+                    <span class="btn text-danger" (click)="inputValue.splice(i,1); onChange()"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
                 </div>
                 <div *ngSwitchCase="'aud'" >
                     <img class="file-img" src="../../../../assets/images/forms-svg/audio.svg">
-                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 43" class="text-primary"></span></a>
-                    <span class="btn text-danger" (click)="inputValue.splice(i,1)"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
+                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 30" class="text-primary"></span></a>
+                    <span class="btn text-danger" (click)="inputValue.splice(i,1); onChange()"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
                 </div>
                 <div *ngSwitchCase="'vid'" >
                     <img class="file-img" src="../../../../assets/images/forms-svg/video.svg">
-                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 43" class="text-primary"></span></a>
-                    <span class="btn text-danger" (click)="inputValue.splice(i,1)"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
+                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 30" class="text-primary"></span></a>
+                    <span class="btn text-danger" (click)="inputValue.splice(i,1); onChange()"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
                 </div>
                 <div *ngSwitchCase="'app'" >
                     <img class="file-img" src="../../../../assets/images/forms-svg/document.svg">
-                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 43" class="text-primary"></span></a>
-                    <span class="btn text-danger" (click)="inputValue.splice(i,1)"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
+                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 30" class="text-primary"></span></a>
+                    <span class="btn text-danger" (click)="inputValue.splice(i,1); onChange()"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
                 </div>
                 <div *ngSwitchCase="'tex'" >
                     <img class="file-img" src="../../../../assets/images/forms-svg/document.svg">
-                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 43" class="text-primary"></span></a>
-                    <span class="btn text-danger" (click)="inputValue.splice(i,1)"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
+                    <a [href]="item.path" target="_blank"><span [innerHTML]="item.name | truncate: 30" class="text-primary"></span></a>
+                    <span class="btn text-danger" (click)="inputValue.splice(i,1); onChange()"><img class="remove" src="../../../../assets/images/forms-svg/close.svg"></span>
                 </div>
-                <div *ngIf="item.name.length > 43" class="tooltip">{{item.name}}</div>
+                <div *ngIf="item.name.length > 30" class="tooltip">{{item.name}}</div>
             </div>
         </div>
     </div>

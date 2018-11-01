@@ -34,7 +34,7 @@ export class TextSummaryComponent implements OnInit, ControlValueAccessor {
     }
 
     validate(control: FormControl) {
-        const valid = (control.value.summary.length === 0 || control.value.body.length === 0) && this.required;
+        const valid = (control.value.summary === '' || control.value.body === '') && this.required;
         return valid ?
             {'summary-required': {valid: false}} : null;
     }

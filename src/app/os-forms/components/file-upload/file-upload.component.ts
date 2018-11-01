@@ -1,5 +1,5 @@
 import {Component, Input, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormControlName} from '@angular/forms';
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {ActivatedRoute} from '@angular/router';
@@ -21,17 +21,23 @@ export interface FileSocket {
             provide: NG_VALUE_ACCESSOR,
             useExisting: forwardRef(() => FileUploadComponent),
             multi: true
-        }]
+        },
+        {
+            provide: NG_VALIDATORS,
+            useExisting: forwardRef(() => FileUploadComponent),
+            multi: true}]
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
     @Input() accept: {
         type: string;
-        maxSize?: number;
+        maxSize?: any;
         maxRez?: string;
         minRez?: string;
     };
     @Input() multiValue: number;
     @Input() id: number;
+    @Input() required: boolean;
+    @Input() reference: string;
     files: File[] = [];
     dragFiles: File[] = [];
     progress = 0;
@@ -66,6 +72,23 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
         if (value !== '') {
             this.inputValue = value;
         }
+    }
+
+    /**
+     * Used to display the maximum size allowed from the CMS
+     * @param maxSize
+     */
+    sizeConversion(maxSize: any) {
+        if (!(maxSize.includes('KB') || maxSize.includes('MB') || maxSize.includes('GB'))) {
+            maxSize = (maxSize / 1048576).toFixed(3) + 'KB';
+        }
+        return maxSize;
+    }
+
+    validate(control: FormControl) {
+        const valid = !this.inputValue[0] && this.required;
+        return valid ?
+            {'required': {valid: false}} : null;
     }
 
     registerOnChange(fn) {
@@ -118,6 +141,7 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
                 this.progressColor = '#53D79F';
                 this.progress = 100;
                 setTimeout(() => this.show = false, 500);
+                this.propagateChange(this.inputValue);
             } else {
                 this.message.add(x.body, 'danger');
                 this.progressColor = '#b30000';
@@ -141,8 +165,12 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
      * @return {string | null}
      */
     private getBundle(): string | null {
-        this.bundle = this.router.snapshot.paramMap.get('contenttype');
-        if (this.bundle === null) {
+        if (this.reference) {
+            this.bundle = this.reference;
+        } else {
+            this.bundle = this.router.snapshot.paramMap.get('contenttype');
+        }
+        if (this.bundle === null || this.reference === 'user') {
             this.bundle = 'user';
         }
         return this.bundle;
@@ -161,4 +189,8 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
         return type;
     }
 
+    onChange() {
+        // Send data to the parent form.
+        this.propagateChange(this.inputValue);
+    }
 }

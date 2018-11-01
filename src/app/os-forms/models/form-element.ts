@@ -20,4 +20,6 @@ export interface FormElement {
     step?: number;
     urlTitleDisabled?: boolean;
     timePicker?: boolean;
+    targetType?: any;
+    targetBundles?: Array<any>;
 }

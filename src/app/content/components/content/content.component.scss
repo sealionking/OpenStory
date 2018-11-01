@@ -207,3 +207,14 @@ lottie-animation-view {
 ng-select.custom {
   width: rem(200);
 }
+
+// Overwride wysiwyg.
+.text {
+  border: none;
+  color: white;
+  left: 0;
+  padding: 0;
+  position: relative;
+  top: 0;
+  transform: translate(0);
+}

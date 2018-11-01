@@ -1,5 +1,6 @@
 @import "../../../../assets/scss/variables";
 @import "../../../../assets/scss/mixins";
+@import "~assets/scss/tooltip";
 
 label {
   color: $text-color2;
@@ -31,4 +32,9 @@ input {
 
 .link {
   margin: rem(10) 0 0;
+}
+.links:hover .tooltip {
+  opacity: 1;
+  top: rem(-10);
+  visibility: visible;
 }

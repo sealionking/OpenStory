@@ -85,7 +85,7 @@
                     <div class="checkbox">
                     </div>
                     <div class="options">
-                        <a [routerLink]="['user', user.uuid]">
+                        <a [routerLink]="['user', user.uuid, {info: user.uid}]">
                             <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
                         </a>
                         <a *ngIf="user.uid != currentUser.uid" (click)="deleteStatus = true; checkbox = user?.uid">

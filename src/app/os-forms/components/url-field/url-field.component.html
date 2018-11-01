@@ -6,7 +6,7 @@
             [placeholder]="'Type here'"
             (input)="onChange()"
             [(ngModel)]="inputVal.title"
-            [tooltip]="description" placement="right">
+            placement="top-right">
   </div>
   <div class="link">
     <label for="">Url link</label>
@@ -14,7 +14,8 @@
               [placeholder]="'Type here'"
               (input)="onChange()"
               [(ngModel)]="inputVal.url"
-              [tooltip]="description" placement="right">
+              placement="top-right">
   </div>
+  <div *ngIf="description" class="tooltip">{{description}}</div>
 </div>
 <div class="description">The url can only be internal</div>

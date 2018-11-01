@@ -17,6 +17,7 @@ export class EditContentComponent implements OnInit {
     contentName: string;
     liveFormData = {};
     showSchema = false;
+    buttonValue = false;
     public lottieConfig: Object;
 
     /**
@@ -104,6 +105,7 @@ export class EditContentComponent implements OnInit {
      * @param formData
      */
     onSubmitFn(formData): void {
+        this.buttonValue = true;
         this.wsService.sendRequest({
             eventType: 'entity',
             event: 'UpdateEntity', data: {
@@ -124,23 +126,56 @@ export class EditContentComponent implements OnInit {
                     case 400:
                         this.messageService.add('Bad request.');
                         break;
+                    case 401:
+                        // TODO: Redo this when backend resolves the issue
+                        if (data.hasOwnProperty('body')) {
+                            if (data['body'].hasOwnProperty('message')) {
+                                this.messageService.add(data.body.message);
+                            } else {
+                                this.messageService.add('Unauthorized. Access denied.', 'danger');
+                            }
+                        }
+                        break;
                     case 403:
-                        this.messageService.add(data.body);
+                        // TODO: Redo this when backend resolves the issue
+                        if (data.hasOwnProperty('body')) {
+                            if (data['body'].hasOwnProperty('message')) {
+                                this.messageService.add(data.body.message);
+                            } else {
+                                this.messageService.add('Forbidden. Access denied.', 'danger');
+                            }
+                        }
                         break;
                     case 404:
                         this.messageService.add('Not Found.');
                         break;
                     case 422:
-                        data.body.errors.forEach((i) => {
-                            this.messageService.add(i.detail);
-                        });
+                        // TODO: Redo this when backend resolves the issue
+                        // data.body.errors.forEach((i) => {
+                        //     this.messageService.add(i.detail);
+                        // });
+                        if (data.hasOwnProperty('body')) {
+                            if (data['body'].hasOwnProperty('message')) {
+                                this.messageService.add(data.body.message);
+                            } else {
+                                this.messageService.add('Unprocessable Entity.', 'danger');
+                            }
+                        }
                         break;
                     case 500:
-                        this.messageService.add('Internal Server Error.');
+                        // TODO: Redo this when backend resolves the issue
+                        if (data.hasOwnProperty('body')) {
+                            if (data['body'].hasOwnProperty('message')) {
+                                this.messageService.add(data.body.message);
+                            } else {
+                                this.messageService.add('Internal Server Error.', 'danger');
+                            }
+                        }
                         break;
                     default:
-                        this.messageService.add('Unknown request.');
+                        this.messageService.add('Connection issues between UI and Server');
                 }
+                this.buttonValue = false;
             });
     }
 

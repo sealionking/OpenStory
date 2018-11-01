@@ -1,0 +1,173 @@
+// Reference modal.
+.modal-dialog:not(.select-widget-modal) {
+  background-color: $white;
+  max-width: rem(700) !important;
+  padding-bottom:  rem(115);
+  .modal-content {
+    background: $white;
+    border: none;
+    margin: 0 auto;
+    min-height: rem(685);
+    padding: rem(40) 0 0;
+    position: relative;
+    .ng-dropdown-panel.bottom {
+      margin-top: rem(1);
+    }
+    form {
+      min-height: rem(200);
+    }
+    .close-modal {
+      background-color: transparent;
+      border: 0;
+      color: $text-color1;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: rem(24);
+      margin: rem(-27) rem(19) 0 0 ;
+      max-height: rem(24);
+      position: absolute;
+      padding: 0;
+      right: 0;
+      &:hover {
+        color: $dark-grey;
+      }
+      &:focus {
+        outline: none;
+      }
+      span {
+        display: block;
+        line-height: rem(24);
+      }
+    }
+    .reference-header ~ app-os-form .form-actions{
+      padding: 0;
+    }
+    .reference-header {
+      height: rem(220);
+      margin: 0 auto;
+      max-width: rem(420);
+      width: 100%;
+      h1 {
+        font-weight: 600;
+      }
+      .mb-5 {
+        margin-top: rem(68);
+        label {
+          color: $text-color2;
+          font-size: rem(14);
+          font-weight: 600;
+          line-height: rem(19);
+        }
+        .border-bottom {
+          border-bottom: rem(1) solid #687086 !important;
+          span {
+            color: #687086;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 36px;
+          }
+        }
+        .ng-value-container,
+        .ng-input {
+          padding-left: 0;
+        }
+      }
+    }
+    app-os-form {
+      max-width: 100%;
+    }
+    .form-group {
+      .tooltip {
+        max-width: rem(420);
+      }
+    }
+    .reference {
+      max-width: rem(420);
+      .ng-dropdown-panel {
+        max-width: 100%;
+      }
+    }
+    .ng-dirty,.ng-valid,.ng-touched,.ng-invalid,.ng-untouched,.ng-pristine,.ng-pristine {
+      background: transparent;
+      box-shadow: none;
+      max-width: rem(420);
+      margin: 0 auto;
+      padding: 0;
+      .ng-select .ng-control,
+      input {
+        background-color: transparent;
+      }
+      .drop-zone-container,
+      .my-drop-zone,
+      .info-zone{
+        width: 100%;
+      }
+      .upload-list > div {
+        display: flex;
+        img {
+          margin: rem(4) !important;
+        }
+      }
+      .form-group-reference {
+        max-width: 100%;
+      }
+      .form-group.form-group-url {
+        margin: rem(8) 0;
+        max-width: 100%;
+      }
+      .form-group.form-upload,
+      .form-group.form-group-date {
+        max-width: 100%;
+      }
+      .form-group {
+        margin-bottom: rem(8);
+        &.form-group-textfield,
+        &.form-group-password,
+        &.form-group-email {
+          margin-bottom: rem(-4);
+        }
+        &.form-group-publish {
+          margin-bottom: rem(1);
+          max-width: rem(420);
+        }
+        label {
+          margin: 0;
+        }
+        .form-text-area .remove {
+          float: none;
+          margin: rem(1) 0 rem(16);
+        }
+      }
+    }
+    .form-actions.text-right{
+      bottom: rem(-95);
+      padding: 0;
+      position: absolute;
+      right: rem(140);
+      .btn.btn-success {
+        margin: 0;
+      }
+    }
+    .form-text + span,
+    .text + span {
+      margin-top: rem(16);
+    }
+    .field.textfield {
+      display: flex;
+      input {
+        margin-left: 0;
+      }
+    }
+
+    // Overwride wysiwyg.
+    .text {
+      border: none;
+      color: white;
+      left: 0;
+      padding: 0;
+      position: relative;
+      top: 0;
+      transform: translate(0);
+    }
+  }
+}

@@ -2,6 +2,7 @@
 @import '../../../../assets/scss/mixins';
 @import '../../../../assets/scss/sidemenu';
 @import '../../../../assets/scss/searchbar';
+@import '../../../../assets/scss/reference-modal';
 
 .right-container{
   line-height: rem(24) !important;
@@ -82,4 +83,15 @@ app-os-form {
 // Overwrite ckeditor styling.
 ckeditor {
   display: block;
+}
+
+// Overwride wysiwyg.
+.text {
+  border: none;
+  color: white;
+  left: 0;
+  padding: 0;
+  position: relative;
+  top: 0;
+  transform: translate(0);
 }

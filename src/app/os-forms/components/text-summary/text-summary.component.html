@@ -4,13 +4,13 @@
             (input)="onChange()"
             [(ngModel)]="inputVal.summary"
             [attr.maxlength]="maxLength"
-            [tooltip]="description" placement="right"
+            placement="right"
   ></textarea>
     <ckeditor [config]="ckeConfig"
               (change)="onChange()"
               [(ngModel)]="inputVal.body"
               [maxlength]="maxLength"
-              [tooltip]="description" placement="right"
+              placement="right"
     >
     </ckeditor>
 </div>

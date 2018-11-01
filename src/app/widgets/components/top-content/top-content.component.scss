@@ -8,11 +8,11 @@
 
 .position {
   @include border-radius(100%);
-  background-color: $green;
-  border: 3px solid #0DBCAC;
-  color: $white;
-  font-size: rem(24);
-  line-height: rem(33);
+  border: rem(9) solid $green;
+  color: $text-color2;
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: rem(21);
   height: rem(40);
   text-align: center;
   width: rem(40);

@@ -33,7 +33,7 @@ export class UrlFieldComponent implements OnInit, ControlValueAccessor {
     }
 
     validate(control: FormControl) {
-        const valid = ((control.value.title && control.value.title.length === 0) || control.value.url.length === 0) && this.required;
+        const valid = ((control.value.title && control.value.title === '') || control.value.url === '') && this.required;
         return valid ?
             {'url-required': {valid: false}} : null;
     }
