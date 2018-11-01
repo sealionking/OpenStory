@@ -12,13 +12,16 @@ import {MessageService} from '../../../core/services/message.service';
 })
 export class OsFormComponent implements OnInit, OnChanges {
     @Input() formData: FormElement[] = [];
+    @Input() fieldRef;
+    @Input() referenceCheck;
+    @Input() buttonValue: boolean;
     @Output() sentData: EventEmitter<any> = new EventEmitter();
     osValidators = [];
     configForm: FormGroup = new FormGroup({});
     formSubmitted = false;
     multiValuesData: any = {};
 
-    private notChangeDefault = ['select', 'checkbox', 'radio', 'upload'];
+    private notChangeDefault = ['select', 'checkbox', 'radio', 'upload', 'reference'];
     private arrayListControls = ['text', 'number', 'email', 'text-area',
         'slider', 'text-editor', 'url', 'text-summary', 'password', 'date'];
 
@@ -32,6 +35,7 @@ export class OsFormComponent implements OnInit, OnChanges {
     ngOnInit() {
         // this.formData = FormData;
         // this.initForm();
+        // console.log(this.formData);
     }
 
     ngOnChanges(changes: SimpleChanges) {

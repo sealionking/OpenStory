@@ -56,7 +56,8 @@ export class AuthenticateService {
                         this.wsService.ioReconnect();
                         break;
                     case 500:
-                        this.messageService.add(data.body);
+                        // TODO: Redo this when backend resolves the issue
+                        this.messageService.add('Internal Server Error.');
                         break;
                     default:
                         this.messageService.add('Connection issues between UI and Server');

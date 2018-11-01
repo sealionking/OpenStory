@@ -1,0 +1,73 @@
+<div class="reference" >
+  <ng-select [items]="items$ | async"
+             bindLabel="label"
+             [maxSelectedItems]="maxItems != -1 ? maxItems : 999"
+             [multiple]="true"
+             [hideSelected]="true"
+             [loading]="itemsLoading"
+             [typeahead]="itemsInput$"
+             loadingText="Searching..."
+             placeholder="Start Searching"
+             (clear)="clear()"
+             (change)="onChange()"
+             (focus)="loadItems()"
+             (remove)="onChange(); changeClear = false"
+             (add)="onChange()"
+             [appHideElement]="maxItems"
+             [initValue]="startClear"
+             [changeValue]="changeClear"
+             [(ngModel)]="inputVal">
+    <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+      <div class="ng-value" *ngFor="let item of items">
+        <span class="ng-value-label">{{item.label}}</span>
+        <button aria-label="Close" class="close" type="button" (click)="clear(item)">
+          <span class="ng-value-icon right" aria-hidden="true">×</span>
+        </button>
+      </div>
+    </ng-template>
+    <ng-template let-items="items">
+      <ng-option *ngFor="let item of items" [value]="item.id" [disabled]="item.disabled" >{{item.label}}</ng-option>
+    </ng-template>
+    <ng-template *ngIf="!addNew" ng-footer-tmp>
+      <div *ngIf="targetType != 'node'; else nodeTemplate" class="card-body"
+           (click)="openModal(template); callTemplate()">
+        <span>Add new {{targetType}}</span>
+        <img src="../../../../assets/images/inline-svg/add_new.svg">
+      </div>
+      <ng-template #nodeTemplate>
+        <div class="card-body" (click)="openModal(template);">
+          <span>Add new {{targetType}}</span>
+          <img src="../../../../assets/images/inline-svg/add_new.svg">
+        </div>
+      </ng-template>
+    </ng-template>
+  </ng-select>
+</div>
+
+<ng-template #template>
+    <button type="button" class="close-modal float-right" aria-label="Close" (click)="closeModal()">
+        <span  aria-hidden="true">&times;</span>
+    </button>
+    <div class="reference-header">
+      <h1>Add New Reference</h1>
+      <div class="mb-5">
+        <label>Reference type</label>
+        <div class="border-bottom">
+          <span *ngIf="targetType == 'user'" class="text-secondary">{{targetType}}</span>
+          <div class="header-select" *ngIf="showCT">
+              <ng-select
+                          [items]="contentOptions"
+                          placeholder="Select a content type."
+                          [clearable]="false"
+                          [searchable]="false"
+                          (change)="callTemplate()"
+                          [(ngModel)]="contentType"
+              >
+              </ng-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  <app-os-form *ngIf="showTemplate" [formData]="newReference" (sentData)="submit($event)" [fieldRef]="referenceType"
+               [referenceCheck]="true" [buttonValue]="buttonValue"></app-os-form>
+</ng-template>

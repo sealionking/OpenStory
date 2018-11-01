@@ -14,6 +14,19 @@ export const FormData: FormElement[] = [
         suffix: 'Suffix'
     },
     {
+        id: 'Reference field',
+        type: 'reference',
+        label: 'Reference Field Here',
+        description: 'What a reference',
+        required: false,
+        multiValues: 1,
+        defaultValue: ['ID'],
+        validators: [''],
+        placeholder: 'This is a placeholder',
+        targetType: 'user',
+        targetBundles: ['array'],
+    },
+    {
         id: 'upload-file',
         type: 'upload',
         label: 'Upload a file or two',
@@ -157,7 +170,7 @@ export const FormData: FormElement[] = [
         required: true,
         multiValues: 1,
         defaultValue: [''],
-        validators: ['required', 'email'],
+        validators: ['email', 'required'],
         placeholder: 'This is placeholder'
     },
     {
@@ -199,7 +212,7 @@ export const FormData: FormElement[] = [
         options: [{id: 's1', name: 'L'}, {id: 's2', name: 'XL'}, {id: 's3', name: 'XXL'}]
     },
     {
-        id: 'image',
+        id: 'unsupported',
         type: 'unsupported',
         label: 'Label for uns',
         description: '',

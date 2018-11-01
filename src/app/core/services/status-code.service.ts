@@ -26,7 +26,13 @@ export class StatusCodesService {
                 this.messageService.add('Bad request.');
                 break;
             case 401:
-                this.messageService.add('Access denied.');
+                if (data.hasOwnProperty('body')) {
+                    if (data['body'].hasOwnProperty('message')) {
+                        this.messageService.add(data.body.message);
+                    } else {
+                        this.messageService.add('Unauthorized.', 'danger');
+                    }
+                }
                 break;
             case 403:
                 this.messageService.add('Access denied.');
@@ -35,7 +41,13 @@ export class StatusCodesService {
                 this.messageService.add('Not Found.');
                 break;
             case 422:
-                this.messageService.add('Unprocessable Entity.');
+                if (data.hasOwnProperty('body')) {
+                    if (data['body'].hasOwnProperty('message')) {
+                        this.messageService.add(data.body.message);
+                    } else {
+                        this.messageService.add('Unprocessable Entity.', 'danger');
+                    }
+                }
                 break;
             case 423:
                 this.messageService.add('Locked');

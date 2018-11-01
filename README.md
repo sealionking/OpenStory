@@ -3,7 +3,7 @@
 **OpenStory** is a decoupled admin interface, capable of improving the usability of any `Drupal` website. With a `NodeJS middleware`, the **OpenStory** interface allows content managers to edit content in a collaborative way, 
  to manage multiple sites and to share the media gallery across various sites (feature enabled for multisite platforms).
 
-See [Demo](https://demo-v2.openstory.io) or visit the [Presentation site](https://openstory.io/).
+See [Demo](https://demo.openstory.io) or visit the [Presentation site](https://openstory.io/).
 
 
 ## About OpenStory

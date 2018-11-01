@@ -10,7 +10,11 @@
 }
 
 .overlay {
+  bottom: rem(8);
   height: calc(100% - 16px);
+  left: rem(8);
+  right: rem(8);
+  top: rem(8);
 }
 
 .row {
@@ -26,11 +30,13 @@
 }
 
 .box {
+  line-height: rem(19);
   padding: rem(8);
   margin: 0;
   &:hover {
     .overlay {
       background-color: rgba(51, 59, 80, 0.8);
+      font-size: rem(14);
       opacity: 1;
       z-index: 1;
       height: calc(100% - 16px);
@@ -65,6 +71,7 @@
     color: $text-color2;
     font-size: rem(12);
     font-weight: 700;
+    height: rem(17);
     line-height: rem(17);
     margin-top: rem(7);
     span.date{

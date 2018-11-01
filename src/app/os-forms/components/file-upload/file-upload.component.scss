@@ -6,18 +6,26 @@
 }
 .my-drop-zone {
   background: $secondary;
-  border: dashed 1px lightgray;
-  border-radius: rem(2);
   font-family: $font-family-Open-Sans;
   max-height: rem(160);
   text-align: center;
   width: rem(370);
+  .drop-zone{
+    border: dashed rem(1) lightgray;
+    border-radius: rem(2);
+    height: rem(160);
+    max-height: rem(160);
+  }
+  .drop-zone.border-danger {
+    border: dashed rem(1) firebrick;
+    border-radius: rem(2);
+  }
   span.d-block.text-secondary {
     color: $text-color1;
     font-size: rem(14);
     font-weight: 600;
     line-height: rem(19);
-    margin-top: rem(31) ;
+    padding-top: rem(31) ;
   }
   span.btn-success{
     font-size: rem(14);
@@ -56,7 +64,6 @@
 }
 .info-zone {
   background-color: $secondary;
-  margin-bottom: rem(2);
   width: rem(370);
   img.notice {
     margin: rem(10);
@@ -86,7 +93,7 @@
     margin: rem(2);
     position: relative;
     &:hover .tooltip{
-      opacity: 0.8;
+      opacity: 1;
       visibility: visible;
     }
     img.file-img {

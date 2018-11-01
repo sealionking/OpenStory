@@ -12,9 +12,12 @@ import {CheckboxComponent} from './components/checkbox/checkbox.component';
 import {RadioButtonComponent} from './components/radio-button/radio-button.component';
 import {ModalModule, BsDatepickerModule} from 'ngx-bootstrap';
 import {AngularDateTimePickerModule} from 'angular2-datetimepicker';
-import { DateComponent } from './components/date/date.component';
+import {DateComponent} from './components/date/date.component';
 import {FileUploadComponent} from './components/file-upload/file-upload.component';
-import { ngfModule} from 'angular-file';
+import {ngfModule} from 'angular-file';
+import {ReferenceFieldComponent} from './components/reference-field/reference-field.component';
+import {OsFormsService} from './services/os-forms.service';
+import { HideElementDirective } from './validators/hide-element.directive';
 
 @NgModule({
     imports: [
@@ -35,9 +38,12 @@ import { ngfModule} from 'angular-file';
         CheckboxComponent,
         RadioButtonComponent,
         DateComponent,
-        FileUploadComponent
+        FileUploadComponent,
+        ReferenceFieldComponent,
+        HideElementDirective
     ],
-    exports: [OsFormComponent]
+    exports: [OsFormComponent],
+    providers: [OsFormsService]
 })
 export class OsFormsModule {
 }
