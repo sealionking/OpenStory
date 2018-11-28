@@ -14,12 +14,17 @@ import {TopContentComponent} from './components/top-content/top-content.componen
 import {ContentEvoComponent} from './components/content-evo/content-evo.component';
 import {SharedModule} from '../shared/shared.module';
 import {LottieAnimationViewModule} from 'ng-lottie';
+import {NgxEchartsModule} from 'ngx-echarts';
+import { DeviceSessionComponent } from './components/device-session/device-session.component';
+import {BrowserSessionComponent} from './components/browser-session/browser-session.component';
+import { RushHoursComponent } from './components/rush-hours/rush-hours.component';
 
 @NgModule({
     imports: [
         CommonModule,
         SharedModule,
         LottieAnimationViewModule.forRoot(),
+        NgxEchartsModule
     ],
     providers: [WidgetServiceService],
     declarations: [
@@ -32,7 +37,10 @@ import {LottieAnimationViewModule} from 'ng-lottie';
         ActiveUsersComponent,
         NewestUsersComponent,
         TopContentComponent,
-        ContentEvoComponent
+        ContentEvoComponent,
+        DeviceSessionComponent,
+        BrowserSessionComponent,
+        RushHoursComponent
     ],
     exports: [WidgetBodyComponent],
     entryComponents: [
@@ -44,7 +52,10 @@ import {LottieAnimationViewModule} from 'ng-lottie';
         ActiveUsersComponent,
         NewestUsersComponent,
         TopContentComponent,
-        ContentEvoComponent
+        ContentEvoComponent,
+        DeviceSessionComponent,
+        BrowserSessionComponent,
+        RushHoursComponent
     ]
 })
 export class WidgetsModule {

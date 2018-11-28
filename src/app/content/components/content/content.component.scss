@@ -49,54 +49,6 @@ appMasonryItem {
   }
 }
 
-.answer-yes {
-  background-color: $green;
-  border: rem(1) solid $green;
-  border-radius: rem(2);
-  color: $white;
-  cursor: pointer;
-  display: none;
-  font-size: rem(14);
-  padding: rem(3.5) rem(22.5);
-  width: rem(70);
-  height: rem(30);
-  left: 50%;
-  margin-left: rem(15);
-  position: absolute;
-  text-decoration: none;
-  top: rem(159);
-}
-
-.answer-no {
-  border: rem(1) solid $green;
-  border-radius: rem(2);
-  color: $white;
-  cursor: pointer;
-  display: none;
-  font-size: rem(14);
-  height: rem(30);
-  margin-right: rem(15);
-  padding: rem(3.5) rem(24);
-  position: absolute;
-  right: 50%;
-  text-decoration: none;
-  top: rem(159);
-  width: rem(70);
-}
-
-.answer-q {
-  color: $white;
-  cursor: pointer;
-  display: none;
-  font-size: rem(14);
-  padding-left: 25%;
-  padding-right: 25%;
-  position: absolute;
-  text-align: center;
-  text-decoration: none;
-  top: 90.96px;
-}
-
 .overlay-over {
   background-color: rgba(51, 59, 80, 0.9);
   opacity: 1;
@@ -193,28 +145,21 @@ appMasonryItem {
   }
 }
 
+.description {
+  height: auto;
+  margin: 0;
+  background-color: transparent;
+  transition: none;
+}
+
 // Loader.
 lottie-animation-view {
   width: 100%;
 }
 
-.no-content {
-  margin: rem(20) 0;
-  font-size: rem(24);
-}
+
 
 // Overwride ng select.
 ng-select.custom {
   width: rem(200);
-}
-
-// Overwride wysiwyg.
-.text {
-  border: none;
-  color: white;
-  left: 0;
-  padding: 0;
-  position: relative;
-  top: 0;
-  transform: translate(0);
 }

@@ -1,128 +1,126 @@
 <section class="main-container-right">
-    <div class="searchbar">
-        <h1>Content</h1>
-        <div class="add-content">
-            <a class="add" (click)="show = !show">
-                <img class="svg" [src]="'../../../../assets/images/inline-svg/plus.svg'">
-            </a>
-            <ul class="menu" [ngStyle]="{'display': show ? 'block' : 'none'}">
-                <li *ngFor="let item of menuItems" [routerLink]="['new', item.id]">{{item.label}}</li>
-            </ul>
-        </div>
-
-    </div>
-    <div class="filter">
-        <ng-select
-                class="custom"
-                (open)="filterItems()"
-                [items]="items"
-                bindLabel="name"
-                bindValue="id"
-                [searchable]="false"
-                placeholder="Content Type"
-                [(ngModel)]="selectedFilter.type"
-                (change)="filter()"
-                (clear)="clearFilter()"
-        >
-        </ng-select>
-        <ng-select
-                class="custom"
-                [items]="contentStatus"
-                (open)="filterItems()"
-                bindLabel="name"
-                bindValue="id"
-                [searchable]="false"
-                placeholder="Status"
-                [(ngModel)]="selectedFilter.status"
-                (change)="filter()"
-                (clear)="clearFilter()"
-        >
-        </ng-select>
-        <!--<ng-select-->
-                <!--class="custom"-->
-                <!--[items]="contentLanguage"-->
-                <!--(open)="filterItems()"-->
-                <!--bindLabel="name"-->
-                <!--bindValue="id"-->
-                <!--[searchable]="false"-->
-                <!--placeholder="Language"-->
-                <!--[(ngModel)]="selectedFilter.language"-->
-                <!--(change)="filter()"-->
-                <!--(clear)="clearFilter()"-->
-        <!--&gt;-->
-        <!--</ng-select>-->
+  <div class="searchbar">
+    <h1>Content</h1>
+    <div class="add-content">
+      <a class="add" >
+        <img class="svg" (click)="show = !show" [ngClass]="{'rotate': show}" [src]="'../../../../assets/images/inline-svg/plus.svg'">
+      </a>
+      <ul class="menu" [ngStyle]="{'display': show ? 'block' : 'none'}">
+        <li *ngFor="let item of menuItems" [routerLink]="['new', item.id]">{{item.label}}</li>
+      </ul>
     </div>
 
-    <!--Loader-->
-    <lottie-animation-view *ngIf="!contentList"
-                           [options]="lottieConfig"
-                           [width]="300"
-                           [height]="400">
+  </div>
+  <div class="filter">
+    <ng-select
+        class="custom"
+        (open)="filterItems()"
+        [items]="items"
+        bindLabel="name"
+        bindValue="id"
+        [searchable]="false"
+        placeholder="Content Type"
+        [(ngModel)]="selectedFilter.type"
+        (change)="filter()"
+        (clear)="clearFilter()"
+    >
+    </ng-select>
+    <ng-select
+        class="custom"
+        [items]="contentStatus"
+        (open)="filterItems()"
+        bindLabel="name"
+        bindValue="id"
+        [searchable]="false"
+        placeholder="Status"
+        [(ngModel)]="selectedFilter.status"
+        (change)="filter()"
+        (clear)="clearFilter()"
+    >
+    </ng-select>
+  </div>
+
+  <!--Loader-->
+  <lottie-animation-view *ngIf="!contentList"
+                         [options]="lottieConfig"
+                         [width]="300"
+                         [height]="400">
+  </lottie-animation-view>
+
+  <!--In case the retrieved object is empty but exists -->
+  <div class="no-content" *ngIf="contentList && contentList.length === 0">
+    <lottie-animation-view
+            [options]="noContent"
+            [width]="700"
+            [height]="410">
     </lottie-animation-view>
-
-    <!--In case the retrieved object is empty but exists -->
-    <div class="no-content" *ngIf="contentList && contentList.length === 0">
-        <h1>No Content to be displayed.</h1>
+    <div class="no-content-text">
+      <h4>NO CONTENT FOUND.</h4>
     </div>
+  </div>
 
-    <!--List-->
-    <app-masonry *ngIf="contentList" [useImagesLoaded]="true" class="hero">
-                <appMasonryItem class="hero-grid__item" *ngFor="let content of contentList">
-            <div class="image_size">{{content.type}}</div>
-            <img *ngIf="!content.osContentPicture || content.osContentPicture.url.length === 0; else defaultImage" src="../../../../assets/images/default.svg">
-            <ng-template #defaultImage><img class="w-100" src="{{content.osContentPicture.url}}" /></ng-template>
-            <div class="d-none">{{content.langcode}}</div>
-            <div class="overlay" [ngClass]="{'overlay-over': deleteStatus === true && content.nid === checkbox}">
-                <a class="view" [href]="content.viewUrl" target="_blank" [ngStyle]="{'display': content.nid !== checkbox ? 'block' : 'none'}">VIEW</a>
-                <span class="answer-q" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}">Are you sure you want to delete this content?</span>
-                <span class="answer-yes" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}" (click)="deleteContent(content.uuid, content.nid, content.contentMachineName)">YES</span>
-                <span class="answer-no" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}" (click)="return()">NO</span>
-                <div class="updates">
-                    <p *ngIf="content.status == 1; else elseBlock ">Published</p>
-                    <ng-template #elseBlock>Unpublished</ng-template>
-                    <p>{{content.changed * 1000 | date}}</p>
-                </div>
-                <div class="checkbox">
-                </div>
-                <div class="options">
-                    <a [routerLink]="['edit', content.uuid, content.contentMachineName]">
-                        <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
-                    </a>
-                    <a (click)="deleteStatus = true; checkbox = content.nid">
-                        <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
-                    </a>
-                </div>
-            </div>
-            <div class="content-block">
-                <h4 class="card-title">{{content.title}}</h4>
-                <small class="text-muted">
-                    by {{content.username.name}}
-                </small>
-                <div class="card-content" *ngIf="content.body != null ; else bodyContent" >{{content.body | truncate: 300}}</div>
-                <ng-template #bodyContent></ng-template>
-            </div>
-            <div class="statistic">
+  <!--List-->
+  <ngx-masonry [options]="masonryOptions" [updateLayout]="true" [useImagesLoaded]="true" *ngIf="contentList"
+               class="clearfix hero">
+    <ngxMasonryItem class="hero-grid__item" *ngFor="let content of contentList">
+      <div class="image_size">{{content.type}}</div>
+      <img class="" *ngIf="!content.osContentPicture || content.osContentPicture.url.length === 0; else defaultImage"
+           src="../../../../assets/images/no_image.png">
+      <ng-template #defaultImage><img class="w-100" src="{{content.osContentPicture.url}}"/></ng-template>
+      <div class="d-none">{{content.langcode}}</div>
+      <div class="overlay" [ngClass]="{'overlay-over': deleteStatus === true && content.nid === checkbox}">
+        <a class="view" [href]="content.viewUrl" target="_blank"
+           [ngStyle]="{'display': content.nid !== checkbox ? 'block' : 'none'}">VIEW</a>
+        <span class="answer-q" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}">Are you sure you want to delete this content?</span>
+        <span class="answer-yes" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}"
+              (click)="deleteContent(content.uuid, content.nid, content.contentMachineName)">YES</span>
+        <span class="answer-no" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}" (click)="return()">NO</span>
+        <div class="updates">
+          <p *ngIf="content.status == 1; else elseBlock ">Published</p>
+          <ng-template #elseBlock>Unpublished</ng-template>
+          <p>{{content.changed * 1000 | date}}</p>
+        </div>
+        <div class="checkbox">
+        </div>
+        <div class="options">
+          <a [routerLink]="['edit', content.uuid, content.contentMachineName]">
+            <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
+          </a>
+          <a (click)="deleteStatus = true; checkbox = content.nid">
+            <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
+          </a>
+        </div>
+      </div>
+      <div class="content-block">
+        <h4 class="card-title">{{content.title}}</h4>
+        <small class="text-muted">
+          by {{content.username.name}}
+        </small>
+        <div class="card-content" *ngIf="content.body != null ; else bodyContent">{{content.body | truncate: 300}}</div>
+        <ng-template #bodyContent></ng-template>
+      </div>
+      <div class="statistic">
                 <span class="workflow">
                     <img class="isvg" [src]="'../../../../assets/images/inline-svg/publish.svg'">
                 </span>
-                <div class="w-100 d-flex social">
+        <div class="w-100 d-flex social">
                     <span class="d-flex align-items-center like">
                         <img class="lisvg" [src]="'../../../../assets/images/inline-svg/likes.svg'">
                         <div class="count">33</div>
                     </span>
-                    <span class="seperator">|</span>
-                    <span class="d-flex align-items-center twitter">
+          <span class="seperator">|</span>
+          <span class="d-flex align-items-center twitter">
                         <img class="tsvg" [src]="'../../../../assets/images/inline-svg/twitter.svg'">
                         <span class="count">30</span>
                     </span>
-                    <span class="seperator">|</span>
-                    <span class="d-flex align-items-center share">
+          <span class="seperator">|</span>
+          <span class="d-flex align-items-center share">
                         <img class="sisvg" [src]="'../../../../assets/images/inline-svg/link.svg'">
                         <span class="count">200</span>
                     </span>
-                </div>
-            </div>
-        </appMasonryItem>
-    </app-masonry>
-    <button class="show-more" *ngIf="contentList && limit < tmpContentList.length" (click)="showMore()">Show More</button>
+        </div>
+      </div>
+    </ngxMasonryItem>
+  </ngx-masonry>
+  <button class="show-more" *ngIf="contentList && limit < tmpContentList.length" (click)="showMore()">Show More</button>
 </section>

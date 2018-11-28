@@ -197,7 +197,8 @@ export const FormData: FormElement[] = [
         defaultValue: [],
         validators: ['required'],
         placeholder: null,
-        options: [{id: 'l1', name: 'Level1'}, {id: 'l2', name: 'Level2'}, {id: 'l3', name: 'Level3'}]
+        options: [{id: 'l1', name: 'Level1'}, {id: 'l2', name: 'Level2'}, {id: 'l3', name: 'Level3'}],
+        permissions: 'TEST'
     },
     {
         id: 'size',

@@ -4,6 +4,7 @@ import {FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS} fro
 export interface TextSummary {
     summary: string;
     body: string;
+    format?: string;
 }
 
 @Component({
@@ -26,7 +27,8 @@ export class TextSummaryComponent implements OnInit, ControlValueAccessor {
     ckeConfig: any;
     inputVal: TextSummary = {
         summary: '',
-        body: ''
+        body: '',
+        format: ''
     };
     propagateChange: any = () => {};
 

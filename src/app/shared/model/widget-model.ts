@@ -8,6 +8,7 @@ export interface WidgetModel {
     viewMoreLink?: string;
     viewMore?: boolean;
     filterItem?: string;
+    expand: boolean;
 }
 
 export interface SavedWidget {
@@ -228,6 +229,10 @@ export const widgetsData = {
         }
     ],
     pieChart: [],
+    deviceSession: {
+        value: [102, 110, 35 ],
+        name: ['Tablet', 'Desktop', 'Mobile']
+    },
     top5: [
         {
             title: 'Demo title1',
@@ -315,10 +320,27 @@ export const widgetsData = {
                 other: 34
             }
         }
-    ]
+    ],
+    browserSession: {
+        value: [170, 70, 50, 150 ],
+        name: ['Chrome', 'Safari', 'Firefox', 'Other']
+    },
+    rushHours: {
+        value: [120, 200, 400, 210, 610]
+    }
 };
 
 export const availableWidgets: WidgetModel[] = [
+    {
+        type: 'chart',
+        weight: 0,
+        name: 'Session by device',
+        key: 'deviceSession',
+        dataStatic: true,
+        id: 0,
+        viewMore: false,
+        expand: false
+    },
     {
         type: 'content',
         weight: 0,
@@ -327,7 +349,8 @@ export const availableWidgets: WidgetModel[] = [
         dataStatic: true,
         id: 0,
         viewMoreLink: '/content',
-        viewMore: true
+        viewMore: true,
+        expand: false
     },
     {
         type: 'comment',
@@ -337,7 +360,8 @@ export const availableWidgets: WidgetModel[] = [
         dataStatic: true,
         id: 0,
         viewMoreLink: '/comments',
-        viewMore: true
+        viewMore: true,
+        expand: false
     },
     {
         type: 'user',
@@ -347,7 +371,8 @@ export const availableWidgets: WidgetModel[] = [
         dataStatic: true,
         id: 0,
         viewMoreLink: '/users',
-        viewMore: true
+        viewMore: true,
+        expand: false
     },
     {
         type: 'user',
@@ -356,7 +381,8 @@ export const availableWidgets: WidgetModel[] = [
         key: 'activeUsers',
         dataStatic: true,
         id: 0,
-        viewMore: false
+        viewMore: false,
+        expand: false
     },
     {
         type: 'user',
@@ -365,7 +391,8 @@ export const availableWidgets: WidgetModel[] = [
         key: 'newestUsers',
         dataStatic: true,
         id: 0,
-        viewMore: false
+        viewMore: false,
+        expand: false
     },
     {
         type: 'content',
@@ -374,7 +401,8 @@ export const availableWidgets: WidgetModel[] = [
         key: 'top5',
         dataStatic: true,
         id: 0,
-        viewMore: false
+        viewMore: false,
+        expand: false
     },
     {
         type: 'content',
@@ -384,7 +412,8 @@ export const availableWidgets: WidgetModel[] = [
         dataStatic: true,
         id: 0,
         viewMoreLink: '/media',
-        viewMore: true
+        viewMore: true,
+        expand: true
     },
     {
         type: 'activity',
@@ -393,7 +422,8 @@ export const availableWidgets: WidgetModel[] = [
         key: 'pieChart',
         dataStatic: true,
         id: 0,
-        viewMore: false
+        viewMore: false,
+        expand: false
     },
     {
         type: 'content',
@@ -402,6 +432,28 @@ export const availableWidgets: WidgetModel[] = [
         key: 'contentStories',
         dataStatic: true,
         id: 0,
-        viewMore: false
-    }
+        viewMore: false,
+        expand: false
+    },
+    {
+        type: 'chart',
+        weight: 0,
+        name: 'Session by Browser',
+        key: 'browserSession',
+        dataStatic: true,
+        id: 0,
+        viewMore: false,
+        expand: true
+    },
+    {
+        type: 'chart',
+        weight: 0,
+        name: 'Rush hours',
+        key: 'rushhours',
+        dataStatic: true,
+        id: 0,
+        viewMore: false,
+        expand: false
+    },
+
 ];

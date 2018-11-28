@@ -18,22 +18,21 @@
     width: 100%;
     a {
       left: rem(10);
-      position: relative;
       z-index: 99;
       &.add .svg {
         @include box-shadow(0, 2px, 2px, 0, rgba(0,0,0,0.15));
         @include border-radius(100%);
         background-color: transparent;
         height: rem(30);
-        position: relative;
+        position: absolute;
         top: rem(-2);
         transform: rotate(0deg);
         transition: all 1s;
-        width: rem(30);
+        max-width: rem(30);
         -webkit-transform: rotate(0deg);
         cursor: pointer;
         &.rotate {
-          filter: drop-shadow(0 rem(2) rem(2) $ligth-grey) ;
+          @include box-shadow(2px, 1px, 2px, 0, rgba(0,0,0,0.15));
           transform: rotate(45deg);
           transition: all 1s;
           -webkit-transform: rotate(45deg);

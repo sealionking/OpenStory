@@ -6,7 +6,8 @@
     <img *ngIf="myMedia.filemime.slice(0, 3) === 'vid'" class="img-fluid" src="../../../../assets/images/noVideo.svg">
     <img *ngIf="myMedia.filemime.slice(0, 3) === 'aud'" class="img-fluid" src="../../../../assets/images/noAudio.svg">
     <ng-template><img #defaultMedia class="img-fluid" src="../../../../assets/images/default.svg"></ng-template>
-    <div class="overlay">
+    <div class="overlay" *ngIf="dataStatic != true">
+      <a class="view" [href]="myMedia.uri" target="_blank">VIEW</a>
       <div class="updates">
         <p class="hero__tagline">{{myMedia.filename}}</p>
         <p *ngIf="myMedia.username && myMedia.username.name; else enableAnonymous" class="hero__author">By {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}</p>

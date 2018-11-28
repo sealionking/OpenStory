@@ -1,33 +1,22 @@
 import {Injectable} from '@angular/core';
+
 import {WidgetModel} from '../../shared/model/widget-model';
 import {WebsocketService} from '../../core/services/websocket.service';
 import {AuthenticateService} from '../../core/services/authenticate.service';
-import {MessageService} from '../../core/services/message.service';
+import {StatusCodesService} from '../../core/services/status-code.service';
 
 @Injectable()
 export class DashboardService {
-
     constructor(private wsSocket: WebsocketService,
                 private auth: AuthenticateService,
-                private messageService: MessageService) {
+                private statusCodes: StatusCodesService) {
     }
 
-    public arrangeWidget(items: any, data: any) {
-        for (let y = 0; y < data.length; y++) {
-            for (const x in items) {
-                if (x) {
-                    const position = Object.keys(items).indexOf(x);
-                    if (position === y) {
-                        if (items[x] !== y) {
-                            items[x] = y;
-                        }
-                    }
-                }
-            }
-        }
-        return items;
-    }
-
+    /**
+     * Allows us to build a widget
+     * @param widgets
+     * @param data
+     */
     public buildWidget(widgets: WidgetModel[], data?: any) {
         for (const item in widgets) {
             if (item) {
@@ -42,11 +31,11 @@ export class DashboardService {
         return widgets;
     }
 
-    saveToLocal(data) {
-        localStorage.setItem('itemsShiftPositions', JSON.stringify(data));
-    }
-
-    savePositions(widget) {
+    /**
+     * Allows us to save the current dashboard layout
+     * @param widget - widget object
+     */
+    public savePositions(widget) {
         this.wsSocket.sendRequest({
             eventType: 'user',
             event: 'SaveUserPreferences',
@@ -56,31 +45,20 @@ export class DashboardService {
             }
         })
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add('Internal Server Error.');
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    return true;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }
 
-    getDashboardItems(item, widgets) {
+    /**
+     * Retrieves the dashboard items
+     * @param item
+     * @param widgets
+     */
+    public getDashboardItems(item, widgets) {
         this.wsSocket.sendRequest({
             eventType: 'user',
             event: 'GetUserPreferences',
@@ -88,35 +66,18 @@ export class DashboardService {
                 token: this.auth.getToken()
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        item = data.body;
-                        for (const value in item) {
-                            if (item.hasOwnProperty(value)) {
-                                widgets.push(item[value]);
-                            }
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    item = data.body;
+                    for (const value in item) {
+                        if (item.hasOwnProperty(value)) {
+                            widgets.push(item[value]);
                         }
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add('Internal Server Error.');
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                    }
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }
-
 }

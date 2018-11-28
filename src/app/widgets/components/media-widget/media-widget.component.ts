@@ -1,14 +1,15 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {AuthenticateService} from '../../../core/services/authenticate.service';
-import {MessageService} from '../../../core/services/message.service';
 import {Media} from '../../../media/models/media';
 import {widgetsData} from '../../../shared/model/widget-model';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 @Component({
-  selector: 'app-media-widget',
-  templateUrl: './media-widget.component.html',
-  styleUrls: ['./media-widget.component.scss']
+    selector: 'app-media-widget',
+    templateUrl: './media-widget.component.html',
+    styleUrls: ['./media-widget.component.scss']
 })
 export class MediaWidgetComponent implements OnInit {
     @Input() dataStatic: boolean;
@@ -16,9 +17,8 @@ export class MediaWidgetComponent implements OnInit {
     mediaList: Media[];
 
     constructor(private wsSocket: WebsocketService,
-                private auth: AuthenticateService,
-                private messageService: MessageService
-    ) {
+                private statusCodes: StatusCodesService,
+                private auth: AuthenticateService) {
     }
 
     ngOnInit() {
@@ -40,33 +40,17 @@ export class MediaWidgetComponent implements OnInit {
                 token: this.auth.getToken()
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        if (data.body instanceof Object && Object.keys(data.body).length > 0) {
-                            const list = data.body.filter(x => {
-                                return x.filemime !== 'application/octet-stream';
-                            });
-                            this.mediaList = list.slice(0, 6);
-                        }
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    if (data.body instanceof Object && Object.keys(data.body).length > 0) {
+                        const list = data.body.filter(x => {
+                            return x.filemime !== 'application/octet-stream';
+                        });
+                        this.mediaList = list.slice(0, 6);
+                    }
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 setTimeout(() => {
                     this.dataLoaded.emit(true);
@@ -75,7 +59,7 @@ export class MediaWidgetComponent implements OnInit {
     }
 
     // Calculate file size MB.
-    fileSize(size){
+    fileSize(size) {
         return size / 1024000;
     }
 

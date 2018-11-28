@@ -2,30 +2,71 @@
 @import '../../../../assets/scss/mixins';
 
 alert {
+  @include user-select;
+  animation: 0.4s ease-in slideIn, 0.4s 9.6s ease-out slideOut;
+  cursor: default;
   text-align: center;
-}
-
-.closebtn {
-  margin-left: rem(15);
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: rem(22);
-  line-height: rem(20);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.closebtn:hover {
-  color: black;
-}
-
-div {
+  transition: all 0.4s;
   z-index: 9999;
+  .closebtn {
+    cursor: pointer;
+    font-weight: bold;
+    float: right;
+    height: rem(9.78);
+    margin: rem(6) rem(-8) 0 0 ;
+    transition: 0.3s;
+    width: rem(9.78);
+  }
 }
 
-.alert-md-color {
-  background-color: #7B1FA2;
-  border-color: #4A148C;
-  color: #fff;
+.os-alert {
+  height: rem(46) !important;
+  border: 0 !important;
+  border-radius: 2px;
+}
+
+.status-code-message {
+  font-size: rem(16);
+  line-height: rem(22);
+  height: rem(22);
+}
+
+.os-danger {
+  background-color: #F0CCC3 !important;
+  color: #C4330F;
+}
+
+.os-success {
+  background-color: #D4F5E7;
+  color: #0FAB69;
+}
+
+.os-info {
+  background-color: #C4DFF4;
+  color: #147ED4;
+}
+
+.os-warning {
+  background-color: #FCE9C8;
+  color: #986004;
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(-44px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  0% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(-46px);
+  }
 }

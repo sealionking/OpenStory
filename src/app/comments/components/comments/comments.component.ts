@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
 
 import {Comment} from '../../models/comments';
 import {CommentsService} from '../../services/comments.service';
-// import {NgxMasonryOptions} from '../../../masonry/ngx-masonry-options.interface';
+import {NgxMasonryOptions} from 'ngx-masonry';
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {MessageService} from '../../../core/services/message.service';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 /**
  * CommentsComponent allows us to display the list of comments .
@@ -14,7 +16,8 @@ import {MessageService} from '../../../core/services/message.service';
     templateUrl: './comments.component.html',
     styleUrls: ['./comments.component.scss']
 })
-export class CommentsComponent implements OnInit {
+export class CommentsComponent implements OnInit, OnDestroy {
+    private view: Subscription;
     /**
      * Array used to retrieve data from the server.
      */
@@ -47,14 +50,31 @@ export class CommentsComponent implements OnInit {
     limit = 10;
 
     public lottieConfig: Object;
+    public noContent: Object;
+    /**
+     * Masonry animation options
+     */
+    public masonryOptions: NgxMasonryOptions = {
+        transitionDuration: '1s',
+        percentPosition: true,
+        resize: true,
+        initLayout: true,
+        columnWidth: 1
+    };
     /**
      *@ignore
      */
     constructor(private commentsService: CommentsService,
                 private messageService: MessageService,
+                private statusCodes: StatusCodesService,
                 private wsSocket: WebsocketService) {
         this.lottieConfig = {
             path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
+        this.noContent = {
+            path: 'assets/no-content/data.json',
             autoplay: true,
             loop: true
         };
@@ -69,34 +89,24 @@ export class CommentsComponent implements OnInit {
     }
 
     /**
+     * @ignore
+     */
+    ngOnDestroy(): void {
+        this.view.unsubscribe();
+    }
+
+    /**
      * Get list of Comments.
      */
-    public listenComments(): void {
-        this.wsSocket.eventListen('ListComment')
+    private listenComments(): void {
+        this.view = this.wsSocket.eventListen('ListComment')
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        this.commentsList = data.body.slice(0, 10);
-                        this.date = this.commentsService.populateFilters(this.commentsList);
-                        this.tmpList = data.body;
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.commentsList = data.body.slice(0, 10);
+                    this.date = this.commentsService.populateFilters(this.commentsList);
+                    this.tmpList = data.body;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }
@@ -104,7 +114,7 @@ export class CommentsComponent implements OnInit {
     /**
      * Filter comments by values from inputs.
      */
-    filterComments(): void {
+    public filterComments(): void {
         this.commentsList = this.tmpList.filter(data => {
             return (
                 (this.selectedType !== null ? data.status === this.selectedType : true) &&
@@ -116,14 +126,14 @@ export class CommentsComponent implements OnInit {
     /**
      * Clears the filter functions.
      */
-    clear() {
+    public clear() {
         this.commentsList = this.tmpList.slice(0 , 10);
     }
 
     /**
      * Shows more.
      */
-    showMore() {
+    public showMore() {
         this.limit += 10;
         this.commentsList = this.tmpList.slice(0, this.limit);
     }

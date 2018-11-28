@@ -1,5 +1,6 @@
 @import '../../../../assets/scss/variables';
 @import '../../../../assets/scss/mixins';
+@import "../../../../assets/scss/overlay";
 
 .user-widget {
   width: 420px;
@@ -13,24 +14,15 @@
 .avatar {
   border-radius: rem(100);
   box-shadow: 0 rem(2) rem(4) 0 rgba(0, 0, 0, 0.25);
-  height: rem(90);
-  width: rem(90);
+  height: rem(30);
+  width: rem(30);
   object-fit: cover;
 }
 
-.card-view {
-  align-items: center;
-  background-color: #FFFFFF;
-  border-radius: rem(2);
-  height: rem(303);
-  -webkit-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15);
-  -moz-box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15);
-  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.comment-widget {
+  margin: 0 rem(-15);
+  padding: rem(16) rem(16) 0;
   position: relative;
-  z-index: 3;
   &:hover {
     .overlay {
       background-color: rgb(51, 59, 80);
@@ -162,11 +154,6 @@ label {
   }
 }
 
-// Position number.
-.comment-widget {
-  margin: rem(24) rem(6) rem(30);
-}
-
 // Info.
 .info {
   border-bottom: 1px solid $ligth-grey;
@@ -178,20 +165,28 @@ label {
 .title {
   color: $text-color2;
   font-size: rem(14);
-  font-weight: 700;
+  font-weight: 600;
   line-height: rem(19);
+  margin: 0 rem(8) rem(8) 0;
 }
 
 .comment-date {
-  color: rgba(51, 59, 80, 0.7);
-  font-size: rem(12);
-  font-weight: 700;
-  line-height: rem(17);
-}
-
-.author {
   color: $text-color4;
   font-size: rem(12);
   font-weight: 600;
+  line-height: rem(19);
+}
+
+.author {
+  color: $text-color3;
+  font-size: rem(12);
+  font-weight: 600;
   line-height: rem(17);
+  margin-bottom: rem(8);
+}
+
+.latest-comment {
+  color: $text-color2;
+  font-size: rem(14);
+  line-height: rem(19);
 }

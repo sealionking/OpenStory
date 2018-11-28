@@ -19,8 +19,7 @@ export interface GeneralUsers {
     status: boolean;
     timezone: string;
     uid: number;
-    userPicture: any[];
+    userPicture: any;
     uuid: string;
     viewUserUrl: string;
-
 }

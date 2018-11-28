@@ -27,7 +27,17 @@
 
     <!--In case the retrieved object is empty but exists -->
     <div class="no-content" *ngIf="message">
-        <h1>No <strong>Media</strong> items found.</h1>
+        <lottie-animation-view
+                [options]="noContent"
+                [width]="700"
+                [height]="410">
+        </lottie-animation-view>
+        <div class="no-content-text">
+            <h4>NO MEDIA FOUND.</h4>
+
+            <!--<span>Please click the “Add Widget” button on the top left-->
+        <!--of the page to add widgets on your dashboard.</span>-->
+        </div>
     </div>
 
     <!--Loader-->
@@ -39,22 +49,22 @@
 
     <!--List-->
     <ngx-masonry [options]="masonryOptions" [useImagesLoaded]="true" *ngIf="mediaList" class="hero">
-        <ngxMasonryItem class="hero-grid__item" *ngFor="let myMedia of mediaList">
-            <div *ngIf="myMedia.filemime.slice(0, 3) === 'ima'; else otherType" class="image_size">{{myMedia.width}} x {{myMedia.height}}</div>
-            <ng-template #otherType><div class="image_size">{{myMedia.filesize / 1024000 | number : '1.2-2'}} MB</div></ng-template>
-            <img *ngIf="myMedia.filemime.slice(0, 3) === 'ima'; else defaultMedia" src="{{myMedia.uri}}">
-            <img *ngIf="myMedia.filemime.slice(0, 3) === 'app'" src="../../../../assets/images/noDocs.svg">
-            <img *ngIf="myMedia.filemime.slice(0, 3) === 'tex'" src="../../../../assets/images/noDocs.svg">
-            <img *ngIf="myMedia.filemime.slice(0, 3) === 'vid'" src="../../../../assets/images/noVideo.svg">
-            <img *ngIf="myMedia.filemime.slice(0, 3) === 'aud'" src="../../../../assets/images/noAudio.svg">
+        <ngxMasonryItem class="hero-grid__item" *ngFor="let media of mediaList">
+            <div *ngIf="media.filemime.slice(0, 3) === 'ima'; else otherType" class="image_size">{{media.width}} x {{media.height}}</div>
+            <ng-template #otherType><div class="image_size">{{media.filesize / 1024000 | number : '1.2-2'}} MB</div></ng-template>
+            <img *ngIf="media.filemime.slice(0, 3) === 'ima'; else defaultMedia" src="{{media.uri}}">
+            <img *ngIf="media.filemime.slice(0, 3) === 'app'" src="../../../../assets/images/no_docs.png">
+            <img *ngIf="media.filemime.slice(0, 3) === 'tex'" src="../../../../assets/images/no_docs.png">
+            <img *ngIf="media.filemime.slice(0, 3) === 'vid'" src="../../../../assets/images/no_video.png">
+            <img *ngIf="media.filemime.slice(0, 3) === 'aud'" src="../../../../assets/images/no_audio.png">
             <ng-template><img #defaultMedia src="../../../../assets/images/default.svg"></ng-template>
             <div class="overlay">
-                <a class="view" [href]="myMedia.uri" target="_blank">VIEW</a>
+                <a class="view" [href]="media.uri" target="_blank">VIEW</a>
                 <div class="updates">
-                    <p class="hero__tagline" [innerHTML]="myMedia.filename | truncate: 20"></p>
-                    <p *ngIf="myMedia.username && myMedia.username.name; else enableAnonymous" class="hero__author">by
-                        {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}</p>
-                    <ng-template #enableAnonymous class="hero__author">by Anonymous on {{myMedia.created * 1000 | date}}
+                    <p class="hero__tagline" [innerHTML]="media.filename | truncate: 20"></p>
+                    <p *ngIf="media.username; else enableAnonymous" class="hero__author">by
+                        {{media.username}} on {{media.created * 1000 | date}}</p>
+                    <ng-template #enableAnonymous class="hero__author">by Anonymous on {{media.created * 1000 | date}}
                     </ng-template>
                 </div>
                 <div class="checkbox">
@@ -65,13 +75,13 @@
                 </div>
             </div>
             <div class="description">
-                <p class="hero__tagline" [innerHTML]="myMedia.filename | truncate: 20"></p>
-                <p *ngIf="myMedia.username && myMedia.username.name; else enableAnonymoustag" class="hero__author">by
-                    {{myMedia.username.name}} on {{myMedia.created * 1000 | date}}</p>
-                <ng-template #enableAnonymoustag> <p  class="hero__author">by Anonymous on {{myMedia.created * 1000 | date}}</p>
+                <p class="hero__tagline" [innerHTML]="media.filename | truncate: 20"></p>
+                <p *ngIf="media.username; else enableAnonymoustag" class="hero__author">by
+                    {{media.username}} on {{media.created * 1000 | date}}</p>
+                <ng-template #enableAnonymoustag> <p  class="hero__author">by Anonymous on {{media.created * 1000 | date}}</p>
                 </ng-template>
             </div>
         </ngxMasonryItem>
     </ngx-masonry>
-    <button class="show-more" *ngIf="mediaList.length < bodyLength && lottieShow" (click)="showMoreImages()">Show More</button>
+    <button class="show-more" [style.opacity]="mediaList.length < bodyLength && lottieShow && !message ? 1 : 0" (click)="showMoreImages()">Show More</button>
 </section>

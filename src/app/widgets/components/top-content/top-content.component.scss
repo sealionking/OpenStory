@@ -3,7 +3,17 @@
 
 // Position number.
 .comment {
-  margin: rem(8) rem(6);
+  margin: 0 rem(-11);
+  padding: rem(16) rem(16) 0;
+  position: relative;
+  &:hover {
+    .overlay {
+      background-color: rgb(51, 59, 80);
+      transition: 1s ease;
+      opacity: 0.9;
+      z-index: 3;
+    }
+  }
 }
 
 .position {

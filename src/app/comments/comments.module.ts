@@ -7,7 +7,7 @@ import {CommentsService} from './services/comments.service';
 import {FilterPipeModule} from 'ngx-filter-pipe';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
-import {NgxMasonryModule} from '../masonry/masonry.module';
+import {NgxMasonryModule} from 'ngx-masonry';
 import {LottieAnimationViewModule} from 'ng-lottie';
 
 @NgModule({

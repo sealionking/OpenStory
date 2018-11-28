@@ -38,7 +38,7 @@ export class CheckboxComponent implements ControlValueAccessor {
     @Input() labelStyleClass: string;
 
     @Input() formControl: FormControl;
-
+    @Input() options: any[] = [];
     @Output() Changed: EventEmitter<any> = new EventEmitter();
 
     model: any;
@@ -107,10 +107,10 @@ export class CheckboxComponent implements ControlValueAccessor {
     }
 
     addValue() {
-        if (this.model) {
-            this.model = [...this.model, this.value];
-        } else {
+        if (this.options.length === 1) {
             this.model = [this.value];
+        } else {
+            this.model = [...this.model, this.value];
         }
     }
 

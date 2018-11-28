@@ -5,6 +5,7 @@ import {Subject} from 'rxjs/Subject';
 import {Observable} from 'rxjs/Observable';
 import {of} from 'rxjs/observable/of';
 import {concat} from 'rxjs/observable/concat';
+import 'rxjs/add/operator/takeUntil';
 
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {WebsocketService} from '../../../core/services/websocket.service';
@@ -91,6 +92,9 @@ export class ReferenceFieldComponent implements OnInit, ControlValueAccessor {
     registerOnTouched() {
     }
 
+    /**
+     * @ignore
+     */
     ngOnInit(): void {
         if (this.targetType && (this.targetType === 'node' || this.targetType === 'taxonomy_term')) {
             this.targetBundles.forEach(item => {
@@ -284,7 +288,7 @@ export class ReferenceFieldComponent implements OnInit, ControlValueAccessor {
                 }
                 break;
             default:
-                this.message.add('No entity type found', 'warning');
+                this.message.add(this.status.getMessageType('No entity type found'), 'os-warning');
         }
     }
 
@@ -299,22 +303,23 @@ export class ReferenceFieldComponent implements OnInit, ControlValueAccessor {
 
     /**
      * Reference form submit function
-     * @param formData
+     * @param referenceData
      */
-    public submit(formData): void {
+    public submit(referenceData): void {
         this.buttonValue = true;
         this.wsSocket.sendRequest({
             eventType: this.eventModel, event: 'CreateEntity', data: {
                 token: this.auth.getToken(),
-                entityType: this.targetType, bundle: this.bundle, body: formData
+                entityType: this.targetType, bundle: this.bundle, body: referenceData
             }
         })
+            .take(1)
             .subscribe(data => {
                 if (data.statusCode === 201 || data.statusCode === 200) {
-                    this.message.add('Entity created. You can now add the reference', 'success');
+                    this.message.add(this.status.getMessageType('reference-create'), 'os-success');
                     this.closeModal();
                 } else if (this.status.checkStatusCode(data)) {
-                    // TODO: redo the status code service.
+                    return true;
                 }
                 this.buttonValue = false;
             });

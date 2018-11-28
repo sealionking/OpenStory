@@ -4,6 +4,7 @@ import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {MessageService} from '../../../core/services/message.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {WebsocketService} from '../../../core/services/websocket.service';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 @Component({
     selector: 'app-edit-content',
@@ -27,6 +28,7 @@ export class EditContentComponent implements OnInit {
                 private auth: AuthenticateService,
                 private messageService: MessageService,
                 private route: Router,
+                private statusCodes: StatusCodesService,
                 private router: ActivatedRoute) {
         this.lottieConfig = {
             path: 'assets/json/loader.json',
@@ -43,7 +45,7 @@ export class EditContentComponent implements OnInit {
     }
 
     /**
-     * Allows us to retreive the schema from the CMS
+     * Allows us to retrieve the schema from the CMS
      */
     contentSchemaRequest() {
         this.wsService.sendRequest({
@@ -53,39 +55,21 @@ export class EditContentComponent implements OnInit {
                 entityType: 'node', bundle: this.getContentType(), id: this.getContentId()
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        if (this.initContent) {return; } else {this.initContent = true; }
-                        this.contentSchema = data.body.definition;
-                        this.contentName = data.body.entityLabel;
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        data.body.errors.forEach((i) => {
-                            this.messageService.add(i.detail);
-                        });
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    if (this.initContent) {return; } else {this.initContent = true; }
+                    this.contentSchema = data.body.definition;
+                    this.contentName = data.body.entityLabel;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 this.showSchema = true;
             });
     }
 
     /**
-     * Retreive the content type
+     * Retrieve the content type
      */
     getContentType(): string {
         const type = this.router.snapshot.paramMap.get('contenttype');
@@ -93,7 +77,7 @@ export class EditContentComponent implements OnInit {
     }
 
     /**
-     * Retrive the id of the selected content type
+     * Retrieve the id of the selected content type
      */
     getContentId(): any {
         const id = this.router.snapshot.paramMap.get('id');
@@ -113,67 +97,13 @@ export class EditContentComponent implements OnInit {
                 entityType: 'node', bundle: this.getContentType(), id: this.getContentId(), body: formData
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        this.route.navigate(['/content']);
-                        this.messageService.add('Content has been edited!', 'success');
-                        break;
-                    case 201:
-                        this.route.navigate(['/content']);
-                        this.messageService.add('Content has been edited!', 'success');
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 401:
-                        // TODO: Redo this when backend resolves the issue
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Unauthorized. Access denied.', 'danger');
-                            }
-                        }
-                        break;
-                    case 403:
-                        // TODO: Redo this when backend resolves the issue
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Forbidden. Access denied.', 'danger');
-                            }
-                        }
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        // TODO: Redo this when backend resolves the issue
-                        // data.body.errors.forEach((i) => {
-                        //     this.messageService.add(i.detail);
-                        // });
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Unprocessable Entity.', 'danger');
-                            }
-                        }
-                        break;
-                    case 500:
-                        // TODO: Redo this when backend resolves the issue
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Internal Server Error.', 'danger');
-                            }
-                        }
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.route.navigate(['/content']);
+                    this.messageService.add(this.statusCodes.getMessageType('content-edit'), 'os-success');
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 this.buttonValue = false;
             });

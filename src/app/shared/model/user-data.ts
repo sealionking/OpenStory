@@ -4,5 +4,6 @@ export class UserData {
     name: string;
     roles: any;
     uid: string;
+    uuid: string;
     userPicture: any;
 }

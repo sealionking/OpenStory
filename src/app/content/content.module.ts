@@ -4,7 +4,7 @@ import {CommonModule} from '@angular/common';
 import {ContentComponent} from './components/content/content.component';
 import {ContentRoutingModule} from './content-routing.module';
 import {ContentService} from './services/content.service';
-import {NgxMasonryModule} from '../masonry/masonry.module';
+import {NgxMasonryModule} from 'ngx-masonry';
 import {NgSelectModule} from '@ng-select/ng-select';
 import {SharedModule} from '../shared/shared.module';
 import { NewContentComponent } from './components/new-content/new-content.component';

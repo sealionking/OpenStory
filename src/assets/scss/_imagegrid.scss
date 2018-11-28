@@ -15,7 +15,8 @@ margin: 0 rem(-8) 0 rem(12);
 }
 
 .hero-grid__item {
-  float: left;
+  //float: left;
+  //@include transition(.5s ease-in);
 }
 
 .hero-grid__item,
@@ -101,11 +102,14 @@ margin: 0 rem(-8) 0 rem(12);
     text-overflow: ellipsis;
   }
   .text-muted {
+    color: #333B50 !important;
+    font-size: rem(12);
+    font-weight: 600;
+    line-height: rem(17);
+    margin: 0;
     top: rem(-4);
     position: relative;
     padding: 0;
-    margin: 0;
-    color: #333B50 !important;
     opacity: 0.7;
   }
   .card-text {
@@ -117,6 +121,8 @@ margin: 0 rem(-8) 0 rem(12);
   }
   .card-content {
     color: #333B50;
+    font-size: rem(14);
+    line-height: rem(19);
     opacity: 0.7;
   }
 }
@@ -207,8 +213,6 @@ img {
   height: 100%;
   width: 100%;
 }
-  
-  
 
 .text {
   font-size: rem(14);
@@ -259,6 +263,12 @@ img {
     @media screen and ( max-width: 500px ) {
       .hero {
         margin-top: rem(-28);
+        min-width: 700px;
+        &:after {
+          content: '';
+          display: block;
+          clear: both;
+        }
       }
       .hero-grid.clearfix {
         margin: 0;

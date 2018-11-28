@@ -123,7 +123,7 @@
 			<span class="nameSur">{{userJWTData.name}}</span>
 			<span class="emailAdr">{{userJWTData.mail}}</span>
 		</div>
-		<div class="edit">
+		<div class="edit" (click)="editUser('users/user', userJWTData.uuid, userJWTData.uid)">
 			<span class="editProf">
 				<svg width=16 height=16 version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                 viewBox="0 0 16 16" style="fill: #4A5269;; enable-background:new 0 0 16 16;" xml:space="preserve">

@@ -22,4 +22,5 @@ export interface FormElement {
     timePicker?: boolean;
     targetType?: any;
     targetBundles?: Array<any>;
+    permissions?: string;
 }

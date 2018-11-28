@@ -1,5 +1,10 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup, ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
+export interface SimpleEditor {
+    body: string;
+    format?: string;
+}
 
 @Component({
     selector: 'app-text-editor',
@@ -17,15 +22,17 @@ export class TextEditorComponent implements OnInit, ControlValueAccessor {
     @Input() maxLength: number;
     @Input() description: string;
     ckeConfig: any;
-    inputVal = '';
-    propagateChange: any = () => {
+    inputVal: SimpleEditor = {
+        body: '',
+        format: ''
     };
+    propagateChange: any = () => { };
 
     constructor() {
     }
 
     writeValue(value: any) {
-        if (value !== '') {
+        if (value !== '' && value !== null) {
             this.inputVal = value;
         }
     }

@@ -14,6 +14,7 @@ label {
 input {
   border: 0;
   border-bottom: 1px solid $ligth-grey;
+  color: #C3C6CF;
   font-size: rem(16);
   height: rem(30);
   line-height: rem(30);
@@ -23,15 +24,21 @@ input {
 }
 
 .description {
-  color: $text-color2;
+  background-color: transparent;
+  color: $text-color1;
   font-size: rem(12);
+  height: auto;
   line-height: rem(17);
+  margin: rem(3) rem(48) 0 0;
   text-align: right;
-  width: rem(295);
 }
 
 .link {
-  margin: rem(10) 0 0;
+  margin: rem(10) rem(48) 0 0;
+  input {
+    background-color: transparent;
+    width: 100%;
+  }
 }
 .links:hover .tooltip {
   opacity: 1;

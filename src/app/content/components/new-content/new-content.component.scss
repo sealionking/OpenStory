@@ -84,14 +84,3 @@ app-os-form {
 ckeditor {
   display: block;
 }
-
-// Overwride wysiwyg.
-.text {
-  border: none;
-  color: white;
-  left: 0;
-  padding: 0;
-  position: relative;
-  top: 0;
-  transform: translate(0);
-}

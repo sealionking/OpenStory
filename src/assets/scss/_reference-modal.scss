@@ -74,6 +74,7 @@
       }
     }
     app-os-form {
+      margin-top: rem(5);
       max-width: 100%;
     }
     .form-group {
@@ -116,7 +117,8 @@
         max-width: 100%;
       }
       .form-group.form-upload,
-      .form-group.form-group-date {
+      .form-group.form-group-date,
+      .form-group.form-group-number {
         max-width: 100%;
       }
       .form-group {
@@ -124,18 +126,51 @@
         &.form-group-textfield,
         &.form-group-password,
         &.form-group-email {
-          margin-bottom: rem(-4);
+          margin-bottom: rem(4);
+          > label {
+            margin-bottom: rem(6);
+          }
         }
         &.form-group-publish {
-          margin-bottom: rem(1);
+          margin-bottom: rem(0);
           max-width: rem(420);
+          .group-publish {
+           margin: rem(7) 0 !important;
+          }
         }
+        &.slider {
+          max-width: calc(100% - 32px);
+          > label {
+            margin-bottom: rem(16);
+          }
+        }
+        &.form-group-date > label,
+        &.form-group-number > label,
+        &.form-group-text > label {
+          margin-bottom: rem(4);
+        }
+        &.form-group-unsuported {
+          .unsupported-field {
+            margin-bottom: rem(0);
+          }
+          > label {
+            margin-bottom: rem(8);
+          }
+        }
+
         label {
-          margin: 0;
+          margin: rem(1);
         }
-        .form-text-area .remove {
-          float: none;
-          margin: rem(1) 0 rem(16);
+        &.form-text-area {
+          &.text-area {
+            margin-bottom: rem(-3);
+          }
+          > label {
+            margin-bottom: rem(8);
+          }
+        }
+        &.confirm-password {
+          margin-top: rem(8);
         }
       }
     }
@@ -157,17 +192,6 @@
       input {
         margin-left: 0;
       }
-    }
-
-    // Overwride wysiwyg.
-    .text {
-      border: none;
-      color: white;
-      left: 0;
-      padding: 0;
-      position: relative;
-      top: 0;
-      transform: translate(0);
     }
   }
 }
