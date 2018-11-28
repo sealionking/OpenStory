@@ -4,13 +4,39 @@
 @import "../../../../assets/scss/imagegrid";
 
 .item {
-  margin: rem(30) rem(6);
-  &:first-child {
-    margin: rem(24) rem(6) rem(30);
+  margin: 0 rem(-11);
+  padding: rem(16) rem(16) rem(15);
+  position: relative;
+  &:hover {
+    .overlay {
+      background-color: rgb(51, 59, 80);
+      transition: 1s ease;
+      opacity: 0.9;
+      z-index: 3;
+    }
   }
-  &:last-child {
-    margin: rem(24) rem(6) rem(21);
-  }
+}
+
+.answer-yes {
+  font-size: rem(14);
+  font-weight: 600;
+  top: calc(100% - 46px);
+}
+
+.answer-no {
+  font-size: rem(14);
+  font-weight: 600;
+  top: calc(100% - 46px);
+  width: rem(70);
+}
+
+.answer-q {
+  font-size: rem(14);
+  font-weight: 600;
+  padding-left: 13%;
+  padding-right: 13%;
+  top: rem(10);
+  width: 100%;
 }
 
 .info {

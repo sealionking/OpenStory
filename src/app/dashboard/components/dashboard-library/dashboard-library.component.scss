@@ -6,15 +6,17 @@
 @import "../../../../assets/scss/imagegrid";
 
 .add-widget {
-  color: #B1B4BE;
+  color: $green;
   cursor: pointer;
-  font-size: 12px;
-  margin: rem(4) rem(8);
+  font-family: "Open Sans";
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: rem(19);
+  margin: rem(4) 0 0 rem(12);
   img {
-    height: rem(16);
+    height: rem(14);
     margin: 0 rem(8) 0 0;
-    transform: rotate(45deg);
-    width: rem(16);
+    width: rem(14);
   }
 }
 
@@ -38,7 +40,7 @@ app-widget-body {
   @include media-breakpoint-down(sm) {
     width: 100% !important;
   }
-  &.selected {
+  &.selected-widget {
     position: relative;
     &:after {
       border: 2px solid $green;
@@ -117,5 +119,11 @@ app-widget-body {
   }
   .form-actions {
     padding: 0;
+  }
+}
+
+.grid-item.large {
+  .de-table .table {
+    margin-top: rem(61) !important;
   }
 }

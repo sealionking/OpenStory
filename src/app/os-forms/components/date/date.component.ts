@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+
 import * as moment from 'moment';
-import {FormElement} from '../../models/form-element';
 
 @Component({
     selector: 'app-date',

@@ -1,9 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Router} from '@angular/router';
+
 import {WebsocketService} from '../../../core/services/websocket.service';
-import {MessageService} from '../../../core/services/message.service';
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {Content} from '../../../content/model/content';
 import {widgetsData} from '../../../shared/model/widget-model';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 @Component({
     selector: 'app-content-widget',
@@ -21,17 +23,27 @@ export class ContentWidgetComponent implements OnInit, OnChanges {
     limit = 5;
     contentList: Content[];
     tmpContentList: Content[];
+    /**
+     * Delete status
+     * @type {boolean}
+     */
+    deleteStatus = false;
+    /**
+     * Used for the delete function
+     */
+    checkbox: any;
 
     /**
      * @ignore
      * @param wsSocket - web-socket service used to connect to the nodeJS
      * @param auth - used to send the token, needed to authenticate the request
-     * @param messageService - used to display the error messages
+     * @param router
+     * @param statusCodes - used to show status code message
      */
     constructor(private wsSocket: WebsocketService,
                 private auth: AuthenticateService,
-                private messageService: MessageService
-    ) {
+                private router: Router,
+                private statusCodes: StatusCodesService) {
     }
 
     /**
@@ -77,40 +89,25 @@ export class ContentWidgetComponent implements OnInit, OnChanges {
                 token: this.auth.getToken()
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        if (data.body instanceof Object && Object.keys(data.body).length > 0) {
-                            if (this.filterItem) {
-                                this.selectedFilter = this.filterItem;
-                                this.contentList = data.body.filter(filter => {
-                                    return ((this.selectedFilter !== null) ? filter.type === this.selectedFilter : true);
-                                }).slice(0, 5);
-                                this.tmpContentList = data.body;
-                                this.filterItems();
-                            } else {
-                                this.contentList = data.body.slice(0, 5);
-                                this.tmpContentList = data.body;
-                            }
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    if (data.body instanceof Object && Object.keys(data.body).length > 0) {
+                        if (this.filterItem) {
+                            this.selectedFilter = this.filterItem;
+                            this.contentList = data.body.filter(filter => {
+                                return ((this.selectedFilter !== null) ? filter.type === this.selectedFilter : true);
+                            }).slice(0, 5);
+                            this.tmpContentList = data.body;
+                            this.filterItems();
+                        } else {
+                            this.contentList = data.body.slice(0, 5);
+                            this.tmpContentList = data.body;
                         }
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                    }
+                    console.log(data);
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }
@@ -137,5 +134,40 @@ export class ContentWidgetComponent implements OnInit, OnChanges {
         if (this.limit <= this.tmpContentList.length) {
             this.contentList = this.tmpContentList.slice(0, this.limit);
         }
+    }
+
+    /**
+     * Delete function
+     * @param id - the content UID
+     * @param nid - the content NID
+     * @param name
+     */
+    public deleteContent(id, nid, name): Content[] {
+        this.wsSocket.sendRequest({eventType: 'content', event: 'DeleteEntity', data: {
+                token: this.auth.getToken(), entityType: 'node', bundle: name, id: id
+            }});
+        const index = this.tmpContentList.findIndex(content => content.uuid === id);
+        this.tmpContentList.splice(index, 1);
+        this.contentList = this.tmpContentList.filter( x => {
+            return x.nid !== nid;
+        }).slice(0, 5);
+        return this.tmpContentList;
+    }
+
+    /**
+     * Redirect to the desired content
+     * @param page - string
+     * @param id - string
+     * @param type - string
+     */
+    editContent(page: any, id: any, type: any) {
+        this.router.navigate(['/' + page + '/' + id + '/' + type]);
+    }
+    /**
+     * cancel delete user function
+     */
+    public return() {
+        this.deleteStatus = false;
+        this.checkbox = null;
     }
 }

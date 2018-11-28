@@ -15,17 +15,68 @@
     cursor: pointer;
     font-size: rem(14);
     left: 50%;
-    padding: rem(10.5) rem(32.5);
+    padding: rem(10.5) rem(30);
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);   
+    -ms-transform: translate(-50%, -50%);
+    &:hover {
+      color: $green;
+    }
   }
   a {
     color: $white;
     text-decoration: none;
   }
 }
+.answer-yes {
+  background-color: $green;
+  border: rem(1) solid $green;
+  border-radius: rem(2);
+  cursor: pointer;
+  font-size: rem(14);
+  padding: rem(3.5) rem(22.5);
+  width: rem(70);
+  height: rem(30);
+  margin-left: rem(15);
+  position: absolute;
+  color: $white;
+  text-decoration: none;
+  top: rem(159);
+  left: 50%;
+  display: none;
+}
+
+.answer-no {
+  border: rem(1) solid $green;
+  border-radius: rem(2);
+  cursor: pointer;
+  font-size: rem(14);
+  padding: rem(3.5) rem(24);
+  width: rem(70);
+  height: rem(30);
+  position: absolute;
+  color: $white;
+  text-decoration: none;
+  margin-right: rem(15);
+  top: rem(159);
+  right: 50%;
+  display: none;
+}
+
+.answer-q {
+  cursor: pointer;
+  font-size: rem(14);
+  position: absolute;
+  padding-left: 25%;
+  padding-right: 25%;
+  color: $white;
+  text-decoration: none;
+  top: rem(90.96);
+  text-align: center;
+  display: none;
+}
+
 
 .options {
   align-self: flex-start;

@@ -5,6 +5,9 @@
     <div class="author">by {{content.username.name}}</div>
     <div class="updated-date">Updated on: {{content.changed * 1000 | date: 'medium'}}</div>
   </div>
+  <div class="overlay" *ngIf="dataStatic != true">
+    <a class="view" [href]="content.viewUrl" target="_blank">VIEW</a>
+  </div>
 </div>
 <app-doublebounce *ngIf="!topList"></app-doublebounce>
 <div *ngIf="topList && topList.length === 0">

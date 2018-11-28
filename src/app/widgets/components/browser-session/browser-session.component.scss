@@ -1,0 +1,58 @@
+@import "~assets/scss/mixins";
+@import "~assets/scss/variables";
+
+.de-mini {
+  height: rem(404);
+  width: rem(400);
+  margin-top: -36px;
+}
+
+.de-table{
+  height: rem(200);
+  position: relative;
+  width: rem(271);
+  .table {
+    color: $text-color2;
+    font-family: "Open Sans";
+    font-size: rem(14);
+    line-height: rem(19);
+    margin: rem(16) rem(45) 0 rem(24);
+    width: rem(345);
+    z-index: 1;
+    th {
+      background-color: transparent;
+      border-top: none;
+      font-weight: 600;
+      padding: 0 0 rem(9);
+    }
+    tr td {
+      border: rem(1) solid $ligth-grey;
+      height: rem(38);
+      padding: rem(9) 0 0 rem(7);
+      &:first-child {
+        width: rem(159);
+      }
+      &:nth-child(2) {
+        width: rem(89);
+      }
+      &:last-child {
+        width: rem(100);
+      }
+      img {
+        display: inline;
+        height: rem(20);
+        margin-right: rem(10);
+        width: rem(20);
+      }
+    }
+    tr{
+      &:nth-child(odd) {
+        background-color: $secondary;
+      }
+      &:first-child {
+        background-color: transparent;
+      }
+    }
+
+  }
+}

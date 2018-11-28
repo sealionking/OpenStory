@@ -43,59 +43,67 @@
 
     <!--In case the retrieved object is empty but exists -->
     <div class="no-content" *ngIf="list && list.length === 0">
-        <h1>No Users to be displayed.</h1>
+        <lottie-animation-view
+                [options]="noContent"
+                [width]="700"
+                [height]="410">
+        </lottie-animation-view>
+        <div class="no-content-text">
+            <h4>NO USERS FOUND.</h4>
+
+            <!--<span>Please click the “Add Widget” button on the top left-->
+        <!--of the page to add widgets on your dashboard.</span>-->
+        </div>
     </div>
 
     <!--List-->
-    <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6"
-             *ngFor="let user of list | orderBy: order: reverse: 'case-insensitive'; let j = index">
-            <div class="card-view" onclick="">
-                <img *ngIf="user.userPicture != ''; else defaultAvatar" class="avatar" src="{{user.userPicture}}"
-                     alt="profile image"/>
-                <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg"
-                                                 alt="profile image"/></ng-template>
-                <label class="fullname w-100">{{user.fieldFirstName  | truncate: 12}} {{user.fieldLastName  | truncate: 12}}</label>
-                <div>
-                    <label *ngFor="let role of user.roles; let i = index">
-                        <label *ngIf="role.id && i <= 1" class="role">{{role.label}}</label>
-                    </label>
+    <ngx-masonry [options]="masonryOptions" [updateLayout]="true" [useImagesLoaded]="true" class="hero"
+         >
+        <ngxMasonryItem class="hero-grid__item card-view" onclick="" *ngFor="let user of list | orderBy: order: reverse: 'case-insensitive'; let j = index">
+            <img *ngIf="user.userPicture != ''; else defaultAvatar" class="avatar" src="{{user.userPicture}}"
+                 alt="profile image"/>
+            <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/no-user-pic.png"
+                                             alt="profile image"/></ng-template>
+            <label class="fullname w-100">{{user.fieldFirstName  | truncate: 12}} {{user.fieldLastName  | truncate: 12}}</label>
+            <div>
+                <label *ngFor="let role of user.roles; let i = index">
+                    <label *ngIf="role.id && i <= 1" class="role">{{role.label}}</label>
+                </label>
+            </div>
+            <label class="username w-100">{{user.name}}</label>
+            <label class="email w-100">{{user.mail}}</label>
+            <div class="d-flex user-info">
+                <!--<a class="stories-count w-100" href="#"><label class="stories-count">Stories:-->
+                    <!--{{user.publishedArticles}}</label></a>-->
+                <label *ngIf="user.access && user.access.slice(0, 10) !== '1970-01-01'; else defaultDate" class="active w-100">Last login: {{user.access | date: 'medium'}}</label>
+                <ng-template #defaultDate><label class="active w-100">Last login: never</label></ng-template>
+            </div>
+            <div class="overlay" [ngClass]="{'overlay-over': deleteStatus === true && user?.uid === checkbox}">
+                <a class="view" [href]="user.viewUserUrl" target="_blank"
+                   [ngStyle]="{'display': user?.uid !== checkbox ? 'block' : 'none'}">VIEW</a>
+                <span class="answer-q" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}">Are you sure you want to delete this user?</span>
+                <span class="answer-yes" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
+                      (click)="deleteThisUser(user.uuid)">YES</span>
+                <span class="answer-no" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
+                      (click)="return()">NO</span>
+                <div class="updates">
+                    <p *ngIf="user.status == true; else elseBlock">Published</p>
+                    <ng-template #elseBlock>Draft</ng-template>
+                    <p>{{user.changed | date}}</p>
                 </div>
-                <label class="username w-100">{{user.name}}</label>
-                <label class="email w-100">{{user.mail}}</label>
-                <div class="d-flex user-info">
-                    <!--<a class="stories-count w-100" href="#"><label class="stories-count">Stories:-->
-                        <!--{{user.publishedArticles}}</label></a>-->
-                    <label *ngIf="user.access && user.access.slice(0, 10) !== '1970-01-01'; else defaultDate" class="active w-100">Last login: {{user.access | date: 'medium'}}</label>
-                    <ng-template #defaultDate><label class="active w-100">Last login: never</label></ng-template>
+                <div class="checkbox">
                 </div>
-                <div class="overlay" [ngClass]="{'overlay-over': deleteStatus === true && user?.uid === checkbox}">
-                    <a class="view" [href]="user.viewUserUrl" target="_blank"
-                       [ngStyle]="{'display': user?.uid !== checkbox ? 'block' : 'none'}">VIEW</a>
-                    <span class="answer-q" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}">Are you sure you want to delete this user?</span>
-                    <span class="answer-yes" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
-                          (click)="deleteThisUser(user.uuid)">YES</span>
-                    <span class="answer-no" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
-                          (click)="return()">NO</span>
-                    <div class="updates">
-                        <p *ngIf="user.status == true; else elseBlock">Published</p>
-                        <ng-template #elseBlock>Draft</ng-template>
-                        <p>{{user.changed | date}}</p>
-                    </div>
-                    <div class="checkbox">
-                    </div>
-                    <div class="options">
-                        <a [routerLink]="['user', user.uuid, {info: user.uid}]">
-                            <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
-                        </a>
-                        <a *ngIf="user.uid != currentUser.uid" (click)="deleteStatus = true; checkbox = user?.uid">
-                            <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
-                        </a>
-                    </div>
+                <div class="options">
+                    <a [routerLink]="['user', user.uuid, {info: user.uid}]">
+                        <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
+                    </a>
+                    <a *ngIf="user.uid != currentUser.uid" (click)="deleteStatus = true; checkbox = user?.uid">
+                        <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
+        </ngxMasonryItem>
+    </ngx-masonry>
 </section>
 
 

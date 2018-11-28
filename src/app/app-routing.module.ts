@@ -13,6 +13,7 @@ const routes: Routes = [
     { path: 'comments', loadChildren: 'app/comments/comments.module#CommentsModule', canActivate: [AuthGuard] },
     { path: 'content', loadChildren: 'app/content/content.module#ContentModule', canActivate: [AuthGuard] },
     { path: 'media', loadChildren: 'app/media/media.module#MediaModule', canActivate: [AuthGuard] },
+    { path: 'charts', loadChildren: 'app/echarts/echarts.module#EchartsModule', canActivate: [AuthGuard] },
     { path: 'page-not-found', component: NotFoundComponent, canActivate: [AuthGuard] },
     { path: 'access-denied', component: AccessDeniedComponent },
     { path: '**', redirectTo: '/page-not-found' }

@@ -89,23 +89,82 @@ input {
 
 // Slider
 .slider {
-  max-width: rem(540);
+  max-width: rem(338);
+  label {
+    margin: 0 !important;
+    position: relative;
+    top: 10px;
+  }
+  nouislider {
+    margin-top: rem(24);
+  }
+}
+
+.form-group-number {
+  max-width: rem(370);
+  .numberfields {
+    margin-top: rem(4);
+    .numberfield {
+      background-color: $secondary;
+      display: flex;
+      font-weight: 600;
+      height: rem(40);
+      margin: rem(4) 0;
+      padding: rem(8) rem(16);
+      position: relative;
+      .prefix,
+      .suffix {
+        white-space: nowrap;
+      }
+      input {
+        padding: 0 rem(8);
+        width: 100%;
+      }
+      input[type=number] {
+        -moz-appearance: textfield;
+      }
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      img ~ input {
+        margin-right: rem(20);
+      }
+      img ~ input ~ .suffix {
+        margin-left: rem(-20);
+      }
+      .bin {
+        bottom: rem(12);
+      }
+      .add {
+        margin: rem(16) 0 0;
+      }
+    }
+  }
 }
 
 .form-group-date {
   max-width: rem(370);
 }
 
+.form-group-select {
+  > label {
+    margin: 0 0 0;
+  }
+}
+
 .form-group-url {
   border-left: 1px solid #687086;
+  margin-top: rem(8);
   max-width: rem(370);
-  min-height: rem(180);
-  padding: 0 0 0 rem(16);
+  min-height: rem(223);
   > label {
     color: $text-color2;
     font-size: rem(14);
     font-weight: 700;
     line-height: rem(24);
+    padding: 0 0 0 rem(16);
     text-transform: uppercase;
   }
 }
@@ -113,27 +172,44 @@ input {
 // Form groups.
 .form-group {
   display: inline-block;
+  margin-bottom: rem(28);
   position: relative;
   width: 100%;
   > label {
     color: $text-color2;
     font-size: rem(14);
     font-weight: 600;
-    line-height: rem(24);
-    margin: 0 0 rem(6);
+    line-height: rem(18);
+    margin: 0 0 rem(16);
   }
 }
+.group-publish > label {
+  color: $text-color2;
+  font-size: rem(14);
+  font-weight: 600;
+  line-height: rem(18);
+  margin: 0;
+}
+
 .form-group-text,
-.form-group-summary {
-  .remove {
-    margin: rem(8) 0;
-  }
+.form-text-area,
+.form-group-summary,
+.slider {
+  width: calc(100% - 32px);
   .add {
-    margin: rem(8) 0 0;
+    float: right;
+    margin: rem(16) 0 0;
   }
 }
-.text-area .remove {
-  margin: rem(5) 0 rem(16) !important;
+.text-area,
+.form-summary,
+.form-text,
+.form-number-slider{
+  position: relative;
+  .bin {
+    bottom: 0;
+    right: rem(-32);
+  }
 }
 
 .form-text-area .remove {
@@ -148,16 +224,16 @@ input {
 .form-group-password,
 .form-group-url {
   input {
+    background-color: transparent;
     border: 0;
-    width: 90%;
+    width: 84%;
     height: rem(24);
     margin: 0;
     padding: 0;
   }
 
-  .remove {
-    float: right;
-    margin: 0 0 rem(8);
+  .add {
+    margin: rem(12) 0 0;
   }
 
   // Actions.
@@ -168,9 +244,13 @@ input {
     }
   }
 
+}
+.form-group-date,
+.form-group-url {
   // Add button.
   .add {
-    margin: rem(4) 0 0;
+    float: right;
+    margin: rem(12) 0 0;
   }
 }
 
@@ -185,21 +265,36 @@ input {
 .textfield {
   border-bottom: 1px solid $ligth-grey;
   min-height: rem(31);
-  margin: rem(12) 0;
+  margin: rem(7) 0 rem(4);
+  position: relative;
 }
 
 // Textfield.
-.numberfield,
 .emailfield,
 .urlfield {
   border-bottom: 1px solid $ligth-grey;
   min-height: rem(31);
-  margin: rem(12) 0;
+  margin: rem(7) 0 0;
+  position: relative;
 
   // Remove button.
   .remove {
     position: absolute;
     right: rem(-88);
+  }
+}
+
+.numberfield {
+  &:first-child .suffix {
+    margin-right: rem(0);
+
+  }
+}
+.textfield,
+.emailfield {
+  .bin {
+    bottom: rem(10);
+    right: 0;
   }
 }
 .field.textfield {
@@ -210,16 +305,21 @@ input {
 }
 
 .urlfield {
+  background-color: $secondary;
   border: 0;
+  margin: rem(4) 0 rem(4);
+  padding: rem(1) 0 rem(16) rem(16);
 }
 
 .prefix,
 .suffix {
+  color: $text-color2;
   font-size: rem(16);
 }
 
 .suffix {
   float: right;
+  margin-right: rem(31);
 }
 
 // Select.
@@ -232,7 +332,7 @@ input {
 // Textarea.
 textarea {
   border: 1px solid $ligth-grey;
-  margin: rem(4) 0;
+  margin: rem(4) 0 rem(-7);
   min-height: rem(150);
   padding: rem(10);
   width: 100%;
@@ -254,7 +354,6 @@ textarea {
   color: $text-color2;
   height: rem(80);
   line-height: rem(80);
-  margin-bottom: rem(8);
   text-transform: uppercase;
   font-weight: 600;
   text-align: center;
@@ -282,19 +381,60 @@ textarea {
 .form-group-reference {
   max-width: rem(370);
 }
+.form-groups.group-publish.form-group-publish {
+  margin: rem(5) 0 rem(23) ;
+}
+
+.form-group.form-group-publish {
+  .form-groups.group-publish.form-group-publish {
+    margin: 0 ;
+  }
+}
 
 .form-group-publish {
-  margin-bottom: 0;
+  margin-bottom: rem(0);
   max-width: rem(370);
+  position: relative;
   &:hover .tooltip {
     opacity: 1;
     visibility: visible;
   }
+  label {
+    margin-bottom: 0;
+  }
 }
-.form-reference, .unsupported-field, .form-upload, .form-radio, .form-text, .form-number-slider, .numberfield, .form-group-select, .field, .text,.text-area, .form-summary {
+.form-reference, .unsupported-field, .form-upload, .form-radio, .form-text, .slider, .numberfields, .form-group-date, .form-group-select, .text,.text-area, .form-summary {
   &:hover .tooltip {
     opacity: 1;
     top: rem(-10);
     visibility: visible;
   }
+}
+.field-date,
+.urlfields {
+  background-color: $secondary;
+  height: rem(40);
+  margin: rem(4) 0;
+  position: relative;
+  &:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+.field-date {
+  margin-bottom: 0;
+  padding: rem(8) 0 0 rem(16);
+  img {
+    bottom: rem(12);
+  }
+}
+
+.permission-message {
+  background-color: #EFF0F3;
+  color: $text-color2;
+  font-size: rem(16);
+  font-weight: 400;
+  margin-top: rem(7);
+  max-width: 100%;
+  padding: rem(14) rem(18) rem(17) rem(16)
 }

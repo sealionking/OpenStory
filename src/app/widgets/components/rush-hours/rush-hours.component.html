@@ -1,0 +1,14 @@
+<div class="widget-footer">
+  <div echarts [options]="area" class="de-rush"></div>
+  <ng-select *ngIf="showFilter"
+             [multiple]="false"
+             [searchable]="false"
+             appendTo="body"
+             (change)="onChange()"
+             [clearable]="false"
+             [(ngModel)]="currentItem">
+    <ng-option *ngFor="let x of period" [value]="x">
+      <span class="widget-span-option">{{x}}</span>
+    </ng-option>
+  </ng-select>
+</div>

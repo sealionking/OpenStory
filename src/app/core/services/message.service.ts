@@ -19,7 +19,8 @@ export class MessageService {
     add(message: string, type?: string): void {
         this.messages.push({
             msg: message,
-            type: type
+            type: type,
+            timeout: 10000
         });
     }
 }

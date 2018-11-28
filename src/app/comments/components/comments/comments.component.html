@@ -34,12 +34,22 @@
 
     <!--In case the retrieved object is empty but exists -->
     <div class="no-content" *ngIf="commentsList && commentsList.length === 0">
-        <h1>No Comments to be displayed.</h1>
+        <lottie-animation-view
+                [options]="noContent"
+                [width]="700"
+                [height]="410">
+        </lottie-animation-view>
+        <div class="no-content-text">
+            <h4>NO COMMENTS FOUND.</h4>
+
+            <!--<span>Please click the “Add Widget” button on the top left-->
+        <!--of the page to add widgets on your dashboard.</span>-->
+        </div>
     </div>
 
     <!--List-->
-    <app-masonry *ngIf="commentsList" [useImagesLoaded]="true" class="hero">
-        <appMasonryItem class="col-xl-3 col-lg-4 col-md-6 col-sm-12 box" *ngFor="let myComments of commentsList" >
+    <ngx-masonry [options]="masonryOptions" [updateLayout]="true" [useImagesLoaded]="true" *ngIf="commentsList" class="hero">
+        <ngxMasonryItem class="hero-grid__item box" *ngFor="let myComments of commentsList" >
             <div class="overlay">
                 <a class="view" [href]="myComments.viewUrl" target="_blank">VIEW</a>
             </div>
@@ -95,7 +105,7 @@
                 <div class="status" *ngIf="myComments.status == false"><p>Unpublished</p>
                 </div>
             </div>
-        </appMasonryItem>
-    </app-masonry>
+        </ngxMasonryItem>
+    </ngx-masonry>
     <button *ngIf="commentsList && limit < tmpList.length" (click)="showMore()">Show More</button>
 </section>

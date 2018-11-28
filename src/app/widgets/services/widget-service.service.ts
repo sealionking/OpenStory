@@ -1,4 +1,5 @@
 import {ComponentFactoryResolver, Injectable, ViewContainerRef} from '@angular/core';
+
 import {UsersWidgetComponent} from '../components/users-widget/users-widget.component';
 import {ContentWidgetComponent} from '../components/content-widget/content-widget.component';
 import {CommentWidgetComponent} from '../components/comment-widget/comment-widget.component';
@@ -8,6 +9,9 @@ import {ActiveUsersComponent} from '../components/active-users/active-users.comp
 import {NewestUsersComponent} from '../components/newest-users/newest-users.component';
 import {TopContentComponent} from '../components/top-content/top-content.component';
 import {ContentEvoComponent} from '../components/content-evo/content-evo.component';
+import {DeviceSessionComponent} from '../components/device-session/device-session.component';
+import {BrowserSessionComponent} from '../components/browser-session/browser-session.component';
+import {RushHoursComponent} from '../components/rush-hours/rush-hours.component';
 
 @Injectable()
 export class WidgetServiceService {
@@ -24,8 +28,10 @@ export class WidgetServiceService {
      * @param rootViewContainer - angular directive
      * @param dataStatic - used to determine if we should send live data to the widget
      * @param filter - used to filter the content widget, for now
+     * @param mini
      */
-    public addDynamicComponent(widgetName: string, rootViewContainer: ViewContainerRef, dataStatic?: boolean, filter?: string) {
+    public addDynamicComponent(widgetName: string, rootViewContainer: ViewContainerRef, dataStatic?: boolean,
+                               filter?: string, mini?: any) {
         let factory: any;
         let component: any;
         switch (widgetName) {
@@ -61,6 +67,18 @@ export class WidgetServiceService {
                 factory = this.factoryResolver.resolveComponentFactory(ContentEvoComponent);
                 component = factory.create(rootViewContainer.parentInjector);
                 break;
+            case 'deviceSession':
+                factory = this.factoryResolver.resolveComponentFactory(DeviceSessionComponent);
+                component = factory.create(rootViewContainer.parentInjector);
+                break;
+            case 'browserSession':
+                factory = this.factoryResolver.resolveComponentFactory(BrowserSessionComponent);
+                component = factory.create(rootViewContainer.parentInjector);
+                break;
+            case 'rushhours':
+                factory = this.factoryResolver.resolveComponentFactory(RushHoursComponent);
+                component = factory.create(rootViewContainer.parentInjector);
+                break;
             default:
                 factory = this.factoryResolver.resolveComponentFactory(UnknownWidgetComponent);
                 component = factory.create(rootViewContainer.parentInjector);
@@ -70,6 +88,9 @@ export class WidgetServiceService {
         }
         if (filter) {
             component.instance.filterItem = filter;
+        }
+        if (mini) {
+            component.instance.mini = mini;
         }
         return component;
     }

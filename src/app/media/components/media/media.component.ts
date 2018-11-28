@@ -61,11 +61,13 @@ export class MediaComponent implements OnInit {
      * Masonry animation options
      */
     public lottieConfig: Object;
+    public noContent: Object;
     /**
      * Masonry animation options
      */
     public masonryOptions: NgxMasonryOptions = {
-        transitionDuration: '0.5s',
+        transitionDuration: '1s',
+        percentPosition: true,
         resize: true,
         initLayout: true
     };
@@ -96,6 +98,11 @@ export class MediaComponent implements OnInit {
             autoplay: true,
             loop: true
         };
+        this.noContent = {
+            path: 'assets/no-content/data.json',
+            autoplay: true,
+            loop: true
+        };
     }
 
     /**
@@ -111,21 +118,17 @@ export class MediaComponent implements OnInit {
      */
     public getMediaLibrary(): void {
         let listing: any;
-        let init = false;
         listing = this.listingOptions(this.selectedType, this.selectedDate, this.lowerLimit, this.upperLimit);
+        // TODO: Add unsubscribe on SOS-490
         this.wsSocket.sendRequest({
             eventType: 'media',
             event: 'ListMedia',
             data: listing
         })
+            .take(1)
             .subscribe(data => {
                 if (data.statusCode === 200) {
                     this.message = data.body.length === 0;
-                    if (init) {
-                        return;
-                    } else {
-                        init = true;
-                    }
                     if (this.lowerLimit === 0) {
                         this.mediaList = data.body;
                         this.lottieShow = true;
@@ -144,10 +147,11 @@ export class MediaComponent implements OnInit {
      * Allows us to reset the items per page and filter the view
      */
     public filterMediaLibrary(): void {
+        this.bodyLength = 0;
         this.lowerLimit = 0;
         if (this.selectedType !== null || this.selectedDate !== null) {
             this.getMediaLibrary();
-            this.getBodyLength();
+            setTimeout( () => this.getBodyLength(), 800);
         }
     }
 
@@ -155,18 +159,20 @@ export class MediaComponent implements OnInit {
      * Used to add 10 more files on the current view
      */
     public showMoreImages(): void {
+        this.bodyLength = 0;
         this.lowerLimit += 10;
         this.getMediaLibrary();
-        this.getBodyLength();
+        setTimeout( () => this.getBodyLength(), 800);
     }
 
     /**
      * Clears the filter functions.
      */
     public clear(): void {
+        this.bodyLength = 0;
         this.lowerLimit = 0;
         this.getMediaLibrary();
-        this.getBodyLength();
+        setTimeout( () => this.getBodyLength(), 800);
     }
 
     /**
@@ -174,18 +180,15 @@ export class MediaComponent implements OnInit {
      * also used to initialize the grid
      */
     public getDates(): void {
+        // TODO: Add unsubscribe on SOS-490
         this.wsSocket.sendRequest({
             eventType: 'media',
             event: 'ListMedia',
             data: {
-                token: this.auth.getToken(),
-                filters:
-                    {
-                        start_limit: 0,
-                        end_limit: 0
-                    }
+                token: this.auth.getToken()
             }
         })
+            .take(1)
             .subscribe(data => {
                 if (data.statusCode === 200) {
                     if (this.initContent) {
@@ -194,8 +197,8 @@ export class MediaComponent implements OnInit {
                         this.initContent = true;
                     }
                     this.date = this.mediaService.populateFilters(data.body);
-                    this.bodyLength = data.body.length;
                     this.getMediaLibrary();
+                    setTimeout( () => this.bodyLength = data.body.length, 1100);
                 } else if (this.statusCodes.checkStatusCode(data)) {
                     return true;
                 }
@@ -206,26 +209,28 @@ export class MediaComponent implements OnInit {
      *  Public function used to retrieve the current filtered array length
      */
     public getBodyLength(): void {
+        // TODO: Add unsubscribe on SOS-490
         let listing: any;
         let init = false;
-        listing = this.listingOptions(this.selectedType, this.selectedDate, 0, 0);
-        if (init) {
-            return;
-        } else {
-            this.wsSocket.sendRequest({
-                eventType: 'media',
-                event: 'ListMedia',
-                data: listing
-            })
-                .subscribe(data => {
-                    if (data.statusCode === 200) {
-                        this.bodyLength = data.body.length;
-                    } else if (this.statusCodes.checkStatusCode(data)) {
-                        return true;
-                    }
-                });
-            init = true;
-        }
+        listing = this.listingOptions(this.selectedType, this.selectedDate, 0, this.lowerLimit + 20);
+        this.wsSocket.sendRequest({
+            eventType: 'media',
+            event: 'ListMedia',
+            data: listing
+        })
+            .take(1)
+            .subscribe(data => {
+                if (init) {
+                    return;
+                } else {
+                    init  = true;
+                }
+                if (data.statusCode === 200) {
+                    this.bodyLength = data.body.length;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
+                }
+            });
     }
 
     /**

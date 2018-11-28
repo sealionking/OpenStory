@@ -1,18 +1,42 @@
-<div *ngFor="let myUsers of userList" class="user-widget d-flex">
+<div *ngFor="let user of userList" class="user-widget d-flex">
   <div class="image">
-    <img *ngIf="myUsers.userPicture != ''; else defaultAvatar" class="avatar" src="{{myUsers.userPicture}}" alt="profile image"/>
+    <img *ngIf="user.userPicture != ''; else defaultAvatar" class="avatar" src="{{user.userPicture}}" alt="profile image"/>
     <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/avatar.svg" alt="profile image"/></ng-template>
   </div>
   <div class="info d-flex flex-column justify-content-between">
     <div>
-      <div class="title">{{myUsers.name}}</div>
-      <div class="created-date">{{myUsers.created | date}}</div>
+      <div class="title">{{user.name}}</div>
+      <div class="created-date">{{user.created | date}}</div>
     </div>
     <div>
-      <div class="mail">{{myUsers.mail}}</div>
-      <div class="roles" *ngFor="let role of myUsers.roles; let i = index">
+      <div class="mail">{{user.mail}}</div>
+      <div class="roles" *ngFor="let role of user.roles; let i = index">
         <span *ngIf="role.id && i <= 1">{{role.label}}</span>
       </div>
+    </div>
+  </div>
+  <div class="overlay overlay-over" *ngIf="dataStatic != true" [ngClass]="{'overlay-over': deleteStatus === true && user?.uid === checkbox}">
+    <a class="view" [href]="user.viewUserUrl" target="_blank"
+       [ngStyle]="{'display': user?.uid !== checkbox ? 'block' : 'none'}">VIEW</a>
+    <span class="answer-q" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}">Delete user?</span>
+    <span class="answer-yes" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
+          (click)="deleteThisUser(user.uuid)">YES</span>
+    <span class="answer-no" [ngStyle]="{'display': user?.uid === checkbox ? 'block' : 'none'}"
+          (click)="return()">NO</span>
+    <div class="updates" *ngIf="deleteStatus != true">
+      <p *ngIf="user.status == true; else elseBlock">Published</p>
+      <ng-template #elseBlock>Draft</ng-template>
+      <p>{{user.changed | date}}</p>
+    </div>
+    <div class="checkbox">
+    </div>
+    <div class="options">
+      <a (click)="editUser('users/user', user.uuid, user.uid)">
+        <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
+      </a>
+      <a *ngIf="user.uid != currentUser.uid" (click)="deleteStatus = true; checkbox = user?.uid">
+        <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
+      </a>
     </div>
   </div>
 </div>

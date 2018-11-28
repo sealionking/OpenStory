@@ -68,6 +68,6 @@
         </div>
       </div>
     </div>
-  <app-os-form *ngIf="showTemplate" [formData]="newReference" (sentData)="submit($event)" [fieldRef]="referenceType"
+  <app-os-form *ngIf="showTemplate" [formData]="newReference" (sendReferenceData)="submit($event)" [fieldRef]="referenceType"
                [referenceCheck]="true" [buttonValue]="buttonValue"></app-os-form>
 </ng-template>

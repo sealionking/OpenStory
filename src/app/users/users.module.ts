@@ -10,6 +10,7 @@ import {UsersService} from './services/users.service';
 import {EditUserComponent} from './components/edit-user/edit-user.component';
 import {LottieAnimationViewModule} from 'ng-lottie';
 import {OsFormsModule} from '../os-forms/os-forms.module';
+import {NgxMasonryModule} from 'ngx-masonry';
 
 
 /**
@@ -23,7 +24,8 @@ import {OsFormsModule} from '../os-forms/os-forms.module';
         SharedModule,
         ModalDialogModule.forRoot(),
         LottieAnimationViewModule.forRoot(),
-        OsFormsModule
+        OsFormsModule,
+        NgxMasonryModule
     ],
     providers: [UsersService],
     declarations: [UsersComponent, NewUserComponent, EditUserComponent],

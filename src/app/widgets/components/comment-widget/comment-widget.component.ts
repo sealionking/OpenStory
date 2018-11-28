@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {AuthenticateService} from '../../../core/services/authenticate.service';
-import {MessageService} from '../../../core/services/message.service';
 import {Comment} from '../../../comments/models/comments';
 import {widgetsData} from '../../../shared/model/widget-model';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 @Component({
     selector: 'app-comment-widget',
@@ -17,8 +18,7 @@ export class CommentWidgetComponent implements OnInit {
 
     constructor(private wsSocket: WebsocketService,
                 private auth: AuthenticateService,
-                private messageService: MessageService
-    ) {
+                private statusCodes: StatusCodesService) {
     }
 
     ngOnInit() {
@@ -40,28 +40,12 @@ export class CommentWidgetComponent implements OnInit {
                 token: this.auth.getToken()
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        this.commentList = data.body.slice(0, 5);
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.commentList = data.body.slice(0, 5);
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 setTimeout(() => {
                     this.dataLoaded.emit(true);

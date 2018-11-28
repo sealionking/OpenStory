@@ -1,6 +1,13 @@
-<div *ngFor='let message of (messages | slice: messages.length - 1)' class="position-fixed w-100" (click)="clear()">
-  <alert *ngIf="message.msg.length > 0"  [type]="message?.type ? message?.type : 'danger'" align="center" [dismissOnTimeout]="7000">
-    <strong>{{message.msg}}</strong>
-    <span class="close">&times;</span>
+<div *ngFor="let message of messages; let i = index">
+  <alert *ngIf="message.msg.length"
+         class="position-fixed w-100 os-alert"
+         [type]="message?.type ? message?.type : 'os-success'" align="center"
+         [dismissOnTimeout]="message.timeout"
+         (onClosed)="clear(i)"
+         [style.margin-top.px]="messages.length && i > 0 ? i * 50 : 0"
+         [ngClass]="addClass(message.type)"
+  >
+    <span class="status-code-message">{{message.msg}}</span>
+    <img (click)="clear(i)" class="close closebtn" [src]="addCloseItem(message.type)">
   </alert>
 </div>

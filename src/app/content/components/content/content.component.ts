@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
 
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {Content} from '../../model/content';
-import {ContentService} from '../../services/content.service';
-import {MessageService} from '../../../core/services/message.service';
+import {NgxMasonryOptions} from 'ngx-masonry';
 import {WebsocketService} from '../../../core/services/websocket.service';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 /**
  * Content Component allows us to view the CMS content
@@ -14,17 +15,13 @@ import {WebsocketService} from '../../../core/services/websocket.service';
     templateUrl: './content.component.html',
     styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, OnDestroy {
+    private contentType: Subscription;
     /**
      * @ignore
      */
     show = false;
     menuItems = [];
-    /**
-     * Used to load the content page once
-     * @type {boolean}
-     */
-    initContent = false;
     /**
      * Items for the dropdown filter list
      * @type {string[]}
@@ -35,11 +32,6 @@ export class ContentComponent implements OnInit {
      * @type {string[]}
      */
     contentStatus = [{id: 1, name: 'Published'}, {id: 0, name: 'Unpublished'}];
-    /**
-     * Items for the dropdown filter list
-     * @type {string[]}
-     */
-    contentLanguage = [{id: 'English', name: 'English'}, {id: 'French', name: 'French'}, {id: 'German', name: 'German'}];
     /**
      * Allows us to retrieve content from the server
      */
@@ -76,21 +68,37 @@ export class ContentComponent implements OnInit {
      */
     checkbox: any;
     limit = 10;
+    /**
+     * Masonry animation options
+     */
+    public masonryOptions: NgxMasonryOptions = {
+        transitionDuration: '1s',
+        percentPosition: true,
+        resize: true,
+        initLayout: true
+    };
 
     public lottieConfig: Object;
+    public noContent: Object;
+
     /**
      * @ignore
      */
     constructor(private wsService: WebsocketService,
                 private auth: AuthenticateService,
-                private messageService: MessageService,
-                private contentService: ContentService) {
+                private statusCodes: StatusCodesService) {
         this.lottieConfig = {
             path: 'assets/json/loader.json',
             autoplay: true,
             loop: true
         };
+        this.noContent = {
+            path: 'assets/no-content/data.json',
+            autoplay: true,
+            loop: true
+        };
     }
+
     /**
      * @ignore
      */
@@ -99,36 +107,32 @@ export class ContentComponent implements OnInit {
     }
 
     /**
+     * @ignore
+     */
+    ngOnDestroy(): void {
+        this.contentType.unsubscribe();
+    }
+
+    /**
      * Returns content types available
      * @return {any}
      */
-    getContentListType(): void {
-        this.wsService.sendRequest({eventType: 'entity', event: 'ListEntities', data: {token: this.auth.getToken(), entityTypeId: 'node'}})
+    private getContentListType(): void {
+        this.wsService.sendRequest({
+            eventType: 'entity',
+            event: 'ListEntities',
+            data: {token: this.auth.getToken(), entityTypeId: 'node'}
+        })
+            .take(1)
             .subscribe(
                 data => {
-                    switch (data.statusCode) {
-                        case 200:
-                            this.contentNames = data.body;
-                            this.getContent();
-                            break;
-                        case 400:
-                            this.messageService.add('Bad request.');
-                            break;
-                        case 403:
-                            this.messageService.add('Access denied.');
-                            break;
-                        case 404:
-                            this.messageService.add('Not Found.');
-                            break;
-                        case 422:
-                            this.messageService.add('Unprocessable Entity.');
-                            break;
-                        case 500:
-                            this.messageService.add('Internal Server Error.');
-                            break;
-                        default:
-                            this.messageService.add('Connection issues between UI and Server');
-                    }}
+                    if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                        this.contentNames = data.body;
+                        this.getContent();
+                    } else if (this.statusCodes.checkStatusCode(data)) {
+                        return true;
+                    }
+                }
             );
     }
 
@@ -136,71 +140,54 @@ export class ContentComponent implements OnInit {
      * Function that allows us to retrieve the Content data from the server
      */
     public getContent(): void {
-        this.wsService.sendRequest({eventType: 'content', event: 'ListContent',
-            data: {token: this.auth.getToken(), sorting: { created: 'DESC' }}})
+        this.contentType = this.wsService.sendRequest({
+            eventType: 'content', event: 'ListContent',
+            data: {token: this.auth.getToken(), sorting: {created: 'DESC'}}
+        })
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        // TODO: Remove this functionality, when back-end fix multiple emits issue.
-                        if (this.initContent) { return; } else {this.initContent = true; }
-                        if (Object.keys(data.body).length > 0) {
-                            for (const item in data.body) {
-                                if (item) {
-                                    // Removes HTML tag from the body and checks if the body is of valid format.
-                                    let stripTag: any;
-                                    if (data.body[item].hasOwnProperty('body')) {
-                                        stripTag = data.body[item]['body'];
-                                        if (data.body[item]['body'] && data.body[item]['body'].length > 0) {
-                                            if (data.body[item]['body'] instanceof Object) {
-                                                if (data.body[item]['body'].find(x => x.hasOwnProperty('value'))) {
-                                                    if (data.body[item]['body'][0]['value'] === '') {
-                                                        data.body[item]['body'] = '';
-                                                    }
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    if (Object.keys(data.body).length > 0) {
+                        for (const item in data.body) {
+                            if (item) {
+                                // Removes HTML tag from the body and checks if the body is of valid format.
+                                let stripTag: any;
+                                if (data.body[item].hasOwnProperty('body')) {
+                                    stripTag = data.body[item]['body'];
+                                    if (data.body[item]['body'] && data.body[item]['body'].length > 0) {
+                                        if (data.body[item]['body'] instanceof Object) {
+                                            if (data.body[item]['body'].find(x => x.hasOwnProperty('value'))) {
+                                                if (data.body[item]['body'][0]['value'] === '') {
+                                                    data.body[item]['body'] = '';
                                                 }
-                                            } else {
-                                                data.body[item]['body'] = stripTag.replace(/<[^>]*>/g, '');
                                             }
+                                        } else {
+                                            data.body[item]['body'] = stripTag.replace(/<[^>]*>/g, '');
                                         }
                                     }
-                                    // end check.
+                                }
+                                // end check.
 
-                                    if (data.body[item].hasOwnProperty('type')) {
-                                        if (data.body[item]['type']) {
-                                            data.body[item]['contentMachineName'] = data.body[item]['type'];
-                                            data.body[item]['type'] = this.contentNames[data.body[item]['type']];
-                                        }
+                                if (data.body[item].hasOwnProperty('type')) {
+                                    if (data.body[item]['type']) {
+                                        data.body[item]['contentMachineName'] = data.body[item]['type'];
+                                        data.body[item]['type'] = this.contentNames[data.body[item]['type']];
                                     }
                                 }
                             }
                         }
-                        this.contentList = data.body.slice(0, 10);
-                        for (const content in this.contentNames) {
-                            if (this.contentNames) {
-                                this.menuItems.push({
-                                    id: content,
-                                    label: this.contentNames[content]
-                                });
-                            }
+                    }
+                    this.contentList = data.body.slice(0, 10);
+                    for (const content in this.contentNames) {
+                        if (this.contentNames) {
+                            this.menuItems.push({
+                                id: content,
+                                label: this.contentNames[content]
+                            });
                         }
-                        this.tmpContentList = data.body;
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                    }
+                    this.tmpContentList = data.body;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }
@@ -208,7 +195,7 @@ export class ContentComponent implements OnInit {
     /**
      * Filter function used to filter the Content page
      */
-    filter(): void {
+    public filter(): void {
         this.contentList = this.tmpContentList.filter(data => {
             return (
                 ((this.selectedFilter.type !== null) ? data.type === this.selectedFilter.type : true) &&
@@ -222,7 +209,7 @@ export class ContentComponent implements OnInit {
     /**
      * Clear the filter functions
      */
-    clearFilter(): void {
+    public clearFilter(): void {
         this.contentList = this.tmpContentList.slice(0, 10);
         this.limit = 10;
     }
@@ -230,7 +217,7 @@ export class ContentComponent implements OnInit {
     /**
      * Function used to get the filter options dynamic
      */
-    filterItems(): void {
+    public filterItems(): void {
         this.items = Array.from(new Set(this.tmpContentList.map(data => data.type)));
     }
 
@@ -240,22 +227,22 @@ export class ContentComponent implements OnInit {
      * @param nid - the content NID
      * @param name
      */
-    deleteContent(id, nid, name): void {
+    public deleteContent(id, nid, name): Content[] {
         this.wsService.sendRequest({eventType: 'content', event: 'DeleteEntity', data: {
                 token: this.auth.getToken(), entityType: 'node', bundle: name, id: id
             }});
+        const index = this.tmpContentList.findIndex(content => content.uuid === id);
+        this.tmpContentList.splice(index, 1);
         this.contentList = this.tmpContentList.filter( x => {
-            this.selectedFilter.type = null;
-            this.selectedFilter.status = null;
-            this.selectedFilter.language = null;
             return x.nid !== nid;
         }).slice(0, 10);
+        return this.tmpContentList;
     }
 
     /**
      * cancel delete user function
      */
-    return() {
+    public return() {
         this.deleteStatus = false;
         this.checkbox = null;
     }
@@ -263,7 +250,7 @@ export class ContentComponent implements OnInit {
     /**
      * Shows more.
      */
-    showMore() {
+    public showMore() {
         this.limit += 10;
         this.contentList = this.tmpContentList.slice(0, this.limit);
     }

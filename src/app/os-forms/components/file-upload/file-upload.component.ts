@@ -1,9 +1,10 @@
 import {Component, Input, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl, FormControlName} from '@angular/forms';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NG_VALIDATORS, FormControl} from '@angular/forms';
+
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {ActivatedRoute} from '@angular/router';
-import {MessageService} from '../../../core/services/message.service';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 export interface FileSocket {
     id: string;
@@ -25,7 +26,8 @@ export interface FileSocket {
         {
             provide: NG_VALIDATORS,
             useExisting: forwardRef(() => FileUploadComponent),
-            multi: true}]
+            multi: true
+        }]
 })
 export class FileUploadComponent implements OnInit, ControlValueAccessor {
     @Input() accept: {
@@ -46,17 +48,18 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
     bundle: any;
     progressColor = 'transparent';
     show = false;
-    propagateChange: any = () => {};
+    propagateChange: any = () => {
+    };
 
     /**
      * @ignore
      * @param wsSocket - web socket service
-     * @param message - message service
+     * @param statusCodes
      * @param router - angular router service
      * @param auth - authenticate service
      */
     constructor(private wsSocket: WebsocketService,
-                private message: MessageService,
+                private statusCodes: StatusCodesService,
                 private router: ActivatedRoute,
                 private auth: AuthenticateService) {
     }
@@ -125,30 +128,34 @@ export class FileUploadComponent implements OnInit, ControlValueAccessor {
                     type: sedate.type.slice(0, sedate.type.indexOf('/'))
                 }
             }
-        }).subscribe(x => {
-            if (init) {
-                return;
-            } else {
-                init = true;
-            }
-            if (x.statusCode === 200 || x.statusCode === 201) {
-                this.inputValue.push({
-                    id: x.body.id,
-                    type: sedate.type,
-                    name: sedate.name,
-                    path: x.body.path
-                });
-                this.progressColor = '#53D79F';
-                this.progress = 100;
-                setTimeout(() => this.show = false, 500);
-                this.propagateChange(this.inputValue);
-            } else {
-                this.message.add(x.body, 'danger');
-                this.progressColor = '#b30000';
-                this.progress = 100;
-                setTimeout(() => this.show = false, 500);
-            }
-        });
+        })
+            .take(1)
+            .subscribe(x => {
+                if (init) {
+                    return;
+                } else {
+                    init = true;
+                }
+                if (x.statusCode === 200 || x.statusCode === 201) {
+                    this.inputValue.push({
+                        id: x.body.id,
+                        type: sedate.type,
+                        name: sedate.name,
+                        path: x.body.path
+                    });
+                    this.progressColor = '#53D79F';
+                    this.progress = 100;
+                    setTimeout(() => this.show = false, 500);
+                    this.propagateChange(this.inputValue);
+                } else {
+                    if (this.statusCodes.checkStatusCode(x)) {
+                        // TODO: Check functionality
+                    }
+                    this.progressColor = '#b30000';
+                    this.progress = 100;
+                    setTimeout(() => this.show = false, 500);
+                }
+            });
         this.progressColor = 'transparent';
         this.progress = 0;
     }

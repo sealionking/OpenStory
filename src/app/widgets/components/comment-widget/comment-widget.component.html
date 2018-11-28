@@ -6,10 +6,15 @@
             <ng-template #defaultAvatar><img class="avatar" src="../../../../assets/images/default.svg" alt="profile image"/></ng-template>
         </div>
         <div class="info">
-            <div class="title">{{comment.subject}}</div>
             <div class="author">{{comment.username.name}}</div>
-            <div class="comment-date">{{comment.created * 1000 | date}}</div>
+            <div class="d-flex">
+                <div class="title">{{comment.subject}}</div>
+                <div class="comment-date">{{comment.created * 1000 | date}}</div>
+            </div>
             <div class="latest-comment" [innerHTML]="comment.commentBody | truncate: 100"></div>
+        </div>
+        <div class="overlay" *ngIf="dataStatic != true">
+            <a class="view" [href]="comment.viewUrl" target="_blank">VIEW</a>
         </div>
     </div>
 </div>

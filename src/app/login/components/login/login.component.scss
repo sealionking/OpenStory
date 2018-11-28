@@ -1,3 +1,4 @@
+@import "../../../../../node_modules/bootstrap/scss/bootstrap-grid.scss";
 @import "../../../../assets/scss/variables";
 @import "../../../../assets/scss/mixins";
 
@@ -134,21 +135,31 @@ h1 {
   margin: 0;
   padding: 0;
   z-index: -2;
-  @media (max-width: 991px) {
+  @include media-breakpoint-down(lg) {
+    min-height: 0 !important;
+  }
+  img {
     display: none;
+    @include media-breakpoint-up(lg) {
+      display: block;
+    }
   }
   .col-1 {
-    border-right: rem(1) solid $dark-grey;
-    margin: rem(100) auto auto;
-    min-height: 80%;
-    z-index: 1;
-    @media (max-width: 484px){
-      display: none;
+    display: none;
+    @include media-breakpoint-up(lg) {
+      border-right: rem(1) solid $dark-grey;
+      display: block;
+      margin: rem(100) auto auto;
+      min-height: 80%;
+      z-index: 1;
     }
   }
   .col-11 {
-    padding: rem(100) 0 0 rem(21);
+    padding: rem(30) 0 0 rem(21);
     z-index: 2;
+    @include media-breakpoint-up(lg) {
+      padding: rem(100) 0 0 rem(21);
+    }
     h1 {
       font-size: rem(48);
       font-weight: 300;
@@ -159,9 +170,13 @@ h1 {
     }
     p {
       color: $dark-grey;
-      font-size: rem(20);
-      line-height: rem(27);
-      width: rem(520);
+      font-size: rem(16);
+      line-height: rem(24);
+      @include media-breakpoint-up(lg) {
+        font-size: rem(20);
+        line-height: rem(27);
+        width: rem(520);
+      }
     }
   }
 }
@@ -179,7 +194,7 @@ h1 {
 }
 
 .section-right {
-  background: $secondary-bg-color;;
+  background: $secondary-bg-color;
   min-height: 100vh;
   padding: rem(30) rem(20) 0 rem(20);
   position: relative;

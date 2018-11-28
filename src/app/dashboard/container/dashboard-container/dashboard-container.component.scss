@@ -36,15 +36,15 @@
 .large {
   height: auto;
   width: rem(855);
-  &:after {
-    background-color: $ligth-grey;
-    content: "";
-    height: rem(1);
-    position: absolute;
-    right: 0;
-    top: rem(36);
-    width: rem(855);
-  }
+  //&:after {
+  //  background-color: $ligth-grey;
+  //  content: "";
+  //  height: rem(1);
+  //  position: absolute;
+  //  right: 0;
+  //  top: rem(36);
+  //  width: rem(855);
+  //}
 }
 
 .default {
@@ -79,6 +79,7 @@
   display: none;
   height: rem(30);
   line-height: rem(36);
+  margin-top: rem(-4);
   position: absolute;
   text-align: center;
   top: 0;
@@ -153,4 +154,12 @@ button {
 
 .grid-gutter {
   width: 2%;
+}
+
+.w-options {
+  margin-top: rem(5);
+}
+
+.w-minus {
+  margin-top: rem(10);
 }

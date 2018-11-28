@@ -1,21 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {WebsocketService} from '../../../core/services/websocket.service';
 import {MessageService} from '../../../core/services/message.service';
-import {Router} from '@angular/router';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 @Component({
     selector: 'app-new-user',
     templateUrl: './new-user.component.html',
     styleUrls: ['./new-user.component.scss']
 })
-export class NewUserComponent implements OnInit {
+export class NewUserComponent implements OnInit, OnDestroy {
+    private viewSchema: Subscription;
+    private submit: Subscription;
     userSchema: any;
     userRoles = [];
-    initContent = false;
     // Loader visibility.
-    lottieLoader: boolean = false;
+    lottieLoader = false;
     showSchema = false;
     buttonValue = false;
     public lottieConfig: Object;
@@ -25,14 +28,14 @@ export class NewUserComponent implements OnInit {
      * @param {WebsocketService} wsService
      * @param {AuthenticateService} auth
      * @param {MessageService} messageService
-     * @param ngSpinner
-     * @param loader
+     * @param statusCodes
      * @param {Router} route
      */
     constructor(
         private wsService: WebsocketService,
         private auth: AuthenticateService,
         private messageService: MessageService,
+        private statusCodes: StatusCodesService,
         private route: Router) {
         this.lottieConfig = {
             path: 'assets/json/loader.json',
@@ -44,52 +47,36 @@ export class NewUserComponent implements OnInit {
     /**
      * @ignore
      */
-    ngOnInit() {
+    ngOnInit(): void {
         this.getUserRoles();
         this.schemaRequest();
     }
 
     /**
-     * Function used to retrevie the form info from the server
+     * @ignore
      */
-    schemaRequest() {
-        this.wsService.sendRequest({
+    ngOnDestroy(): void {
+        this.viewSchema.unsubscribe();
+        if (this.submit) {
+            this.submit.unsubscribe();
+        }
+    }
+
+    /**
+     * Function used to retrieve the form info from the server
+     */
+    private schemaRequest() {
+        this.viewSchema = this.wsService.sendRequest({
             eventType: 'entity',
             event: 'EntityDefinition', data: {token: this.auth.getToken(), entityType: 'user', bundle: 'user'}
         })
             .subscribe(data => {
                 // Set the loader visibility.
                 this.lottieLoader = true;
-                switch (data.statusCode) {
-                    case 200:
-                        if (this.initContent) {
-                            return;
-                        } else {
-                            this.initContent = true;
-                        }
-                        this.userSchema = data.body.definition;
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        // TODO: Change back when json.api is re-implemented
-                        // data.body.errors.forEach((i) => {
-                        //     this.messageService.add(i.detail);
-                        // });
-                        this.messageService.add(data.body.message);
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.userSchema = data.body.definition;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 this.showSchema = true;
             });
@@ -103,40 +90,20 @@ export class NewUserComponent implements OnInit {
             eventType: 'user',
             event: 'GetUserRoles', data: {token: this.auth.getToken()}
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        const roles = data.body;
-                        for (const role in roles) {
-                            if (role) {
-                                this.userRoles.push({
-                                    title: roles[role],
-                                    enum: [role]
-                                });
-                            }
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    const roles = data.body;
+                    for (const role in roles) {
+                        if (role) {
+                            this.userRoles.push({
+                                title: roles[role],
+                                enum: [role]
+                            });
                         }
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        // TODO: Change back when json.api is re-implemented
-                        // data.body.errors.forEach((i) => {
-                        //     this.messageService.add(i.detail);
-                        // });
-                        this.messageService.add(data.body.message);
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                    }
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 this.showSchema = true;
             });
@@ -155,60 +122,13 @@ export class NewUserComponent implements OnInit {
                 entityType: 'user', bundle: 'user', body: formData
             }
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        this.route.navigate(['/users']);
-                        this.messageService.add('User has been created!', 'success');
-                        break;
-                    case 201:
-                        this.route.navigate(['/users']);
-                        this.messageService.add('User has been created!', 'success');
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 401:
-                        // TODO: Redo this when backend resolves the issue
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Unauthorized. Access denied.', 'danger');
-                            }
-                        }
-                        break;
-                    case 403:
-                        // TODO: Redo this when backend resolves the issue
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Forbidden. Access denied.', 'danger');
-                            }
-                        }
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        // TODO: Redo this when backend resolves the issue
-                        // data.body.errors.forEach((i) => {
-                        //     this.messageService.add(i.detail);
-                        // });
-                        if (data.hasOwnProperty('body')) {
-                            if (data['body'].hasOwnProperty('message')) {
-                                this.messageService.add(data.body.message);
-                            } else {
-                                this.messageService.add('Unprocessable Entity.', 'danger');
-                            }
-                        }
-                        break;
-                    case 500:
-                        this.messageService.add('Internal Server Error.');
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.route.navigate(['/users']);
+                    this.messageService.add(this.statusCodes.getMessageType('user-create'), 'os-success');
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
                 this.buttonValue = false;
             });

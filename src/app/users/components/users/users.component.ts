@@ -1,11 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import 'rxjs/add/operator/takeUntil';
+import {Subscription} from 'rxjs/Subscription';
 
 import {AuthenticateService} from '../../../core/services/authenticate.service';
 import {GeneralUsers} from '../../../shared/model/general-users';
 import {MessageService} from '../../../core/services/message.service';
 import {WebsocketService} from '../../../core/services/websocket.service';
-import {UsersService} from '../../services/users.service';
+import {NgxMasonryOptions} from 'ngx-masonry';
 import {UserData} from '../../../shared/model/user-data';
+import {StatusCodesService} from '../../../core/services/status-code.service';
 
 /**
  * User Display Page component
@@ -15,7 +18,8 @@ import {UserData} from '../../../shared/model/user-data';
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
+    private userView: Subscription;
     /**
      * Filter dropdown options
      */
@@ -51,20 +55,35 @@ export class UsersComponent implements OnInit {
      * Array used to store the current list of users in order to filter/sort
      */
     tmpList: GeneralUsers[];
-    initUsers = false;
     deleteStatus = false;
     checkbox: any;
     currentUser: UserData;
+    /**
+     * Masonry animation options
+     */
+    public masonryOptions: NgxMasonryOptions = {
+        transitionDuration: '1s',
+        percentPosition: true,
+        resize: true,
+        initLayout: true
+    };
 
     public lottieConfig: Object;
+    public noContent: Object;
     /**
      * @ignore
      */
     constructor(private auth: AuthenticateService,
                 private wsService: WebsocketService,
+                private statusCodes: StatusCodesService,
                 private messageService: MessageService) {
         this.lottieConfig = {
             path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
+        this.noContent = {
+            path: 'assets/no-content/data.json',
             autoplay: true,
             loop: true
         };
@@ -79,47 +98,31 @@ export class UsersComponent implements OnInit {
     }
 
     /**
+     * @ignore
+     */
+    ngOnDestroy(): void {
+        this.userView.unsubscribe();
+    }
+
+    /**
      * Function allows us to send the event and token to the server
      * and allows us to listen to the event and display the users.
      * @return {Array<GeneralUsers>}
      */
     showUsers(): Array<GeneralUsers> {
-        this.wsService.sendRequest({
+        this.userView = this.wsService.sendRequest({
             eventType: 'user', event: 'ListUser', data: {
                 token: this.auth.getToken(),
                 sorting: {created: 'DESC'}
             }
         })
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        this.getUserRoles();
-                        // TODO: Remove this functionality, when back-end fix multiple emits issue.
-                        if (this.initUsers) {
-                            return;
-                        } else {
-                            this.initUsers = true;
-                        }
-                        this.list = data.body;
-                        this.tmpList = this.list;
-                        break;
-                    case 400:
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-                        this.messageService.add(data.body);
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    this.getUserRoles();
+                    this.list = data.body;
+                    this.tmpList = this.list;
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
         return this.list;
@@ -173,17 +176,19 @@ export class UsersComponent implements OnInit {
 
     /**
      * Delete user from view and server
-     * @param name
      * @param id
      */
-    deleteThisUser(id) {
+    public deleteThisUser(id): GeneralUsers[] {
         this.wsService.sendEvent({eventType: 'user', event: 'DeleteEntity', data: {
                 token: this.auth.getToken(), entityType: 'user', bundle: 'user', id: id
             }
         });
+        const index = this.tmpList.findIndex(content => content.uuid === id);
+        this.tmpList.splice(index, 1);
         this.list = this.tmpList.filter(data => {
             return data.uuid !== id;
         });
+        return this.tmpList;
     }
 
     /**
@@ -206,43 +211,22 @@ export class UsersComponent implements OnInit {
             eventType: 'user',
             event: 'GetUserRoles', data: {token: this.auth.getToken()}
         })
+            .take(1)
             .subscribe(data => {
-                switch (data.statusCode) {
-                    case 200:
-                        const roles = [];
-                        for (const role in data.body) {
-                            if (role) {
-                                roles.push({
-                                    label: data.body[role],
-                                    id: role
-                                });
-                            }
+                if (data.hasOwnProperty('statusCode') && (data.statusCode === 201 || data.statusCode === 200)) {
+                    const roles = [];
+                    for (const role in data.body) {
+                        if (role) {
+                            roles.push({
+                                label: data.body[role],
+                                id: role
+                            });
                         }
-                        this.dropItems = Array.from(new Set(roles
-                            .map(x => x.label)));
-                        break;
-                    case 400:
-
-                        this.messageService.add('Bad request.');
-                        break;
-                    case 403:
-
-                        this.messageService.add('Access denied.');
-                        break;
-                    case 404:
-
-                        this.messageService.add('Not Found.');
-                        break;
-                    case 422:
-
-                        this.messageService.add('Unprocessable Entity.');
-                        break;
-                    case 500:
-
-                        this.messageService.add('Internal Server Error.');
-                        break;
-                    default:
-                        this.messageService.add('Connection issues between UI and Server');
+                    }
+                    this.dropItems = Array.from(new Set(roles
+                        .map(x => x.label)));
+                } else if (this.statusCodes.checkStatusCode(data)) {
+                    return true;
                 }
             });
     }

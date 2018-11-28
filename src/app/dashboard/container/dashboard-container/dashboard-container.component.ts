@@ -30,8 +30,13 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
     optionResize = false;
     draggedWidgets = false;
     closeDialog = false;
+    widgetResize: {
+        id: any;
+        indent: any;
+    };
 
     public lottieConfig: Object;
+    public noWidgets: Object;
 
     /**
      * We initialize the packery contaier to avoid overlapping
@@ -55,6 +60,11 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
 
         this.lottieConfig = {
             path: 'assets/json/loader.json',
+            autoplay: true,
+            loop: true
+        };
+        this.noWidgets = {
+            path: 'assets/no-widgets/no-widgets.json',
             autoplay: true,
             loop: true
         };
@@ -106,7 +116,7 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
      * @param {WidgetModel} data
      * @return {WidgetModel}
      */
-    createWidget(data: WidgetModel): WidgetModel {
+    private createWidget(data: WidgetModel): WidgetModel {
         const widget = {
             type: data.type,
             weight: data.weight,
@@ -115,7 +125,8 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
             id: data.id,
             dataStatic: data.dataStatic,
             viewMore: data.viewMore,
-            filterItem: data.filterItem
+            filterItem: data.filterItem,
+            expand: data.expand
         };
         return widget;
     }
@@ -333,5 +344,22 @@ export class DashboardContainerComponent implements OnInit, OnDestroy {
         this.showModal();
     }
 
+    /**
+     * Used to identify which widget is selected and proc the widget to change(if needed)
+     * Can be expanded via switch for multiple cases based on widget key
+     * @param value - string
+     * @param name - string
+     * @param id
+     */
+    // TODO: Redo function refactor
+    transformWidget ( value: any, name: any, id: any) {
+        this.widgetResize = null;
+        if (name === 'browserSession') {
+            this.widgetResize = {
+                id: value.toString(),
+                indent: id.toString()
+            };
+        }
+    }
 }
 

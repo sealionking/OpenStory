@@ -1,5 +1,5 @@
 <span class="d-flex align-items-center add-widget" (click)="openModal(template)">
-  <img [src]="'../../../../assets/images/inline-svg/close_1.svg'">Add Widget
+  <img [src]="'../../../../assets/images/inline-svg/add_widget.svg'">Add Widget
 </span>
 
 <ng-template #template>
@@ -17,7 +17,7 @@
                        [selectedWidget]="widget.key"
                        style="width: 435px; overflow: hidden; padding: 0 7.5px;"
                        (click)="valueChanged(widget)"
-                       [ngClass]="{'selected': selectedItem == widget}" (click)="clickedItem($event, widget)">
+                       [ngClass]="{'selected-widget': selectedItem == widget}" (click)="clickedItem($event, widget)">
       </app-widget-body>
     </div>
   </div>

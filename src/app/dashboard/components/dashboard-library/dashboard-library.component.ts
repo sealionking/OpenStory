@@ -44,22 +44,35 @@ export class DashboardLibraryComponent implements OnInit, OnDestroy {
         this.resizeSubs = this.globalObjectsRefService.getWindowResizeObs().subscribe(e => this.onResize(e));
     }
 
+    /**
+     * @ignore
+     */
     ngOnInit() {
         //this.filter();
     }
 
+    /**
+     * @ignore
+     */
     ngOnDestroy(): void {
         if (this.resizeSubs) {
             this.resizeSubs.unsubscribe();
         }
     }
 
+    /**
+     * Filter function
+     */
     filter() {
         this.widgetList = this.tmpList.filter( data => {
             return this.view === data.type;
         });
     }
 
+    /**
+     * Opens the library modal and initializes packery
+     * @param template
+     */
     openModal(template: TemplateRef<any>) {
         this.modalRef = this.modalService.show(template, {class: 'select-widget-modal'});
 
@@ -68,10 +81,18 @@ export class DashboardLibraryComponent implements OnInit, OnDestroy {
         }, 100);
     }
 
+    /**
+     * Changed the widget value
+     * @param data
+     */
     valueChanged(data) {
         this.tmpValue = data;
     }
 
+    /**
+     * Closes the modal
+     * @param name
+     */
     hideModal(name: string) {
         if (name === 'add') {
             this.confirmWidget.emit(true);
@@ -82,6 +103,11 @@ export class DashboardLibraryComponent implements OnInit, OnDestroy {
         }
     }
 
+    /**
+     * Click event action
+     * @param event
+     * @param newValue
+     */
     clickedItem(event, newValue) {
         this.selectedItem = newValue;
     }
@@ -104,6 +130,10 @@ export class DashboardLibraryComponent implements OnInit, OnDestroy {
     }
 
 
+    /**
+     * Layout resize helper
+     * @param event
+     */
     private onResize(event): void {
         setTimeout(() => {
             if (this.packery) {

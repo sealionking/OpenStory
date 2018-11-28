@@ -1,17 +1,17 @@
 <ng-select *ngIf="showFilter == true && contentList"
-        style=" position: absolute;
+           style=" position: absolute;
                 top: 0;
                 right: 0;"
-        class="custom"
-        (open)="filterItems()"
-        [items]="items"
-        bindLabel="name"
-        bindValue="id"
-        [searchable]="false"
-        placeholder="Content Type"
-        [(ngModel)]="selectedFilter"
-        (change)="filter()"
-        (clear)="clearFilter()"
+           class="custom"
+           (open)="filterItems()"
+           [items]="items"
+           bindLabel="name"
+           bindValue="id"
+           [searchable]="false"
+           placeholder="Content Type"
+           [(ngModel)]="selectedFilter"
+           (change)="filter()"
+           (clear)="clearFilter()"
 >
 </ng-select>
 
@@ -38,6 +38,29 @@
         </div>
 
         <div class="comment-date">Created on: {{content?.created * 1000 | date}}</div>
+    </div>
+    <div class="overlay" *ngIf="dataStatic != true" [ngClass]="{'overlay-over': deleteStatus === true && content.nid === checkbox}">
+        <a class="view" [href]="content.viewUrl" target="_blank"
+           [ngStyle]="{'display': content.nid !== checkbox ? 'block' : 'none'}">VIEW</a>
+        <span class="answer-q" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}">Delete content?</span>
+        <span class="answer-yes" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}"
+              (click)="deleteContent(content.uuid, content.nid, content.type)">YES</span>
+        <span class="answer-no" [ngStyle]="{'display': content.nid === checkbox ? 'block' : 'none'}" (click)="return()">NO</span>
+        <div class="updates" *ngIf="deleteStatus != true">
+            <p *ngIf="content.status == 1; else elseBlock ">Published</p>
+            <ng-template #elseBlock>Unpublished</ng-template>
+            <p>{{content.changed * 1000 | date}}</p>
+        </div>
+        <div class="checkbox">
+        </div>
+        <div class="options">
+            <a (click)="editContent('content/edit', content.uuid, content.type)">
+                <img class="svg" [src]="'../../../../assets/images/inline-svg/edit.svg'">
+            </a>
+            <a (click)="deleteStatus = true; checkbox = content.nid">
+                <img class="svg" [src]="'../../../../assets/images/inline-svg/delete.svg'">
+            </a>
+        </div>
     </div>
 </div>
 <app-doublebounce *ngIf="!contentList"></app-doublebounce>
