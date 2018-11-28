@@ -5,6 +5,5 @@
 
 export const environment = {
     production: false,
-    ws_url: 'http://ec2-54-82-164-86.compute-1.amazonaws.com:30000',
-    site_key: '6Ley5TsUAAAAACNq4ovPO6ym07ktkq-cSi7en--5'
+    ws_url: ''
 };
